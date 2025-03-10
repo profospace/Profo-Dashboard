@@ -1,0 +1,238 @@
+{
+  "version": "1.0",
+  "exportedAt": "2025-01-16T08:44:24.990Z",
+  "image": {
+    "src": "https://wityysaver.s3.ap-south-1.amazonaws.com/uploads/178585a7-1b7f-4d5d-af6b-e9830c363d3d-realty_special_photo_2100.webp"
+  },
+  "buildings": [
+    {
+      "id": 1737017049356,
+      "name": "Smart City",
+      "position": {
+        "x": 51.59201114967009,
+        "y": 45.806739288240024
+      },
+      "description": "Dummy description data for testing purpose only",
+      "totalFloors": 10,
+      "flatsDetails": [
+        {
+          "floorNumber": 1,
+          "flatsOnFloor": 10,
+          "availableFlats": 5,
+          "_id": "6784c4a8d2e8ab70ed5e3916"
+        },
+        {
+          "floorNumber": 2,
+          "flatsOnFloor": 8,
+          "availableFlats": 2,
+          "_id": "6784c4a8d2e8ab70ed5e3917"
+        },
+        {
+          "floorNumber": 3,
+          "flatsOnFloor": 15,
+          "availableFlats": 12,
+          "_id": "6784c4a8d2e8ab70ed5e3918"
+        },
+        {
+          "floorNumber": 4,
+          "flatsOnFloor": 10,
+          "availableFlats": 2,
+          "_id": "6784c4a8d2e8ab70ed5e3919"
+        },
+        {
+          "floorNumber": 5,
+          "flatsOnFloor": 5,
+          "availableFlats": 1,
+          "_id": "6784c4a8d2e8ab70ed5e391a"
+        },
+        {
+          "floorNumber": 6,
+          "flatsOnFloor": 20,
+          "availableFlats": 12,
+          "_id": "6784c4a8d2e8ab70ed5e391b"
+        },
+        {
+          "floorNumber": 7,
+          "flatsOnFloor": 10,
+          "availableFlats": 5,
+          "_id": "6784c4a8d2e8ab70ed5e391c"
+        },
+        {
+          "floorNumber": 8,
+          "flatsOnFloor": 10,
+          "availableFlats": 5,
+          "_id": "6784c4a8d2e8ab70ed5e391d"
+        },
+        {
+          "floorNumber": 9,
+          "flatsOnFloor": 5,
+          "availableFlats": 5,
+          "_id": "6784c4a8d2e8ab70ed5e391e"
+        },
+        {
+          "floorNumber": 10,
+          "flatsOnFloor": 6,
+          "availableFlats": 2,
+          "_id": "6784c4a8d2e8ab70ed5e391f"
+        }
+      ],
+      "amenities": [],
+      "contactNumber": "7878502010",
+      "developmentStatus": "running"
+    },
+    {
+      "id": 1737017050370,
+      "name": "Smart City",
+      "position": {
+        "x": 35.2401498426212,
+        "y": 67.16404172164494
+      },
+      "description": "Dummy description data for testing purpose only",
+      "totalFloors": 10,
+      "flatsDetails": [
+        {
+          "floorNumber": 1,
+          "flatsOnFloor": 10,
+          "availableFlats": 5,
+          "_id": "6784c4a8d2e8ab70ed5e3916"
+        },
+        {
+          "floorNumber": 2,
+          "flatsOnFloor": 8,
+          "availableFlats": 2,
+          "_id": "6784c4a8d2e8ab70ed5e3917"
+        },
+        {
+          "floorNumber": 3,
+          "flatsOnFloor": 15,
+          "availableFlats": 12,
+          "_id": "6784c4a8d2e8ab70ed5e3918"
+        },
+        {
+          "floorNumber": 4,
+          "flatsOnFloor": 10,
+          "availableFlats": 2,
+          "_id": "6784c4a8d2e8ab70ed5e3919"
+        },
+        {
+          "floorNumber": 5,
+          "flatsOnFloor": 5,
+          "availableFlats": 1,
+          "_id": "6784c4a8d2e8ab70ed5e391a"
+        },
+        {
+          "floorNumber": 6,
+          "flatsOnFloor": 20,
+          "availableFlats": 12,
+          "_id": "6784c4a8d2e8ab70ed5e391b"
+        },
+        {
+          "floorNumber": 7,
+          "flatsOnFloor": 10,
+          "availableFlats": 5,
+          "_id": "6784c4a8d2e8ab70ed5e391c"
+        },
+        {
+          "floorNumber": 8,
+          "flatsOnFloor": 10,
+          "availableFlats": 5,
+          "_id": "6784c4a8d2e8ab70ed5e391d"
+        },
+        {
+          "floorNumber": 9,
+          "flatsOnFloor": 5,
+          "availableFlats": 5,
+          "_id": "6784c4a8d2e8ab70ed5e391e"
+        },
+        {
+          "floorNumber": 10,
+          "flatsOnFloor": 6,
+          "availableFlats": 2,
+          "_id": "6784c4a8d2e8ab70ed5e391f"
+        }
+      ],
+      "amenities": [],
+      "contactNumber": "7878502010",
+      "developmentStatus": "running"
+    },
+    {
+      "id": 1737017051326,
+      "name": "Smart City",
+      "position": {
+        "x": 22.36913029895401,
+        "y": 57.45617697918816
+      },
+      "description": "Dummy description data for testing purpose only",
+      "totalFloors": 10,
+      "flatsDetails": [
+        {
+          "floorNumber": 1,
+          "flatsOnFloor": 10,
+          "availableFlats": 5,
+          "_id": "6784c4a8d2e8ab70ed5e3916"
+        },
+        {
+          "floorNumber": 2,
+          "flatsOnFloor": 8,
+          "availableFlats": 2,
+          "_id": "6784c4a8d2e8ab70ed5e3917"
+        },
+        {
+          "floorNumber": 3,
+          "flatsOnFloor": 15,
+          "availableFlats": 12,
+          "_id": "6784c4a8d2e8ab70ed5e3918"
+        },
+        {
+          "floorNumber": 4,
+          "flatsOnFloor": 10,
+          "availableFlats": 2,
+          "_id": "6784c4a8d2e8ab70ed5e3919"
+        },
+        {
+          "floorNumber": 5,
+          "flatsOnFloor": 5,
+          "availableFlats": 1,
+          "_id": "6784c4a8d2e8ab70ed5e391a"
+        },
+        {
+          "floorNumber": 6,
+          "flatsOnFloor": 20,
+          "availableFlats": 12,
+          "_id": "6784c4a8d2e8ab70ed5e391b"
+        },
+        {
+          "floorNumber": 7,
+          "flatsOnFloor": 10,
+          "availableFlats": 5,
+          "_id": "6784c4a8d2e8ab70ed5e391c"
+        },
+        {
+          "floorNumber": 8,
+          "flatsOnFloor": 10,
+          "availableFlats": 5,
+          "_id": "6784c4a8d2e8ab70ed5e391d"
+        },
+        {
+          "floorNumber": 9,
+          "flatsOnFloor": 5,
+          "availableFlats": 5,
+          "_id": "6784c4a8d2e8ab70ed5e391e"
+        },
+        {
+          "floorNumber": 10,
+          "flatsOnFloor": 6,
+          "availableFlats": 2,
+          "_id": "6784c4a8d2e8ab70ed5e391f"
+        }
+      ],
+      "amenities": [],
+      "contactNumber": "7878502010",
+      "developmentStatus": "running"
+    }
+  ],
+  "metadata": {
+    "buildingCount": 3,
+    "lastModified": "2025-01-16T08:44:24.990Z"
+  }
+}
