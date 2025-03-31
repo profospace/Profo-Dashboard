@@ -1,136 +1,207 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Layout, Menu, theme, Breadcrumb } from 'antd';
+import { useLocation, Link } from 'react-router-dom';
 import {
-    Home,
-    Building,
-    Users,
-    ChevronLeft,
-    ChevronRight,
-    Menu,
-    X,
-    FileText,
-    LayoutDashboardIcon
-} from 'lucide-react';
+    HomeOutlined,
+    BuildOutlined,
+    TeamOutlined,
+    FileTextOutlined,
+    AppstoreOutlined,
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    UserOutlined
+} from '@ant-design/icons';
 
-const SidebarLink = ({ to, icon: Icon, text, active, collapsed }) => (
-    <Link
-        to={to}
-        className={`flex items-center p-3 my-1 rounded-lg transition-colors ${active
-                ? 'bg-blue-100 text-blue-700'
-                : 'hover:bg-gray-100 text-gray-700'
-            }`}
-    >
-        <Icon size={20} className="flex-shrink-0" />
-        {!collapsed && <span className="ml-3">{text}</span>}
-    </Link>
-);
+const { Header, Content, Footer, Sider } = Layout;
 
-const Layout = ({ children }) => {
+const PropertyManagerLayout = ({ children }) => {
     const [collapsed, setCollapsed] = useState(false);
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const location = useLocation();
+    const { token: { colorBgContainer, borderRadiusLG } } = theme.useToken();
 
-    const routes = [
-        { path: '/', icon: Home, text: 'Dashboard' },
-        { path: '/properties', icon: LayoutDashboardIcon, text: 'Properties' },
-        { path: '/projects', icon: FileText, text: 'Projects' },
-        { path: '/buildings', icon: Building, text: 'Buildings' },
-        { path: '/leads', icon: Users, text: 'Leads Management' },
-        { path: '/users', icon: Users, text: 'User Management' },
+    // Convert current path to breadcrumb items
+    const pathSegments = location.pathname.split('/').filter(segment => segment);
+    const breadcrumbItems = [
+        { title: <Link to="/">Home</Link> },
+        ...pathSegments.map((segment, index) => {
+            const url = `/${pathSegments.slice(0, index + 1).join('/')}`;
+            const title = segment.charAt(0).toUpperCase() + segment.slice(1);
+            return { title: <Link to={url}>{title}</Link> };
+        })
     ];
 
-    const toggleSidebar = () => {
-        setCollapsed(!collapsed);
-    };
-
-    const toggleMobileMenu = () => {
-        setMobileMenuOpen(!mobileMenuOpen);
-    };
+    // Navigation items with icons
+    const items = [
+        {
+            key: '/',
+            icon: <HomeOutlined />,
+            label: <Link to="/">Dashboard</Link>,
+        },
+        // {
+        //     key: '/properties',
+        //     icon: <AppstoreOutlined />,
+        //     label: <Link to="/properties">Properties</Link>,
+        // },
+        // {
+        //     key: '/projects',
+        //     icon: <FileTextOutlined />,
+        //     label: <Link to="/projects">Projects</Link>,
+        // },
+        {
+            key: '/buildings',
+            icon: <BuildOutlined />,
+            label: <Link to="/buildings">Buildings</Link>,
+        },
+        {
+            key: 'user-management',
+            icon: <TeamOutlined />,
+            label: 'User Management',
+            children: [
+                {
+                    key: '/leads',
+                    label: <Link to="/leads">Leads Management</Link>,
+                },
+                {
+                    key: '/users',
+                    label: <Link to="/users">User Management</Link>,
+                },
+            ],
+        },
+        {
+            key: '/aws-image-gallery',
+            icon: <BuildOutlined />,
+            label: <Link to="/aws-image-gallery">AWS Image Gallery</Link>,
+        }
+        ,
+        {
+            key: 'resources',
+            icon: <FileTextOutlined />,
+            label: 'List',
+            children: [
+                {
+                    key: '/list-option',
+                    label: <Link to="/list-option">List Option</Link>,
+                },
+                {
+                    key: '/new-list-option',
+                    label: <Link to="/new-list-option">New List Option</Link>,
+                },
+            ],
+        },
+        {
+            key: '/deeplink-generator',
+            icon: <BuildOutlined />,
+            label: <Link to="/deeplink-generator">Deeplink Generator</Link>,
+        },
+        {
+            key: 'property',
+            icon: <AppstoreOutlined />,
+            label: 'Properties',
+            children: [
+                {
+                    key: '/properties-management',
+                    label: <Link to="/properties-management">All Properties</Link>,
+                },
+                {
+                    key: '/property-add',
+                    label: <Link to="/property-add">Add New Property</Link>,
+                },
+                {
+                    key: '/property-edit/:propertyId',
+                    label: <Link to="/property-edit/:propertyId">Edit Property</Link>,
+                },
+                {
+                    key: '/property-drafts',
+                    label: <Link to="/property-drafts">Property Drafts</Link>,
+                }
+            ]
+        },
+        {
+            key: '/buildings-management',
+            icon: <BuildOutlined />,
+            label: <Link to="/buildings-management">Building Management</Link>,
+        },
+        {
+            key: 'project',
+            icon: <AppstoreOutlined />,
+            label: 'Project Management',
+            children: [
+                {
+                    key: '/projects',
+                    label: <Link to="/projects">ProjectsListPage</Link>,
+                },
+                {
+                    key: '/projects/add',
+                    label: <Link to="/projects/add">AddProjectPage</Link>,
+                },
+                {
+                    key: '/projects/edit/:projectId',
+                    label: <Link to="/projects/edit/:projectId">EditProjectPage</Link>,
+                },
+                {
+                    key: '/projects/:projectId',
+                    label: <Link to="/projects/:projectId">ProjectDetailPage</Link>,
+                },
+                {
+                    key: '/projects/drafts',
+                    label: <Link to="/projects/drafts">ProjectDraftsPage</Link>,
+                }
+            ]
+        },
+        {
+            key: '/builder-auth-connection',
+            icon: <BuildOutlined />,
+            label: <Link to="/builder-auth-connection">Builder Auth Management</Link>,
+        },
+    ];
 
     return (
-        <div className="flex h-screen bg-gray-50">
-            {/* Mobile menu button */}
-            <div className="lg:hidden fixed top-0 left-0 z-20 m-4">
-                <button
-                    onClick={toggleMobileMenu}
-                    className="p-2 rounded-md bg-white shadow-md"
-                >
-                    <Menu size={24} />
-                </button>
-            </div>
-
-            {/* Mobile sidebar backdrop */}
-            {mobileMenuOpen && (
-                <div
-                    className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
-                    onClick={() => setMobileMenuOpen(false)}
+        <Layout style={{ minHeight: '100vh' }}>
+            <Sider
+                collapsible
+                collapsed={collapsed}
+                onCollapse={(value) => setCollapsed(value)}
+                breakpoint="lg"
+                collapsedWidth="80"
+            >
+                <div style={{ height: 32, margin: 16, background: 'rgba(255, 255, 255, 0.2)', borderRadius: 6 }} />
+                <Menu
+                    theme="dark"
+                    mode="inline"
+                    defaultSelectedKeys={[location.pathname]}
+                    items={items}
                 />
-            )}
-
-            {/* Sidebar for mobile */}
-            <div
-                className={`fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:hidden ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-                    }`}
-            >
-                <div className="flex items-center justify-between p-4 border-b">
-                    <h1 className="text-xl font-semibold text-gray-800">Property Manager</h1>
-                    <button
-                        onClick={toggleMobileMenu}
-                        className="p-2 rounded-md hover:bg-gray-100"
+            </Sider>
+            <Layout>
+                <Header style={{ padding: 0, background: colorBgContainer }}>
+                    <div style={{ display: 'flex', alignItems: 'center', height: '100%', paddingLeft: 16 }}>
+                        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                            className: 'trigger',
+                            onClick: () => setCollapsed(!collapsed),
+                            style: { fontSize: 18 }
+                        })}
+                        <span style={{ marginLeft: 12, fontSize: 18, fontWeight: 'bold' }}>Property Manager</span>
+                    </div>
+                </Header>
+                <Content style={{ margin: '0 16px' }}>
+                    <Breadcrumb style={{ margin: '16px 0' }} items={breadcrumbItems} />
+                    <div
+                        style={{
+                            padding: 24,
+                            minHeight: 360,
+                            background: colorBgContainer,
+                            borderRadius: borderRadiusLG,
+                        }}
                     >
-                        <X size={20} />
-                    </button>
-                </div>
-                <nav className="p-4">
-                    {routes.map((route) => (
-                        <SidebarLink
-                            key={route.path}
-                            to={route.path}
-                            icon={route.icon}
-                            text={route.text}
-                            active={location.pathname === route.path}
-                            collapsed={false}
-                        />
-                    ))}
-                </nav>
-            </div>
-
-            {/* Sidebar for desktop */}
-            <div
-                className={`hidden lg:block bg-white border-r shadow-sm relative transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'
-                    }`}
-            >
-                <div className={`flex items-center justify-between p-4 border-b ${collapsed ? 'justify-center' : ''}`}>
-                    {!collapsed && <h1 className="text-xl font-semibold text-gray-800">Property Manager</h1>}
-                    <button
-                        onClick={toggleSidebar}
-                        className="p-1 rounded-md hover:bg-gray-100"
-                    >
-                        {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
-                    </button>
-                </div>
-                <nav className="p-2">
-                    {routes.map((route) => (
-                        <SidebarLink
-                            key={route.path}
-                            to={route.path}
-                            icon={route.icon}
-                            text={route.text}
-                            active={location.pathname === route.path}
-                            collapsed={collapsed}
-                        />
-                    ))}
-                </nav>
-            </div>
-
-            {/* Main content */}
-            <div className="flex-1 overflow-auto">
-                <main className="p-4 lg:p-8">
-                    {children}
-                </main>
-            </div>
-        </div>
+                        {children}
+                    </div>
+                </Content>
+                <Footer style={{ textAlign: 'center' }}>
+                    Property Manager ©{new Date().getFullYear()}
+                </Footer>
+            </Layout>
+        </Layout>
     );
 };
 
-export default Layout;
+export default PropertyManagerLayout;
