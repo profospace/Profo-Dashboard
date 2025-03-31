@@ -1,8 +1,9 @@
-import React,{ useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 // import { base_url } from "../../../utils/base_url";
 import LocationMap from './LocationMap';
+
 const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, loading, builders = [] }) => {
     // Initialize form data from props or default values
     const [formData, setFormData] = useState({
@@ -46,6 +47,7 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
     const [newOfferTag, setNewOfferTag] = useState('');
     const [galleryFiles, setGalleryFiles] = useState([]);
     const [floorPlanFiles, setFloorPlanFiles] = useState({});
+    const [formDataChanged, setFormDataChanged] = useState(false);
 
     // Populate form when projectData changes (when editing)
     useEffect(() => {
@@ -92,14 +94,18 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
                 [name]: value
             }));
         }
+
+        // Mark that form data has changed
+        setFormDataChanged(true);
     };
 
-    // Notify parent of form changes
+    // Notify parent of form changes - FIXED to prevent infinite loop
     useEffect(() => {
-        if (onChange) {
+        if (onChange && formDataChanged) {
             onChange(formData);
+            setFormDataChanged(false); // Reset the flag after notifying parent
         }
-    }, [formData, onChange]);
+    }, [formData, onChange, formDataChanged]);
 
     // Handle location selection from map
     const handleLocationSelect = (location) => {
@@ -111,6 +117,9 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
                 longitude: location.lng
             }
         }));
+
+        // Mark that form data has changed
+        setFormDataChanged(true);
     };
 
     // Add a floor plan
@@ -131,6 +140,9 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
                 }
             ]
         }));
+
+        // Mark that form data has changed
+        setFormDataChanged(true);
     };
 
     // Remove a floor plan
@@ -147,6 +159,9 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
             ...prev,
             floorPlans: updatedPlans
         }));
+
+        // Mark that form data has changed
+        setFormDataChanged(true);
     };
 
     // Handle floor plan changes
@@ -158,6 +173,9 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
             ...prev,
             floorPlans: updatedPlans
         }));
+
+        // Mark that form data has changed
+        setFormDataChanged(true);
     };
 
     // Handle floor plan image upload
@@ -179,6 +197,9 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
                 ...prev,
                 floorPlans: updatedPlans
             }));
+
+            // Mark that form data has changed
+            setFormDataChanged(true);
         }
     };
 
@@ -208,6 +229,9 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
         }));
 
         setSelectedAmenity('');
+
+        // Mark that form data has changed
+        setFormDataChanged(true);
     };
 
     // Add amenity item
@@ -223,6 +247,9 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
             ...prev,
             amenities: updatedAmenities
         }));
+
+        // Mark that form data has changed
+        setFormDataChanged(true);
     };
 
     // Remove amenity category
@@ -234,6 +261,9 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
             ...prev,
             amenities: updatedAmenities
         }));
+
+        // Mark that form data has changed
+        setFormDataChanged(true);
     };
 
     // Remove amenity item
@@ -245,6 +275,9 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
             ...prev,
             amenities: updatedAmenities
         }));
+
+        // Mark that form data has changed
+        setFormDataChanged(true);
     };
 
     // Add offer tag
@@ -258,6 +291,9 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
             }));
 
             setNewOfferTag('');
+
+            // Mark that form data has changed
+            setFormDataChanged(true);
         } else {
             toast.error('This offer tag already exists');
         }
@@ -269,6 +305,9 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
             ...prev,
             offer: prev.offer.filter(t => t !== tag)
         }));
+
+        // Mark that form data has changed
+        setFormDataChanged(true);
     };
 
     // Add property type
@@ -281,6 +320,9 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
             ...prev,
             propertyType: updatedTypes
         }));
+
+        // Mark that form data has changed
+        setFormDataChanged(true);
     };
 
     // Add highlight
@@ -292,6 +334,9 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
                 { title: '', description: '', icon: '' }
             ]
         }));
+
+        // Mark that form data has changed
+        setFormDataChanged(true);
     };
 
     // Update highlight
@@ -303,6 +348,9 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
             ...prev,
             highlights: updatedHighlights
         }));
+
+        // Mark that form data has changed
+        setFormDataChanged(true);
     };
 
     // Remove highlight
@@ -314,6 +362,9 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
             ...prev,
             highlights: updatedHighlights
         }));
+
+        // Mark that form data has changed
+        setFormDataChanged(true);
     };
 
     // Handle gallery file uploads
@@ -328,9 +379,53 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
     };
 
     // Form submission
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     onSubmit(formData);
+    // };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        onSubmit(formData);
+
+        // Create a FormData object for file uploads
+        const formDataObj = new FormData();
+
+        // Clone the form data to avoid modifying the original state
+        const projectDataToSubmit = { ...formData };
+
+        // Add the main project data as a JSON string
+        formDataObj.append('data', JSON.stringify(projectDataToSubmit));
+
+        // Add gallery images if any
+        if (galleryFiles && galleryFiles.length > 0) {
+            galleryFiles.forEach((file) => {
+                formDataObj.append('galleryList', file);
+            });
+
+            // Clear temporary URLs from the data since we're uploading the actual files
+            projectDataToSubmit.gallery = [];
+        }
+
+        // Add floor plan images if any
+        if (Object.keys(floorPlanFiles).length > 0) {
+            // Keep track of floor plan indices to help with mapping files to floor plans
+            const floorPlanIndices = [];
+
+            Object.entries(floorPlanFiles).forEach(([index, file]) => {
+                // Add floor plan image with index to FormData
+                formDataObj.append('floorPlanImages', file);
+                floorPlanIndices.push(index);
+
+                // Clear temporary URLs from the data since we're uploading the actual files
+                projectDataToSubmit.floorPlans[index].image = '';
+            });
+
+            // Add indices to help backend map files to floor plans
+            formDataObj.append('floorPlanIndices', JSON.stringify(floorPlanIndices));
+        }
+
+        // Call parent's onSubmit with the FormData object instead of just the form data
+        onSubmit(formDataObj);
     };
 
     return (
@@ -890,11 +985,261 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
                             </div>
                         </div>
                     </div>
-                ))
-                }
+                ))}
+
+                <button
+                    type="button"
+                    onClick={addHighlight}
+                    className="mt-2 px-3 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
+                >
+                    Add Highlight
+                </button>
+            </div>
+
+            {/* Nearby Locations Section */}
+            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h3 className="text-lg font-medium text-gray-800 mb-4">Nearby Locations</h3>
+
+                <button
+                    type="button"
+                    onClick={() => {
+                        setFormData(prev => ({
+                            ...prev,
+                            nearbyLocations: [
+                                ...prev.nearbyLocations,
+                                { type: '', name: '', distance: '' }
+                            ]
+                        }));
+                        setFormDataChanged(true);
+                    }}
+                    className="mb-4 px-3 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
+                >
+                    Add Nearby Location
+                </button>
+
+                {formData.nearbyLocations.map((location, index) => (
+                    <div key={index} className="mb-4 p-3 border border-gray-200 rounded-md bg-white">
+                        <div className="flex justify-between items-center mb-3">
+                            <h4 className="font-medium text-gray-700">Location {index + 1}</h4>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    const updatedLocations = [...formData.nearbyLocations];
+                                    updatedLocations.splice(index, 1);
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        nearbyLocations: updatedLocations
+                                    }));
+                                    setFormDataChanged(true);
+                                }}
+                                className="text-red-600 hover:text-red-800"
+                            >
+                                Remove
+                            </button>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                                <select
+                                    value={location.type}
+                                    onChange={(e) => {
+                                        const updatedLocations = [...formData.nearbyLocations];
+                                        updatedLocations[index].type = e.target.value;
+                                        setFormData(prev => ({
+                                            ...prev,
+                                            nearbyLocations: updatedLocations
+                                        }));
+                                        setFormDataChanged(true);
+                                    }}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    required
+                                >
+                                    <option value="">Select Type</option>
+                                    <option value="HOSPITAL">Hospital</option>
+                                    <option value="SCHOOL">School</option>
+                                    <option value="COLLEGE">College</option>
+                                    <option value="SHOPPING_MALL">Shopping Mall</option>
+                                    <option value="METRO_STATION">Metro Station</option>
+                                    <option value="BUS_STAND">Bus Stand</option>
+                                    <option value="AIRPORT">Airport</option>
+                                    <option value="RAILWAY_STATION">Railway Station</option>
+                                    <option value="PARK">Park</option>
+                                    <option value="RESTAURANT">Restaurant</option>
+                                    <option value="CAFE">Cafe</option>
+                                    <option value="BANK">Bank</option>
+                                    <option value="ATM">ATM</option>
+                                    <option value="PHARMACY">Pharmacy</option>
+                                    <option value="GROCERY_STORE">Grocery Store</option>
+                                    <option value="GYM">Gym</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                <input
+                                    type="text"
+                                    value={location.name}
+                                    onChange={(e) => {
+                                        const updatedLocations = [...formData.nearbyLocations];
+                                        updatedLocations[index].name = e.target.value;
+                                        setFormData(prev => ({
+                                            ...prev,
+                                            nearbyLocations: updatedLocations
+                                        }));
+                                        setFormDataChanged(true);
+                                    }}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Distance (km)</label>
+                                <input
+                                    type="number"
+                                    value={location.distance}
+                                    onChange={(e) => {
+                                        const updatedLocations = [...formData.nearbyLocations];
+                                        updatedLocations[index].distance = e.target.value;
+                                        setFormData(prev => ({
+                                            ...prev,
+                                            nearbyLocations: updatedLocations
+                                        }));
+                                        setFormDataChanged(true);
+                                    }}
+                                    step="0.1"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Brochures Section */}
+            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h3 className="text-lg font-medium text-gray-800 mb-4">Brochures</h3>
+
+                <div className="mb-4">
+                    <input
+                        type="file"
+                        onChange={(e) => {
+                            const files = Array.from(e.target.files);
+                            // In a real implementation, you'd upload these files and get URLs back
+                            // Here we're just creating object URLs for preview
+                            const newBrochures = files.map(file => ({
+                                name: file.name,
+                                url: URL.createObjectURL(file),
+                                // You'd typically store the file here to upload later
+                                file
+                            }));
+
+                            setFormData(prev => ({
+                                ...prev,
+                                brochures: [...prev.brochures, ...newBrochures]
+                            }));
+                            setFormDataChanged(true);
+                        }}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        accept=".pdf,.doc,.docx"
+                        multiple
+                    />
+                    <p className="text-sm text-gray-500 mt-1">Upload project brochures (PDF, DOC, DOCX)</p>
+                </div>
+
+                {formData.brochures.length > 0 && (
+                    <div className="space-y-2">
+                        <h4 className="font-medium text-gray-700">Uploaded Brochures</h4>
+                        {formData.brochures.map((brochure, index) => (
+                            <div key={index} className="flex items-center justify-between p-2 bg-white border border-gray-200 rounded-md">
+                                <div className="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                                    </svg>
+                                    <span>{brochure.name}</span>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        const updatedBrochures = [...formData.brochures];
+                                        updatedBrochures.splice(index, 1);
+                                        setFormData(prev => ({
+                                            ...prev,
+                                            brochures: updatedBrochures
+                                        }));
+                                        setFormDataChanged(true);
+                                    }}
+                                    className="text-red-600 hover:text-red-800"
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            {/* Gallery Section */}
+            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h3 className="text-lg font-medium text-gray-800 mb-4">Project Gallery</h3>
+
+                <div className="mb-4">
+                    <input
+                        type="file"
+                        onChange={handleGalleryUpload}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        accept="image/*"
+                        multiple
+                    />
+                    <p className="text-sm text-gray-500 mt-1">Upload project images (JPEG, PNG, etc.)</p>
+                </div>
+
+                {galleryFiles.length > 0 && (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
+                        {galleryFiles.map((file, index) => (
+                            <div key={index} className="relative">
+                                <img
+                                    src={URL.createObjectURL(file)}
+                                    alt={`Gallery preview ${index}`}
+                                    className="w-full h-32 object-cover rounded-md"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => removeGalleryFile(index)}
+                                    className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-700"
+                                >
+                                    &times;
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            {/* Form Actions */}
+            <div className="flex justify-end space-x-4">
+                {onReset && (
+                    <button
+                        type="button"
+                        onClick={onReset}
+                        className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+                    >
+                        Reset
+                    </button>
+                )}
+                <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-300"
+                    disabled={loading}
+                >
+                    {loading ? 'Saving...' : isEditing ? 'Update Project' : 'Create Project'}
+                </button>
             </div>
         </form>
-    )
+    );
 
 }
 export default ProjectForm;

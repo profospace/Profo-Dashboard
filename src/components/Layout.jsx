@@ -94,6 +94,11 @@ const PropertyManagerLayout = ({ children }) => {
             label: <Link to="/deeplink-generator">Deeplink Generator</Link>,
         },
         {
+            key: '/cities',
+            icon: <BuildOutlined />,
+            label: <Link to="/cities">Cities</Link>,
+        },
+        {
             key: 'property',
             icon: <AppstoreOutlined />,
             label: 'Properties',

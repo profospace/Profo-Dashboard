@@ -29,6 +29,7 @@ import AddProjectPage from './pages/Project/AddProjectPage';
 import EditProjectPage from './pages/Project/EditProjectPage';
 import ProjectDetailPage from './pages/Project/ProjectDetailPage';
 import ProjectDraftsPage from './pages/Project/ProjectDraftPage';
+import CitiesManagementPage from './pages/City/CitiesManagementPage';
 
 
 // Use lazy loading for page components
@@ -76,6 +77,9 @@ function App() {
               <Route path="/new-list-option" element={<NewListOption />} />
               <Route path="/list-option" element={<ListOptions />} />
               <Route path="/deeplink-generator" element={<DeeplinkGenerator />} />
+
+              <Route path="/cities" element={<CitiesManagementPage />} />
+
               {/* Property */}
               <Route path="/properties-management" element={<PropertyManagement />} />
               <Route path="/property-add" element={<PropertyAdd />} />

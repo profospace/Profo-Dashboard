@@ -83,12 +83,17 @@ export default function BuildingForm({ building, onSubmit, onCancel }) {
                 ...buildingData
             });
 
+            console.log("buildingData", buildingData)
+            console.log("formData", formData)
+            
+            
             // Set preview images if available
             if (building.galleryList && building.galleryList.length > 0) {
                 setPreviewImages(building.galleryList);
             }
         }
     }, [building]);
+
 
     useEffect(() => {
         // Initialize Google Maps when component mounts

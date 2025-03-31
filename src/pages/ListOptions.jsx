@@ -436,7 +436,7 @@ const ListOptions = () => {
     };
 
     return (
-        <div className="p-6 bg-white rounded-lg shadow-md">
+        <div className="">
             <h1 className="text-2xl font-bold mb-6 text-gray-800">List Options Management</h1>
 
             {/* Upload Progress Indicator */}
