@@ -42,6 +42,11 @@ import AllBuildingsPage from './pages/Building/AllBuildingsPage';
 import UploadBuildingPage from './pages/Building/UploadBuildingPage';
 import BuildingDetailPage from './pages/Building/BuildingDetailPage';
 import DraftBuildingsPage from './pages/Building/DraftBuildingsPage';
+import ConnectPropertiesPage from './pages/Project/ConnectPropertiesPage';
+import DisconnectPropertiesPage from './pages/Project/DisconnectPropertiesPage';
+import AndroidFeedPreview from './pages/Testing/AndroidFeedPreview';
+import ConnectPropertiesToBuildingPage from './pages/Building/ConnectPropertiesToBuildingPage';
+import DisconnectPropertiesFromBuildingPage from './pages/Building/DisconnectPropertiesFromBuildingPage';
 
 
 // Use lazy loading for page components
@@ -120,6 +125,8 @@ function App() {
               <Route path="/buildings/edit/:buildingId" element={<EditBuildingPage />} />
               <Route path="/buildings/:buildingId" element={<BuildingDetailPage />} />
               <Route path="/buildings/drafts" element={<DraftBuildingsPage />} />
+              <Route path="/buildings/connect/:buildingId" element={<ConnectPropertiesToBuildingPage />} />
+              <Route path="/buildings/disconnect/:buildingId" element={<DisconnectPropertiesFromBuildingPage />} /> 
 
               {/* Project */}
               {/* <Route path="/projects-management" element={<ProjectManagementPage />} /> */}
@@ -128,6 +135,11 @@ function App() {
               <Route path="/projects/edit/:projectId" element={<EditProjectPage />} />
               <Route path="/projects/:projectId" element={<ProjectDetailPage />} />
               <Route path="/projects/drafts" element={<ProjectDraftsPage />} />
+              <Route path="/projects/:projectId/connect-properties" element={<ConnectPropertiesPage />} />
+              <Route path="/projects/:projectId/disconnect-properties" element={<DisconnectPropertiesPage />} />
+
+              {/* <Route path="/testing" element={<AndroidFeedPreview />} /> */}
+
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

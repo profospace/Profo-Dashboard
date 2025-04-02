@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import BuildingCard from '../../components/Building/BuildingCard';
 import BuildingFilters from '../../components/Building/BuildingFilters';
-import { getBuildings, deleteBuilding } from '../../../utils/Building//api';
+import { getBuildings, deleteBuilding } from '../../../utils/Building/api';
 
 const AllBuildingsPage = () => {
     const [buildings, setBuildings] = useState([]);

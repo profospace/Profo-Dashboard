@@ -49,11 +49,11 @@ const PropertyManagerLayout = ({ children }) => {
         //     icon: <FileTextOutlined />,
         //     label: <Link to="/projects">Projects</Link>,
         // },
-        {
-            key: '/buildings',
-            icon: <BuildOutlined />,
-            label: <Link to="/buildings">Buildings</Link>,
-        },
+        // {
+        //     key: '/buildings',
+        //     icon: <BuildOutlined />,
+        //     label: <Link to="/buildings">Buildings</Link>,
+        // },
         {
             key: 'user-management',
             icon: <TeamOutlined />,
