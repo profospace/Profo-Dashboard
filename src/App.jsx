@@ -17,9 +17,7 @@ import ListOptions from './pages/ListOptions';
 import PropertyManagerLayout from './components/Layout';
 import DeeplinkGenerator from './pages/DeeplinkGenerator';
 import PropertyManagement from './pages/Property/PropertyManagement';
-import BuildingManagement from './pages/BuildingManagement';
-import ProjectManagementPage from './pages/ProjectManagementPage';
-import BuilderAuthConnection from './pages/BuilderAuthConnection';
+import BuilderAuthConnection from './pages/Builder Management/BuilderAuthConnection';
 import PropertyAdd from './pages/Property/PropertyAdd';
 import PropertyEdit from './pages/Property/PropertyEdit';
 import PropertyDrafts from './pages/Property/PropertyDrafts';
@@ -30,6 +28,20 @@ import EditProjectPage from './pages/Project/EditProjectPage';
 import ProjectDetailPage from './pages/Project/ProjectDetailPage';
 import ProjectDraftsPage from './pages/Project/ProjectDraftPage';
 import CitiesManagementPage from './pages/City/CitiesManagementPage';
+import ColorsPage from './pages/ColorApiForm/ColorsPage';
+import AdsPage from './pages/Ads Management/AdsPage';
+import AdCreatePage from './pages/Ads Management/AdCreatePage';
+import AdEditPage from './pages/Ads Management/AdEditPage';
+import BuildersListPage from './pages/Builder Management/BuilderListPage';
+import BuilderUploadPage from './pages/Builder Management/BuilderUploadPage';
+import BuilderDetailPage from './pages/Builder Management/BuilderDetailPage';
+import BuilderUpdateInfo from './pages/Builder Management/BuilderUpdateInfo';
+import CreateBuildingPage from './pages/Building/CreateBuildingPage';
+import EditBuildingPage from './pages/Building/EditBuildingPage';
+import AllBuildingsPage from './pages/Building/AllBuildingsPage';
+import UploadBuildingPage from './pages/Building/UploadBuildingPage';
+import BuildingDetailPage from './pages/Building/BuildingDetailPage';
+import DraftBuildingsPage from './pages/Building/DraftBuildingsPage';
 
 
 // Use lazy loading for page components
@@ -70,7 +82,7 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               {/* <Route path="/properties" element={<PropertiesPage />} /> */}
               {/* <Route path="/projects" element={<ProjectsPage />} /> */}
-              <Route path="/buildings" element={<BuildingsPage />} />
+              {/* <Route path="/buildings" element={<BuildingsPage />} /> */}
               <Route path="/leads" element={<LeadsManagementPage />} />
               <Route path="/users" element={<UserManagementPage />} />
               <Route path="/aws-image-gallery" element={<AwsS3ImageGallery />} />
@@ -79,6 +91,18 @@ function App() {
               <Route path="/deeplink-generator" element={<DeeplinkGenerator />} />
 
               <Route path="/cities" element={<CitiesManagementPage />} />
+              <Route path="/color-api" element={<ColorsPage />} />
+              <Route path="/ads" element={<AdsPage />} />
+              <Route path="/post-new-ad" element={<AdCreatePage />} />
+              <Route path="/edit-ad/:id" element={<AdEditPage />} />
+
+              {/* Builder */}
+              <Route path="/builder/upload" element={<BuilderUploadPage />} />
+              <Route path="/builder/all" element={<BuildersListPage />} />
+              <Route path="/builder/detail/:id" element={<BuilderDetailPage />} />
+              <Route path="/builder/update/:builderId" element={<BuilderUpdateInfo />} />
+              <Route path="/builder-auth-connection" element={<BuilderAuthConnection />} />
+              
 
               {/* Property */}
               <Route path="/properties-management" element={<PropertyManagement />} />
@@ -87,7 +111,16 @@ function App() {
               <Route path="/property-drafts" element={<PropertyDrafts />} />
 
               {/* Building */}
-              <Route path="/buildings-management" element={<BuildingManagement />} />
+              {/* <Route path="/upload-new-building" element={<CreateBuildingPage />} />
+              <Route path="/edit-building/:id" element={<EditBuildingPage />} />
+              <Route path="/building/detail/:id" element={<BuilderDetailPage />} />
+              <Route path="/building/all" element={<BuildersListPage />} /> */}
+              <Route path="/buildings" element={<AllBuildingsPage />} />
+              <Route path="/buildings/new" element={<UploadBuildingPage />} />
+              <Route path="/buildings/edit/:buildingId" element={<EditBuildingPage />} />
+              <Route path="/buildings/:buildingId" element={<BuildingDetailPage />} />
+              <Route path="/buildings/drafts" element={<DraftBuildingsPage />} />
+
               {/* Project */}
               {/* <Route path="/projects-management" element={<ProjectManagementPage />} /> */}
               <Route path="/projects" element={<ProjectsListPage />} />
@@ -95,8 +128,6 @@ function App() {
               <Route path="/projects/edit/:projectId" element={<EditProjectPage />} />
               <Route path="/projects/:projectId" element={<ProjectDetailPage />} />
               <Route path="/projects/drafts" element={<ProjectDraftsPage />} />
-              {/* builder */}
-              <Route path="/builder-auth-connection" element={<BuilderAuthConnection />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

@@ -11,6 +11,8 @@ import {
     MenuUnfoldOutlined,
     UserOutlined
 } from '@ant-design/icons';
+import { BsBuildingsFill } from "react-icons/bs";
+
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -71,7 +73,36 @@ const PropertyManagerLayout = ({ children }) => {
             key: '/aws-image-gallery',
             icon: <BuildOutlined />,
             label: <Link to="/aws-image-gallery">AWS Image Gallery</Link>,
+        },
+        ,
+        {
+            key: 'building',
+            icon: <BsBuildingsFill />,
+            label: 'Building Management',
+            children: [
+                {
+                    key: '/buildings',
+                    label: <Link to="/buildings">AllBuildingsPage</Link>,
+                },
+                {
+                    key: '/buildings/new',
+                    label: <Link to="/buildings/new">UploadBuildingPage</Link>,
+                },
+                {
+                    key: '/buildings/edit/:buildingId',
+                    label: <Link to="/buildings/edit/:buildingId">EditBuildingPage</Link>,
+                },
+                {
+                    key: '/buildings/:buildingId',
+                    label: <Link to="/buildings/:buildingId">BuildingDetailPage</Link>,
+                },
+                {
+                    key: '/buildings/drafts',
+                    label: <Link to="/buildings/drafts">DraftBuildingsPage</Link>,
+                },
+            ]
         }
+
         ,
         {
             key: 'resources',
@@ -99,6 +130,57 @@ const PropertyManagerLayout = ({ children }) => {
             label: <Link to="/cities">Cities</Link>,
         },
         {
+            key: '/color-api',
+            icon: <BuildOutlined />,
+            label: <Link to="/color-api">Color Api</Link>,
+        },
+        {
+            key: 'Builder',
+            icon: <FileTextOutlined />,
+            label: 'Builder Management',
+            children: [
+                {
+                    key: '/builder/all',
+                    label: <Link to="/builder/all">BuildersListPage</Link>,
+                },
+                {
+                    key: '/builder/upload',
+                    label: <Link to="/builder/upload">BuilderUploadPage</Link>,
+                },
+                {
+                    key: '/builder/update/:builderId',
+                    label: <Link to="/builder/update/:builderId">BuilderUpdateInfo</Link>,
+                },
+                {
+                    key: '/builder/detail/:id',
+                    label: <Link to="/builder/detail/:id">BuilderDetailPage</Link>,
+                },
+                {
+                    key: '/builder-auth-connection',
+                    label: <Link to="/builder-auth-connection">Builder Auth Management</Link>,
+                },
+            ],
+        },
+        {
+            key: 'Ads',
+            icon: <FileTextOutlined />,
+            label: 'Ads Management',
+            children: [
+                {
+                    key: '/ads',
+                    label: <Link to="/ads">View Ads</Link>,
+                },
+                {
+                    key: '/post-new-ad',
+                    label: <Link to="/post-new-ad">Post New Ad</Link>,
+                },
+                {
+                    key: '/edit-ad',
+                    label: <Link to="/edit-ad/:id">Edit Ad</Link>,
+                },
+            ],
+        },
+        {
             key: 'property',
             icon: <AppstoreOutlined />,
             label: 'Properties',
@@ -121,11 +203,7 @@ const PropertyManagerLayout = ({ children }) => {
                 }
             ]
         },
-        {
-            key: '/buildings-management',
-            icon: <BuildOutlined />,
-            label: <Link to="/buildings-management">Building Management</Link>,
-        },
+
         {
             key: 'project',
             icon: <AppstoreOutlined />,
@@ -153,11 +231,7 @@ const PropertyManagerLayout = ({ children }) => {
                 }
             ]
         },
-        {
-            key: '/builder-auth-connection',
-            icon: <BuildOutlined />,
-            label: <Link to="/builder-auth-connection">Builder Auth Management</Link>,
-        },
+
     ];
 
     return (

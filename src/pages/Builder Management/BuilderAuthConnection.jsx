@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Loader2, Check, X } from 'lucide-react';
-import { base_url } from "../../utils/base_url"
+import { base_url } from "../../../utils/base_url"
 
 
 const BuilderAuthConnection = () => {
@@ -147,7 +147,7 @@ const BuilderAuthConnection = () => {
 
     return (
         <div className="mx-auto ">
-            <h1 className="text-2xl font-bold mb-6">Builder ID Connection</h1>
+            <h1 className="text-2xl font-bold mb-6">Builder Auth Connection</h1>
 
             <div className="overflow-x-auto">
                 <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
