@@ -74,6 +74,33 @@ const PropertyManagerLayout = ({ children }) => {
             icon: <BuildOutlined />,
             label: <Link to="/aws-image-gallery">AWS Image Gallery</Link>,
         },
+        {
+            key: 'Builder',
+            icon: <FileTextOutlined />,
+            label: 'Builder Management',
+            children: [
+                {
+                    key: '/builder/all',
+                    label: <Link to="/builder/all">BuildersListPage</Link>,
+                },
+                {
+                    key: '/builder/upload',
+                    label: <Link to="/builder/upload">BuilderUploadPage</Link>,
+                },
+                {
+                    key: '/builder/update/:builderId',
+                    label: <Link to="/builder/update/:builderId">BuilderUpdateInfo</Link>,
+                },
+                {
+                    key: '/builder/detail/:id',
+                    label: <Link to="/builder/detail/:id">BuilderDetailPage</Link>,
+                },
+                {
+                    key: '/builder-auth-connection',
+                    label: <Link to="/builder-auth-connection">Builder Auth Management</Link>,
+                },
+            ],
+        }
         ,
         {
             key: 'building',
@@ -133,33 +160,6 @@ const PropertyManagerLayout = ({ children }) => {
             key: '/color-api',
             icon: <BuildOutlined />,
             label: <Link to="/color-api">Color Api</Link>,
-        },
-        {
-            key: 'Builder',
-            icon: <FileTextOutlined />,
-            label: 'Builder Management',
-            children: [
-                {
-                    key: '/builder/all',
-                    label: <Link to="/builder/all">BuildersListPage</Link>,
-                },
-                {
-                    key: '/builder/upload',
-                    label: <Link to="/builder/upload">BuilderUploadPage</Link>,
-                },
-                {
-                    key: '/builder/update/:builderId',
-                    label: <Link to="/builder/update/:builderId">BuilderUpdateInfo</Link>,
-                },
-                {
-                    key: '/builder/detail/:id',
-                    label: <Link to="/builder/detail/:id">BuilderDetailPage</Link>,
-                },
-                {
-                    key: '/builder-auth-connection',
-                    label: <Link to="/builder-auth-connection">Builder Auth Management</Link>,
-                },
-            ],
         },
         {
             key: 'Ads',

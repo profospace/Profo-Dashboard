@@ -47,6 +47,8 @@ import DisconnectPropertiesPage from './pages/Project/DisconnectPropertiesPage';
 import AndroidFeedPreview from './pages/Testing/AndroidFeedPreview';
 import ConnectPropertiesToBuildingPage from './pages/Building/ConnectPropertiesToBuildingPage';
 import DisconnectPropertiesFromBuildingPage from './pages/Building/DisconnectPropertiesFromBuildingPage';
+import ConnectBuildingsPage from './pages/Builder Management/ConnectBuildingsPage';
+import DisconnectBuildingsPage from './pages/Builder Management/DisconnectBuildingsPage';
 
 
 // Use lazy loading for page components
@@ -102,11 +104,17 @@ function App() {
               <Route path="/edit-ad/:id" element={<AdEditPage />} />
 
               {/* Builder */}
-              <Route path="/builder/upload" element={<BuilderUploadPage />} />
               <Route path="/builder/all" element={<BuildersListPage />} />
+              <Route path="/builder/upload" element={<BuilderUploadPage />} />
               <Route path="/builder/detail/:id" element={<BuilderDetailPage />} />
               <Route path="/builder/update/:builderId" element={<BuilderUpdateInfo />} />
               <Route path="/builder-auth-connection" element={<BuilderAuthConnection />} />
+
+              {/* Builder-Building , Project , Properties */}
+              <Route path="/builder/connect-buildings/:builderId" element={<ConnectBuildingsPage />} />
+              <Route path="/builder/disconnect-buildings/:builderId" element={<DisconnectBuildingsPage />} />
+
+
               
 
               {/* Property */}
