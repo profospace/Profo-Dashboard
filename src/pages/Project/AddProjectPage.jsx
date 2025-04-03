@@ -130,97 +130,42 @@ const AddProjectPage = () => {
         toast.success('Test data applied successfully');
     };
 
-    // const handleSubmit = async () => {
-    //     try {
-    //         setLoading(true);
-
-    //         // Validate required fields
-    //         if (!formData.name || !formData.builder || !formData.type) {
-    //             toast.error('Please fill out all required fields');
-    //             setLoading(false);
-    //             return;
-    //         }
-
-    //         // Format data for API
-    //         const projectData = {
-    //             ...formData,
-    //             location : {
-    //                 ...formData.location,
-    //                 "coordinates": {
-    //                     "type": "Point",
-    //                     "coordinates": [
-    //                         formData.location.longitude,
-    //                         formData.location.latitude,
-    //                     ]
-    //                 },
-    //             }
-    //             // Add any specific formatting needed for API
-    //         };
-
-    //         // Create FormData object for file uploads
-    //         const formDataObj = new FormData();
-    //         formDataObj.append('data', JSON.stringify(projectData));
-
-    //         // Handle any file uploads here
-    //         // Example: if there are gallery images or floor plan images to upload
-    //         // formDataObj.append('galleryList', fileObject);
-    //         // formDataObj.append('floorPlanImages', fileObject);
-
-    //         const response = await axios.post(`${base_url}/api/projects`, formDataObj, {
-    //             headers: {
-    //                 'Content-Type': 'multipart/form-data'
-    //             }
-    //         });
-
-    //         toast.success('Project created successfully');
-    //         localStorage.removeItem('projectDraft'); // Clear draft on successful submission
-    //         navigate('/projects');
-    //     } catch (error) {
-    //         console.error('Error creating project:', error);
-    //         toast.error(`Failed to create project: ${error.response?.data?.error || error.message}`);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
-
-    const handleSubmit = async (formDataObj) => {
+    const handleSubmit = async () => {
         try {
             setLoading(true);
 
-            // Check if we received FormData (from file uploads) or regular object
-            if (!(formDataObj instanceof FormData)) {
-                // If it's not FormData, it's the regular form data object
-                // Validate required fields
-                if (!formDataObj.name || !formDataObj.builder || !formDataObj.type) {
-                    toast.error('Please fill out all required fields');
-                    setLoading(false);
-                    return;
-                }
-
-                // Format data for API
-                const projectData = {
-                    ...formDataObj,
-                    location: {
-                        ...formDataObj.location,
-                        "coordinates": {
-                            "type": "Point",
-                            "coordinates": [
-                                formDataObj.location.longitude,
-                                formDataObj.location.latitude,
-                            ]
-                        },
-                    }
-                };
-
-                // Create FormData since we're not receiving it from the child component
-                formDataObj = new FormData();
-                formDataObj.append('data', JSON.stringify(projectData));
+            // Validate required fields
+            if (!formData.name || !formData.builder || !formData.type) {
+                toast.error('Please fill out all required fields');
+                setLoading(false);
+                return;
             }
-            // If it's already FormData, the child component has handled file attachments
 
-            console.log('Submitting project with FormData');
+            // Format data for API
+            const projectData = {
+                ...formData,
+                location : {
+                    ...formData.location,
+                    "coordinates": {
+                        "type": "Point",
+                        "coordinates": [
+                            formData.location.longitude,
+                            formData.location.latitude,
+                        ]
+                    },
+                }
+                // Add any specific formatting needed for API
+            };
 
-            // Make API request with FormData
+            // Create FormData object for file uploads
+            const formDataObj = new FormData();
+            formDataObj.append('data', JSON.stringify(projectData));
+
+            // Handle any file uploads here
+            // Example: if there are gallery images or floor plan images to upload
+            // formDataObj.append('galleryList', fileObject);
+            // formDataObj.append('floorPlanImages', fileObject);
+
             const response = await axios.post(`${base_url}/api/projects`, formDataObj, {
                 headers: {
                     'Content-Type': 'multipart/form-data'

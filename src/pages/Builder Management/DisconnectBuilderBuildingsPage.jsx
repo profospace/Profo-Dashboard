@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaCheck, FaBuilding, FaUnlink } from 'react-icons/fa';
 import { base_url } from '../../../utils/base_url';
 
-const DisconnectBuildingsPage = () => {
+const DisconnectBuilderBuildingsPage = () => {
     const { builderId } = useParams();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
@@ -226,4 +226,4 @@ const DisconnectBuildingsPage = () => {
     );
 };
 
-export default DisconnectBuildingsPage;
+export default DisconnectBuilderBuildingsPage;

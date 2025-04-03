@@ -4,20 +4,16 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { base_url } from "../../../utils/base_url";
 
-const ConnectPropertiesPage = () => {
+const DisconnectProjectPropertiesPage = () => {
     const { projectId } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
     const projectName = location.state?.projectName || 'Project';
 
     const [loading, setLoading] = useState(true);
-    const [connecting, setConnecting] = useState(false);
+    const [disconnecting, setDisconnecting] = useState(false);
     const [properties, setProperties] = useState([]);
     const [selectedProperties, setSelectedProperties] = useState([]);
-    const [filters, setFilters] = useState({
-        city: '',
-        type: ''
-    });
     const [searchTerm, setSearchTerm] = useState('');
     const [pagination, setPagination] = useState({
         page: 1,
@@ -26,56 +22,32 @@ const ConnectPropertiesPage = () => {
         pages: 1
     });
 
-    // Fetch unassigned properties when component mounts or filters change
+    // Fetch connected properties when component mounts
     useEffect(() => {
-        fetchUnassignedProperties();
-    }, [filters, pagination.page]);
+        fetchConnectedProperties();
+    }, [pagination.page]);
 
-    const fetchUnassignedProperties = async () => {
+    const fetchConnectedProperties = async () => {
         try {
             setLoading(true);
             const queryParams = new URLSearchParams({
                 page: pagination.page,
-                limit: pagination.limit,
-                ...filters
+                limit: pagination.limit
             });
 
-            const response = await axios.get(`${base_url}/api/properties/unassigned?${queryParams.toString()}`);
+            const response = await axios.get(`${base_url}/api/projects/${projectId}/properties?${queryParams.toString()}`);
             setProperties(response.data.data.properties);
             setPagination(response.data.data.pagination);
         } catch (error) {
-            console.error('Error fetching unassigned properties:', error);
+            console.error('Error fetching connected properties:', error);
             toast.error('Failed to load properties');
         } finally {
             setLoading(false);
         }
     };
 
-    const handleFilterChange = (e) => {
-        const { name, value } = e.target;
-        setFilters(prev => ({
-            ...prev,
-            [name]: value
-        }));
-        // Reset to first page when changing filters
-        if (pagination.page !== 1) {
-            setPagination(prev => ({ ...prev, page: 1 }));
-        }
-    };
-
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
-    };
-
-    const resetFilters = () => {
-        setFilters({
-            city: '',
-            type: ''
-        });
-        setSearchTerm('');
-        if (pagination.page !== 1) {
-            setPagination(prev => ({ ...prev, page: 1 }));
-        }
     };
 
     const handlePageChange = (newPage) => {
@@ -95,7 +67,7 @@ const ConnectPropertiesPage = () => {
     };
 
     const selectAllProperties = () => {
-        const allIds = properties.map(property => property.post_id);
+        const allIds = properties.map(property => property.id);
         setSelectedProperties(allIds);
     };
 
@@ -103,34 +75,39 @@ const ConnectPropertiesPage = () => {
         setSelectedProperties([]);
     };
 
-    const handleConnectProperties = async () => {
+    const handleDisconnectProperties = async () => {
         if (selectedProperties.length === 0) {
-            toast.error('Please select at least one property to connect');
+            toast.error('Please select at least one property to disconnect');
+            return;
+        }
+
+        if (!window.confirm(`Are you sure you want to disconnect ${selectedProperties.length} properties from this project?`)) {
             return;
         }
 
         try {
-            setConnecting(true);
-            const response = await axios.post(`${base_url}/api/projects/${projectId}/properties`, {
-                propertyIds: selectedProperties
+            setDisconnecting(true);
+            const response = await axios.delete(`${base_url}/api/projects/${projectId}/properties`, {
+                data: { propertyIds: selectedProperties }
             });
 
-            toast.success(`${response.data.data.connectedCount} properties connected successfully`);
+            toast.success(`${response.data.data.disconnectedCount} properties disconnected successfully`);
             navigate(`/projects`);
         } catch (error) {
-            console.error('Error connecting properties:', error);
-            toast.error(error.response?.data?.error || 'Failed to connect properties');
+            console.error('Error disconnecting properties:', error);
+            toast.error(error.response?.data?.error || 'Failed to disconnect properties');
         } finally {
-            setConnecting(false);
+            setDisconnecting(false);
         }
     };
 
     // Filter properties by search term
     const filteredProperties = searchTerm
         ? properties.filter(property =>
-            property.post_title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            property.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             property.city?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            property.locality?.toLowerCase().includes(searchTerm.toLowerCase())
+            property.locality?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            property.address?.toLowerCase().includes(searchTerm.toLowerCase())
         )
         : properties;
 
@@ -138,7 +115,7 @@ const ConnectPropertiesPage = () => {
         <div className="mx-auto">
             <div className="flex justify-between items-center mb-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Connect Properties to Project</h1>
+                    <h1 className="text-2xl font-bold text-gray-800">Disconnect Properties from Project</h1>
                     <p className="text-gray-600 mt-1">
                         Project: <span className="font-semibold">{projectName}</span>
                     </p>
@@ -151,89 +128,51 @@ const ConnectPropertiesPage = () => {
                         Cancel
                     </button>
                     <button
-                        onClick={handleConnectProperties}
-                        disabled={connecting || selectedProperties.length === 0}
-                        className={`px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors ${(connecting || selectedProperties.length === 0) ? 'opacity-50 cursor-not-allowed' : ''
+                        onClick={handleDisconnectProperties}
+                        disabled={disconnecting || selectedProperties.length === 0}
+                        className={`px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors ${(disconnecting || selectedProperties.length === 0) ? 'opacity-50 cursor-not-allowed' : ''
                             }`}
                     >
-                        {connecting ? 'Connecting...' : `Connect Selected (${selectedProperties.length})`}
+                        {disconnecting ? 'Disconnecting...' : `Disconnect Selected (${selectedProperties.length})`}
                     </button>
                 </div>
             </div>
 
-            {/* Filter Section */}
+            {/* Search Section */}
             <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 className="text-lg font-semibold text-gray-700 mb-4">Filter Unassigned Properties</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div className="w-full md:w-1/2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Search Connected Properties</label>
                         <input
                             type="text"
                             value={searchTerm}
                             onChange={handleSearchChange}
-                            placeholder="Search by title, city, locality..."
+                            placeholder="Search by title, city, address..."
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
-                        <input
-                            type="text"
-                            name="city"
-                            value={filters.city}
-                            onChange={handleFilterChange}
-                            placeholder="Filter by city"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Property Type</label>
-                        <select
-                            name="type"
-                            value={filters.type}
-                            onChange={handleFilterChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                            <option value="">All Types</option>
-                            <option value="Apartment">Apartment</option>
-                            <option value="Villa">Villa</option>
-                            <option value="House">House</option>
-                            <option value="Plot">Plot</option>
-                            <option value="Commercial">Commercial</option>
-                        </select>
-                    </div>
-                </div>
-                <div className="flex justify-end mt-4">
-                    <button
-                        onClick={resetFilters}
-                        className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
-                    >
-                        Reset Filters
-                    </button>
-                </div>
-            </div>
-
-            {/* Properties Selection */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-semibold text-gray-700">
-                        Available Properties {filteredProperties.length > 0 && `(${filteredProperties.length})`}
-                    </h2>
-                    <div className="flex space-x-3">
+                    <div className="flex space-x-3 self-end">
                         <button
                             onClick={selectAllProperties}
-                            className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors"
+                            className="px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors"
                         >
                             Select All
                         </button>
                         <button
                             onClick={deselectAllProperties}
-                            className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors"
+                            className="px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors"
                         >
                             Deselect All
                         </button>
                     </div>
                 </div>
+            </div>
+
+            {/* Properties List */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+                <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                    Connected Properties {filteredProperties.length > 0 && `(${filteredProperties.length})`}
+                </h2>
 
                 {loading ? (
                     <div className="flex justify-center items-center py-16">
@@ -241,8 +180,18 @@ const ConnectPropertiesPage = () => {
                     </div>
                 ) : filteredProperties.length === 0 ? (
                     <div className="text-center py-16 text-gray-500">
-                        <p className="text-xl">No unassigned properties found.</p>
-                        <p className="mt-2">Try adjusting your filters or add new properties.</p>
+                        <p className="text-xl">No connected properties found.</p>
+                        {searchTerm ? (
+                            <p className="mt-2">Try adjusting your search terms.</p>
+                        ) : (
+                            <p className="mt-2">This project has no connected properties.</p>
+                        )}
+                        <button
+                            onClick={() => navigate(`/projects/${projectId}/connect-properties`, { state: { projectName } })}
+                            className="mt-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+                        >
+                            Connect Properties
+                        </button>
                     </div>
                 ) : (
                     <>
@@ -287,30 +236,30 @@ const ConnectPropertiesPage = () => {
                                 <tbody className="bg-white divide-y divide-gray-200">
                                     {filteredProperties.map((property) => (
                                         <tr
-                                            key={property.post_id}
-                                            className={`hover:bg-gray-50 cursor-pointer ${selectedProperties.includes(property.post_id) ? 'bg-blue-50' : ''
+                                            key={property.id}
+                                            className={`hover:bg-gray-50 cursor-pointer ${selectedProperties.includes(property.id) ? 'bg-amber-50' : ''
                                                 }`}
-                                            onClick={() => togglePropertySelection(property.post_id)}
+                                            onClick={() => togglePropertySelection(property.id)}
                                         >
                                             <td className="px-4 py-3 whitespace-nowrap">
                                                 <input
                                                     type="checkbox"
-                                                    checked={selectedProperties.includes(property.post_id)}
-                                                    onChange={() => togglePropertySelection(property.post_id)}
+                                                    checked={selectedProperties.includes(property.id)}
+                                                    onChange={() => togglePropertySelection(property.id)}
                                                     onClick={(e) => e.stopPropagation()}
                                                     className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                                                 />
                                             </td>
                                             <td className="px-4 py-3 whitespace-nowrap">
                                                 <div className="text-sm font-medium text-gray-900 truncate max-w-xs">
-                                                    {property.post_title || 'Untitled Property'}
+                                                    {property.title || 'Untitled Property'}
                                                 </div>
                                                 <div className="text-xs text-gray-500">
-                                                    ID: {property.post_id}
+                                                    ID: {property.id}
                                                 </div>
                                             </td>
                                             <td className="px-4 py-3 whitespace-nowrap">
-                                                <div className="text-sm text-gray-900">{property.type_name || 'N/A'}</div>
+                                                <div className="text-sm text-gray-900">{property.type || 'N/A'}</div>
                                             </td>
                                             <td className="px-4 py-3 whitespace-nowrap">
                                                 <div className="text-sm text-gray-900">{property.city || 'N/A'}</div>
@@ -386,4 +335,4 @@ const ConnectPropertiesPage = () => {
     );
 };
 
-export default ConnectPropertiesPage;
+export default DisconnectProjectPropertiesPage;

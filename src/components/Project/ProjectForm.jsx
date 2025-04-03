@@ -476,12 +476,11 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Builder*</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Builder</label>
                         <select
                             name="builder"
                             value={formData.builder}
                             onChange={handleChange}
-                            required
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="">Select Builder</option>

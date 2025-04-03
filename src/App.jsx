@@ -11,45 +11,94 @@ import { getProjects } from './redux/features/Projects/projectsSlice';
 import { getBuildings } from './redux/features/Buildings/buildingsSlice';
 import { getLeads } from './redux/features/Leads/leadsSlice';
 import LoadingFallback from './components/LoadingFallback';
-import AwsS3ImageGallery from './pages/AwsS3ImageGallery';
-import NewListOption from './pages/NewListOption';
-import ListOptions from './pages/ListOptions';
-import PropertyManagerLayout from './components/Layout';
-import DeeplinkGenerator from './pages/DeeplinkGenerator';
-import PropertyManagement from './pages/Property/PropertyManagement';
-import BuilderAuthConnection from './pages/Builder Management/BuilderAuthConnection';
-import PropertyAdd from './pages/Property/PropertyAdd';
-import PropertyEdit from './pages/Property/PropertyEdit';
-import PropertyDrafts from './pages/Property/PropertyDrafts';
-import LoadingPage from './components/Loading/LoadingPage';
-import ProjectsListPage from './pages/Project/ProjectsList';
-import AddProjectPage from './pages/Project/AddProjectPage';
-import EditProjectPage from './pages/Project/EditProjectPage';
-import ProjectDetailPage from './pages/Project/ProjectDetailPage';
-import ProjectDraftsPage from './pages/Project/ProjectDraftPage';
-import CitiesManagementPage from './pages/City/CitiesManagementPage';
-import ColorsPage from './pages/ColorApiForm/ColorsPage';
-import AdsPage from './pages/Ads Management/AdsPage';
-import AdCreatePage from './pages/Ads Management/AdCreatePage';
-import AdEditPage from './pages/Ads Management/AdEditPage';
-import BuildersListPage from './pages/Builder Management/BuilderListPage';
-import BuilderUploadPage from './pages/Builder Management/BuilderUploadPage';
-import BuilderDetailPage from './pages/Builder Management/BuilderDetailPage';
-import BuilderUpdateInfo from './pages/Builder Management/BuilderUpdateInfo';
-import CreateBuildingPage from './pages/Building/CreateBuildingPage';
-import EditBuildingPage from './pages/Building/EditBuildingPage';
-import AllBuildingsPage from './pages/Building/AllBuildingsPage';
-import UploadBuildingPage from './pages/Building/UploadBuildingPage';
-import BuildingDetailPage from './pages/Building/BuildingDetailPage';
-import DraftBuildingsPage from './pages/Building/DraftBuildingsPage';
-import ConnectPropertiesPage from './pages/Project/ConnectPropertiesPage';
-import DisconnectPropertiesPage from './pages/Project/DisconnectPropertiesPage';
-import AndroidFeedPreview from './pages/Testing/AndroidFeedPreview';
-import ConnectPropertiesToBuildingPage from './pages/Building/ConnectPropertiesToBuildingPage';
-import DisconnectPropertiesFromBuildingPage from './pages/Building/DisconnectPropertiesFromBuildingPage';
-import ConnectBuildingsPage from './pages/Builder Management/ConnectBuildingsPage';
-import DisconnectBuildingsPage from './pages/Builder Management/DisconnectBuildingsPage';
 
+// layout
+import PropertyManagerLayout from './components/Layout';
+import LoadingPage from './components/Loading/LoadingPage';
+
+
+// Pages
+// import AwsS3ImageGallery from './pages/AwsS3ImageGallery';
+// import NewListOption from './pages/NewListOption';
+// import ListOptions from './pages/ListOptions';
+// import DeeplinkGenerator from './pages/DeeplinkGenerator';
+// import PropertyManagement from './pages/Property/PropertyManagement';
+// import BuilderAuthConnection from './pages/Builder Management/BuilderAuthConnection';
+// import PropertyAdd from './pages/Property/PropertyAdd';
+// import PropertyEdit from './pages/Property/PropertyEdit';
+// import PropertyDrafts from './pages/Property/PropertyDrafts';
+// import ProjectsListPage from './pages/Project/ProjectsList';
+// import AddProjectPage from './pages/Project/AddProjectPage';
+// import EditProjectPage from './pages/Project/EditProjectPage';
+// import ProjectDetailPage from './pages/Project/ProjectDetailPage';
+// import ProjectDraftsPage from './pages/Project/ProjectDraftPage';
+// import CitiesManagementPage from './pages/City/CitiesManagementPage';
+// import ColorsPage from './pages/ColorApiForm/ColorsPage';
+// import AdsPage from './pages/Ads Management/AdsPage';
+// import AdCreatePage from './pages/Ads Management/AdCreatePage';
+// import AdEditPage from './pages/Ads Management/AdEditPage';
+// import BuildersListPage from './pages/Builder Management/BuilderListPage';
+// import BuilderUploadPage from './pages/Builder Management/BuilderUploadPage';
+// import BuilderDetailPage from './pages/Builder Management/BuilderDetailPage';
+// import BuilderUpdateInfo from './pages/Builder Management/BuilderUpdateInfo';
+// import CreateBuildingPage from './pages/Building/CreateBuildingPage';
+// import EditBuildingPage from './pages/Building/EditBuildingPage';
+// import AllBuildingsPage from './pages/Building/AllBuildingsPage';
+// import UploadBuildingPage from './pages/Building/UploadBuildingPage';
+// import BuildingDetailPage from './pages/Building/BuildingDetailPage';
+// import DraftBuildingsPage from './pages/Building/DraftBuildingsPage';
+// import ConnectPropertiesPage from './pages/Project/ConnectPropertiesPage';
+// import DisconnectPropertiesPage from './pages/Project/DisconnectPropertiesPage';
+// import AndroidFeedPreview from './pages/Testing/AndroidFeedPreview';
+// import ConnectPropertiesToBuildingPage from './pages/Building/ConnectPropertiesToBuildingPage';
+// import DisconnectPropertiesFromBuildingPage from './pages/Building/DisconnectPropertiesFromBuildingPage';
+// import ConnectBuildingsPage from './pages/Builder Management/ConnectBuildingsPage';
+// import DisconnectBuildingsPage from './pages/Builder Management/DisconnectBuildingsPage';
+// import ConnectProjectsPage from './pages/Builder Management/ConnectProjectsPage';
+// import DisconnectProjectsPage from './pages/Builder Management/DisconnectProjectsPage';
+
+const AwsS3ImageGallery = lazy(() => import('./pages/AwsS3ImageGallery'));
+const NewListOption = lazy(() => import('./pages/NewListOption'));
+const ListOptions = lazy(() => import('./pages/ListOptions'));
+const DeeplinkGenerator = lazy(() => import('./pages/DeeplinkGenerator'));
+const PropertyManagement = lazy(() => import('./pages/Property/PropertyManagement'));
+const BuilderAuthConnection = lazy(() => import('./pages/Builder Management/BuilderAuthConnection'));
+const PropertyAdd = lazy(() => import('./pages/Property/PropertyAdd'));
+const PropertyEdit = lazy(() => import('./pages/Property/PropertyEdit'));
+const PropertyDrafts = lazy(() => import('./pages/Property/PropertyDrafts'));
+const ProjectsListPage = lazy(() => import('./pages/Project/ProjectsList'));
+const AddProjectPage = lazy(() => import('./pages/Project/AddProjectPage'));
+const EditProjectPage = lazy(() => import('./pages/Project/EditProjectPage'));
+const ProjectDetailPage = lazy(() => import('./pages/Project/ProjectDetailPage'));
+const ProjectDraftsPage = lazy(() => import('./pages/Project/ProjectDraftPage'));
+const CitiesManagementPage = lazy(() => import('./pages/City/CitiesManagementPage'));
+const ColorsPage = lazy(() => import('./pages/ColorApiForm/ColorsPage'));
+const AdsPage = lazy(() => import('./pages/Ads Management/AdsPage'));
+const AdCreatePage = lazy(() => import('./pages/Ads Management/AdCreatePage'));
+const AdEditPage = lazy(() => import('./pages/Ads Management/AdEditPage'));
+const BuildersListPage = lazy(() => import('./pages/Builder Management/BuilderListPage'));
+const BuilderUploadPage = lazy(() => import('./pages/Builder Management/BuilderUploadPage'));
+const BuilderDetailPage = lazy(() => import('./pages/Builder Management/BuilderDetailPage'));
+const BuilderUpdateInfo = lazy(() => import('./pages/Builder Management/BuilderUpdateInfo'));
+const CreateBuildingPage = lazy(() => import('./pages/Building/CreateBuildingPage'));
+const EditBuildingPage = lazy(() => import('./pages/Building/EditBuildingPage'));
+const AllBuildingsPage = lazy(() => import('./pages/Building/AllBuildingsPage'));
+const UploadBuildingPage = lazy(() => import('./pages/Building/UploadBuildingPage'));
+const BuildingDetailPage = lazy(() => import('./pages/Building/BuildingDetailPage'));
+const DraftBuildingsPage = lazy(() => import('./pages/Building/DraftBuildingsPage'));
+const ConnectProjectPropertiesPage = lazy(() => import('./pages/Project/ConnectProjectPropertiesPage'));
+const DisconnectProjectPropertiesPage = lazy(() => import('./pages/Project/DisconnectProjectPropertiesPage'));
+const AndroidFeedPreview = lazy(() => import('./pages/Testing/AndroidFeedPreview'));
+const ConnectPropertiesToBuildingPage = lazy(() => import('./pages/Building/ConnectPropertiesToBuildingPage'));
+const DisconnectPropertiesFromBuildingPage = lazy(() => import('./pages/Building/DisconnectPropertiesFromBuildingPage'));
+
+
+import ConnectBuilderBuildingsPage from './pages/Builder Management/ConnectBuilderBuildingsPage';
+import DisconnectBuilderBuildingsPage from './pages/Builder Management/DisconnectBuilderBuildingsPage';
+import ConnectBuilderProjectsPage from './pages/Builder Management/ConnectBuilderProjectsPage';
+import DisconnectBuilderProjectsPage from './pages/Builder Management/DisconnectBuilderProjectsPage';
+import ConnectBuilderPropertiesPage from './pages/Builder Management/ConnectBuilderPropertiesPage';
+import DisconnectBuilderPropertiesPage from './pages/Builder Management/DisconnectBuilderPropertiesPage';
 
 // Use lazy loading for page components
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -111,8 +160,14 @@ function App() {
               <Route path="/builder-auth-connection" element={<BuilderAuthConnection />} />
 
               {/* Builder-Building , Project , Properties */}
-              <Route path="/builder/connect-buildings/:builderId" element={<ConnectBuildingsPage />} />
-              <Route path="/builder/disconnect-buildings/:builderId" element={<DisconnectBuildingsPage />} />
+              <Route path="/builder/connect-buildings/:builderId" element={<ConnectBuilderBuildingsPage />} />
+              <Route path="/builder/disconnect-buildings/:builderId" element={<DisconnectBuilderBuildingsPage />} />
+
+              <Route path="/builder/connect-projects/:builderId" element={<ConnectBuilderProjectsPage />} />
+              <Route path="/builder/disconnect-projects/:builderId" element={<DisconnectBuilderProjectsPage />} />
+
+              <Route path="/builder/connect-properties/:builderId" element={<ConnectBuilderPropertiesPage />} />
+              <Route path="/builder/disconnect-properties/:builderId" element={<DisconnectBuilderPropertiesPage />} />
 
 
               
@@ -143,8 +198,8 @@ function App() {
               <Route path="/projects/edit/:projectId" element={<EditProjectPage />} />
               <Route path="/projects/:projectId" element={<ProjectDetailPage />} />
               <Route path="/projects/drafts" element={<ProjectDraftsPage />} />
-              <Route path="/projects/:projectId/connect-properties" element={<ConnectPropertiesPage />} />
-              <Route path="/projects/:projectId/disconnect-properties" element={<DisconnectPropertiesPage />} />
+              <Route path="/projects/:projectId/connect-properties" element={<ConnectProjectPropertiesPage />} />
+              <Route path="/projects/:projectId/disconnect-properties" element={<DisconnectProjectPropertiesPage />} />
 
               {/* <Route path="/testing" element={<AndroidFeedPreview />} /> */}
 
