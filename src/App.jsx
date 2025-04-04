@@ -99,6 +99,8 @@ import ConnectBuilderProjectsPage from './pages/Builder Management/ConnectBuilde
 import DisconnectBuilderProjectsPage from './pages/Builder Management/DisconnectBuilderProjectsPage';
 import ConnectBuilderPropertiesPage from './pages/Builder Management/ConnectBuilderPropertiesPage';
 import DisconnectBuilderPropertiesPage from './pages/Builder Management/DisconnectBuilderPropertiesPage';
+import UsersManagement from './pages/User/UsersManagement';
+import UserActivity from './pages/User/UserActivity';
 
 // Use lazy loading for page components
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -139,6 +141,12 @@ function App() {
               {/* <Route path="/properties" element={<PropertiesPage />} /> */}
               {/* <Route path="/projects" element={<ProjectsPage />} /> */}
               {/* <Route path="/buildings" element={<BuildingsPage />} /> */}
+
+              <Route path="/user-management" element={<UsersManagement />} />
+              <Route path="/user-activity/:userId/history" element={<UserActivity />} />
+
+
+
               <Route path="/leads" element={<LeadsManagementPage />} />
               <Route path="/users" element={<UserManagementPage />} />
               <Route path="/aws-image-gallery" element={<AwsS3ImageGallery />} />

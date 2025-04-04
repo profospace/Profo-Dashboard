@@ -338,7 +338,7 @@ const AdsPage = () => {
         navigate(`/edit-ad/${index}`);
     };
 
-    const handleDeleteAd = async (index) => {
+    const handleDeleteAd = async (id) => {
         if (!window.confirm('Are you sure you want to delete this ad?')) {
             return;
         }
@@ -346,9 +346,9 @@ const AdsPage = () => {
         try {
             setIsLoading(true);
 
-            const updatedAds = ads.filter((_, i) => i !== index);
+            const updatedAds = ads.filter((_, i) => i !== id);
 
-            const response = await axios.post(`${base_url}/api/colors/update-ads`, {
+            const response = await axios.delete(`${base_url}/api/colors/ads/${id}`, {
                 ads: updatedAds
             });
 
@@ -371,6 +371,9 @@ const AdsPage = () => {
         }, 3000);
     };
 
+
+
+    console.log("ads", ads)
     const getAdTypeDisplay = (adType) => {
         if (!adType) return 'N/A';
 
@@ -450,7 +453,7 @@ const AdsPage = () => {
                                         Edit
                                     </button>
                                     <button
-                                        onClick={() => handleDeleteAd(index)}
+                                        onClick={() => handleDeleteAd(ad?._id)}
                                         className="px-3 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200 transition"
                                     >
                                         Delete

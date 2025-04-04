@@ -64,6 +64,10 @@ const PropertyManagerLayout = ({ children }) => {
                     label: <Link to="/leads">Leads Management</Link>,
                 },
                 {
+                    key: '/user-management',
+                    label: <Link to="/user-management">User Management 🆕</Link>,
+                },
+                {
                     key: '/users',
                     label: <Link to="/users">User Management</Link>,
                 },
