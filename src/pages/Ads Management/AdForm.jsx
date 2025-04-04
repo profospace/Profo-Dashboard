@@ -276,7 +276,7 @@ const AdForm = () => {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="mx-auto ">
             <h1 className="text-2xl font-bold mb-6">
                 {isEditMode ? 'Edit Ad' : 'Create New Ad'}
             </h1>
@@ -293,7 +293,7 @@ const AdForm = () => {
                 </div>
             )}
 
-            <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <form onSubmit={handleSubmit} className="pb-8 mb-4">
                 <div className="mb-6">
                     <h2 className="text-xl font-semibold mb-4">Basic Information</h2>
                     <div className="mb-4">

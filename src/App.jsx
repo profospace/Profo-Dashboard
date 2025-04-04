@@ -104,6 +104,9 @@ import UserActivity from './pages/User/UserActivity';
 import AdList from './pages/Ads Management/AdList';
 import AdForm from './pages/Ads Management/AdForm';
 import AdDetail from './pages/Ads Management/AdDetail';
+import ReportPage from './pages/Reports/ReportPage';
+import ColorGradientPage from './pages/ColorApiForm/ColorGradientPage';
+import Callbacks from './pages/Callback/Callbacks';
 
 // Use lazy loading for page components
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -145,14 +148,18 @@ function App() {
               {/* <Route path="/projects" element={<ProjectsPage />} /> */}
               {/* <Route path="/buildings" element={<BuildingsPage />} /> */}
 
+
+              {/* Report */}
+              <Route path="/reports" element={<ReportPage />} />
+
               {/* User */}
               <Route path="/user-management" element={<UsersManagement />} />
-              <Route path="/user-activity/:userId/history" element={<UserActivity />} />
+              {/* <Route path="/user-activity/:userId/history" element={<UserActivity />} /> */}
+              {/* <Route path="/users" element={<UserManagementPage />} /> */}
 
 
 
               <Route path="/leads" element={<LeadsManagementPage />} />
-              <Route path="/users" element={<UserManagementPage />} />
               <Route path="/aws-image-gallery" element={<AwsS3ImageGallery />} />
               <Route path="/new-list-option" element={<NewListOption />} />
               <Route path="/list-option" element={<ListOptions />} />
@@ -161,7 +168,11 @@ function App() {
               <Route path="/cities" element={<CitiesManagementPage />} />
 
               {/* color api */}
-              <Route path="/color-api" element={<ColorsPage />} />
+              {/* <Route path="/color-api" element={<ColorsPage />} /> */}
+              <Route path="/color-api" element={<ColorGradientPage />} />
+
+              {/* callback */}
+              <Route path="/callbacks" element={<Callbacks />} />
 
               {/* ads managementr */}
               {/* <Route path="/ads" element={<AdList />} />

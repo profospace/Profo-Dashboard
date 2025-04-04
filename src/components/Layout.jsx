@@ -55,6 +55,16 @@ const PropertyManagerLayout = ({ children }) => {
         //     label: <Link to="/buildings">Buildings</Link>,
         // },
         {
+            key: '/reports',
+            icon: <HomeOutlined />,
+            label: <Link to="/reports">Reports</Link>,
+        },
+        {
+            key: '/callbacks',
+            icon: <HomeOutlined />,
+            label: <Link to="/callbacks">Callback</Link>,
+        },
+        {
             key: 'user-management',
             icon: <TeamOutlined />,
             label: 'User Management',
@@ -67,10 +77,10 @@ const PropertyManagerLayout = ({ children }) => {
                     key: '/user-management',
                     label: <Link to="/user-management">User Management 🆕</Link>,
                 },
-                {
-                    key: '/users',
-                    label: <Link to="/users">User Management</Link>,
-                },
+                // {
+                //     key: '/users',
+                //     label: <Link to="/users">User Management</Link>,
+                // },
             ],
         },
         {
