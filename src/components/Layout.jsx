@@ -175,12 +175,16 @@ const PropertyManagerLayout = ({ children }) => {
                     label: <Link to="/ads">View Ads</Link>,
                 },
                 {
-                    key: '/post-new-ad',
-                    label: <Link to="/post-new-ad">Post New Ad</Link>,
+                    key: '/ads/post-new-ad',
+                    label: <Link to="/ads/post-new-ad">Post New Ad</Link>,
                 },
                 {
-                    key: '/edit-ad',
-                    label: <Link to="/edit-ad/:id">Edit Ad</Link>,
+                    key: '/ads/:id',
+                    label: <Link to="/ads/:id">Detail Ad</Link>,
+                },
+                {
+                    key: '/ads/:id/edit',
+                    label: <Link to="/ads/:id/edit">Edit Ad</Link>,
                 },
             ],
         },

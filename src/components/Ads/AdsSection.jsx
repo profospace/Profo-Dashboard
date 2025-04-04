@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AdForm from './AdForm';
+import AdForm from '../../pages/Ads Management/AdForm';
 
 const AdsSection = ({ ads, onAddAd, onUpdateAd, onRemoveAd }) => {
     const [isAdFormOpen, setIsAdFormOpen] = useState(false);

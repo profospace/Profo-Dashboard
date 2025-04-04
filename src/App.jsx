@@ -101,6 +101,9 @@ import ConnectBuilderPropertiesPage from './pages/Builder Management/ConnectBuil
 import DisconnectBuilderPropertiesPage from './pages/Builder Management/DisconnectBuilderPropertiesPage';
 import UsersManagement from './pages/User/UsersManagement';
 import UserActivity from './pages/User/UserActivity';
+import AdList from './pages/Ads Management/AdList';
+import AdForm from './pages/Ads Management/AdForm';
+import AdDetail from './pages/Ads Management/AdDetail';
 
 // Use lazy loading for page components
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -142,6 +145,7 @@ function App() {
               {/* <Route path="/projects" element={<ProjectsPage />} /> */}
               {/* <Route path="/buildings" element={<BuildingsPage />} /> */}
 
+              {/* User */}
               <Route path="/user-management" element={<UsersManagement />} />
               <Route path="/user-activity/:userId/history" element={<UserActivity />} />
 
@@ -155,10 +159,18 @@ function App() {
               <Route path="/deeplink-generator" element={<DeeplinkGenerator />} />
 
               <Route path="/cities" element={<CitiesManagementPage />} />
+
+              {/* color api */}
               <Route path="/color-api" element={<ColorsPage />} />
-              <Route path="/ads" element={<AdsPage />} />
+
+              {/* ads managementr */}
+              {/* <Route path="/ads" element={<AdList />} />
               <Route path="/post-new-ad" element={<AdCreatePage />} />
-              <Route path="/edit-ad/:id" element={<AdEditPage />} />
+              <Route path="/edit-ad/:id" element={<AdEditPage />} /> */}
+              <Route path="/ads" element={<AdList />} />
+              <Route path="/ads/post-new-ad" element={<AdForm />} />
+              <Route path="/ads/:id" element={<AdDetail />} />
+              <Route path="/ads/:id/edit" element={<AdForm />} />
 
               {/* Builder */}
               <Route path="/builder/all" element={<BuildersListPage />} />
@@ -178,7 +190,7 @@ function App() {
               <Route path="/builder/disconnect-properties/:builderId" element={<DisconnectBuilderPropertiesPage />} />
 
 
-              
+
 
               {/* Property */}
               <Route path="/properties-management" element={<PropertyManagement />} />
@@ -197,7 +209,7 @@ function App() {
               <Route path="/buildings/:buildingId" element={<BuildingDetailPage />} />
               <Route path="/buildings/drafts" element={<DraftBuildingsPage />} />
               <Route path="/buildings/connect/:buildingId" element={<ConnectPropertiesToBuildingPage />} />
-              <Route path="/buildings/disconnect/:buildingId" element={<DisconnectPropertiesFromBuildingPage />} /> 
+              <Route path="/buildings/disconnect/:buildingId" element={<DisconnectPropertiesFromBuildingPage />} />
 
               {/* Project */}
               {/* <Route path="/projects-management" element={<ProjectManagementPage />} /> */}
