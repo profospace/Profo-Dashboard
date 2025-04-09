@@ -6,7 +6,7 @@ import { LoadScript } from "@react-google-maps/api";
 
 
 // Import Redux actions
-import { getProperties } from './redux/features/properties/propertiesSlice';
+import { getProperties } from './features/properties/propertiesSlice';
 import { getProjects } from './redux/features/Projects/projectsSlice';
 import { getBuildings } from './redux/features/Buildings/buildingsSlice';
 import { getLeads } from './redux/features/Leads/leadsSlice';
