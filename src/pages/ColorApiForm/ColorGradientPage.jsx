@@ -1,18 +1,3 @@
-// import React from 'react';
-// import ColorGradientForm from '../../components/ColorGradient/ColorGradientForm';
-
-// const ColorGradientPage = () => {
-//     return (
-//         <div className="min-h-screen">
-//                 <div className="mx-auto ">
-//                         <ColorGradientForm />
-//                     </div>
-//         </div>
-//     );
-// };
-
-// export default ColorGradientPage;
-
 import React, { useState } from 'react';
 import ColorGradientForm from '../../components/ColorGradient/ColorGradientForm';
 import ColorPreview from '../../components/ColorGradient/ColorPreview';

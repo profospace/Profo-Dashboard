@@ -158,6 +158,10 @@ const PropertyManagerLayout = ({ children }) => {
                     key: '/new-list-option',
                     label: <Link to="/new-list-option">New List Option</Link>,
                 },
+                {
+                    key: '/list-options/sequence',
+                    label: <Link to="/list-options/sequence">Manage List Sequence</Link>,
+                },
             ],
         },
         {

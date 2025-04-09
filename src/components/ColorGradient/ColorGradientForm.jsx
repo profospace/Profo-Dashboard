@@ -1,648 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import { toast } from 'react-hot-toast';
-// import { base_url } from '../../../utils/base_url';
-
-// const ColorGradientForm = ({ onSubmitSuccess }) => {
-//     // Form state
-//     const [formData, setFormData] = useState({
-//         header: {
-//             startColor: "#ffffff",
-//             endColor: "#ffffff"
-//         },
-//         button: {
-//             startColor: "#ee0979",
-//             endColor: "#ff6a00"
-//         },
-//         buttonBackground: {
-//             startColor: "#ee0979",
-//             endColor: "#ff6a00"
-//         },
-//         list_title_size: {
-//             color: "#333333",
-//             backgroundColor: "#f2f2f2"
-//         },
-//         listbackground: {
-//             backgroundColor: "#ededed"
-//         },
-//         search_filter: {
-//             backgroundColor: "#000000"
-//         },
-//         list_price_size: 14,
-//         markerColor: "#e1faeb",
-//         constantData: {
-//             progressGif: "",
-//             listEndImage: "",
-//             listAds: "",
-//             searchAds: "",
-//             maxListAds: "",
-//             autoPlayAds: false,
-//             headerBackgroundImage: "",
-//             isPropertyUpload: false,
-//             homeUrls: [],
-//             isStrokeFilter: false,
-//             isMaterialElevation: false,
-//             headerHeight: 400,
-//             appPackageName: "",
-//             defaultLanguage: "",
-//             currencyCode: "",
-//             appName: "",
-//             appEmail: "",
-//             appLogo: "",
-//             appCompany: "",
-//             appWebsite: "",
-//             appContact: "",
-//             facebookLink: "",
-//             twitterLink: "",
-//             instagramLink: "",
-//             youtubeLink: "",
-//             googlePlayLink: "",
-//             appleStoreLink: "",
-//             appVersion: "",
-//             appUpdateHideShow: "",
-//             appUpdateVersionCode: 0,
-//             appUpdateDesc: "",
-//             appUpdateLink: "",
-//             appUpdateCancelOption: "",
-//             priceColor: "#000000",
-//             callButtonColor: "#e1faeb",
-//             DetailPageButtonColor: {
-//                 startColor: "#e1faeb",
-//                 endColor: "#e1faeb"
-//             },
-//             isCallDirect: false,
-//             homePageLayoutOrder: [1, 3, 4, 5, 6],
-//             shadowOnImage: false
-//         }
-//     });
-
-//     // Loading state
-//     const [loading, setLoading] = useState(false);
-//     // Initial loading of existing data
-//     const [initialLoading, setInitialLoading] = useState(true);
-
-//     // Fetch color data when component mounts
-//     useEffect(() => {
-//         fetchColorData();
-//     }, []);
-
-//     // Function to fetch existing color data
-//     const fetchColorData = async () => {
-//         try {
-//             const response = await axios.get(`${base_url}/api/colors`);
-//             if (response.data) {
-//                 // Merge the response data with the default state, keeping default values for missing fields
-//                 setFormData(prevState => {
-//                     // Helper function to deep merge objects
-//                     const mergeDeep = (target, source) => {
-//                         if (!source) return target;
-
-//                         const result = { ...target };
-
-//                         Object.keys(source).forEach(key => {
-//                             if (typeof source[key] === 'object' && source[key] !== null && !Array.isArray(source[key])) {
-//                                 // If both objects, recurse
-//                                 if (typeof target[key] === 'object' && target[key] !== null && !Array.isArray(target[key])) {
-//                                     result[key] = mergeDeep(target[key], source[key]);
-//                                 } else {
-//                                     // If target doesn't have this as an object, use source object directly
-//                                     result[key] = { ...source[key] };
-//                                 }
-//                             } else {
-//                                 // For non-objects (including arrays), replace directly if not 'NA'
-//                                 if (source[key] !== 'NA') {
-//                                     result[key] = source[key];
-//                                 }
-//                             }
-//                         });
-
-//                         return result;
-//                     };
-
-//                     return mergeDeep(prevState, response.data);
-//                 });
-//             }
-//         } catch (error) {
-//             console.error('Error fetching color data:', error);
-//             toast.error('Failed to load existing color settings');
-//         } finally {
-//             setInitialLoading(false);
-//         }
-//     };
-
-//     // Handle input change for color pickers and text inputs
-//     const handleColorChange = (section, field, value) => {
-//         setFormData(prevState => {
-//             if (section) {
-//                 return {
-//                     ...prevState,
-//                     [section]: {
-//                         ...prevState[section],
-//                         [field]: value
-//                     }
-//                 };
-//             } else {
-//                 return {
-//                     ...prevState,
-//                     [field]: value
-//                 };
-//             }
-//         });
-//     };
-
-//     // Handle input change for constantData
-//     const handleConstantDataChange = (field, value) => {
-//         setFormData(prevState => ({
-//             ...prevState,
-//             constantData: {
-//                 ...prevState.constantData,
-//                 [field]: value
-//             }
-//         }));
-//     };
-
-//     // Handle DetailPageButtonColor changes
-//     const handleDetailButtonColorChange = (field, value) => {
-//         setFormData(prevState => ({
-//             ...prevState,
-//             constantData: {
-//                 ...prevState.constantData,
-//                 DetailPageButtonColor: {
-//                     ...prevState.constantData.DetailPageButtonColor,
-//                     [field]: value
-//                 }
-//             }
-//         }));
-//     };
-
-//     // Handle boolean toggle inputs
-//     const handleToggleChange = (field) => {
-//         setFormData(prevState => ({
-//             ...prevState,
-//             constantData: {
-//                 ...prevState.constantData,
-//                 [field]: !prevState.constantData[field]
-//             }
-//         }));
-//     };
-
-//     // Handle form submission
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-//         setLoading(true);
-
-//         try {
-//             // Process homeUrls if it's a string
-//             const processedFormData = { ...formData };
-//             if (typeof processedFormData.constantData.homeUrls === 'string') {
-//                 processedFormData.constantData.homeUrls = processedFormData.constantData.homeUrls
-//                     .split(',')
-//                     .map(url => url.trim())
-//                     .filter(Boolean);
-//             }
-
-//             // Format homePageLayoutOrder if it's a string
-//             if (typeof processedFormData.constantData.homePageLayoutOrder === 'string') {
-//                 processedFormData.constantData.homePageLayoutOrder = processedFormData.constantData.homePageLayoutOrder
-//                     .split(',')
-//                     .map(num => parseInt(num.trim()))
-//                     .filter(num => !isNaN(num));
-//             }
-
-//             const response = await axios.post(`${base_url}/api/colors/update`, processedFormData);
-//             toast.success('Colors updated successfully!');
-//             console.log('Server response:', response.data);
-
-//             // Call the success callback if provided
-//             if (onSubmitSuccess && typeof onSubmitSuccess === 'function') {
-//                 onSubmitSuccess(response.data);
-//             }
-//         } catch (error) {
-//             console.error('Error updating colors:', error);
-//             toast.error(`Failed to update colors: ${error.response?.data?.message || error.message}`);
-//         } finally {
-//             setLoading(false);
-//         }
-//     };
-
-//     if (initialLoading) {
-//         return (
-//             <div className="flex justify-center items-center min-h-[300px]">
-//                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-//             </div>
-//         );
-//     }
-
-//     // Component for color input with color picker and text field
-//     const ColorInput = ({ section, field, label, value, onChange }) => (
-//         <div className="mb-4 flex items-center">
-//             <label className="min-w-40 block text-sm font-medium text-gray-700">{label}</label>
-//             <div className="flex items-center gap-3">
-//                 <input
-//                     type="color"
-//                     value={value}
-//                     onChange={(e) => onChange(section, field, e.target.value)}
-//                     className="w-12 h-8 p-0 border border-gray-300 rounded"
-//                 />
-//                 <input
-//                     type="text"
-//                     value={value}
-//                     onChange={(e) => onChange(section, field, e.target.value)}
-//                     className="w-28 p-2 border border-gray-300 rounded text-sm"
-//                 />
-//             </div>
-//         </div>
-//     );
-
-//     return (
-//         <div className="mx-auto">
-//             <h1 className="text-2xl font-bold mb-6 text-gray-800">Update Colors API Form</h1>
-
-//             <form onSubmit={handleSubmit} className="space-y-6">
-//                 {/* Header Section */}
-//                 <div className="p-4 bg-gray-50 rounded-md">
-//                     <h2 className="text-lg font-semibold mb-3 text-gray-700">Header</h2>
-//                     <ColorInput
-//                         section="header"
-//                         field="startColor"
-//                         label="Start Color"
-//                         value={formData.header.startColor}
-//                         onChange={handleColorChange}
-//                     />
-//                     <ColorInput
-//                         section="header"
-//                         field="endColor"
-//                         label="End Color"
-//                         value={formData.header.endColor}
-//                         onChange={handleColorChange}
-//                     />
-//                 </div>
-
-//                 {/* Button Section */}
-//                 <div className="p-4 bg-gray-50 rounded-md">
-//                     <h2 className="text-lg font-semibold mb-3 text-gray-700">Button</h2>
-//                     <ColorInput
-//                         section="button"
-//                         field="startColor"
-//                         label="Start Color"
-//                         value={formData.button.startColor}
-//                         onChange={handleColorChange}
-//                     />
-//                     <ColorInput
-//                         section="button"
-//                         field="endColor"
-//                         label="End Color"
-//                         value={formData.button.endColor}
-//                         onChange={handleColorChange}
-//                     />
-//                 </div>
-
-//                 {/* Button Background Section */}
-//                 <div className="p-4 bg-gray-50 rounded-md">
-//                     <h2 className="text-lg font-semibold mb-3 text-gray-700">Button Background</h2>
-//                     <ColorInput
-//                         section="buttonBackground"
-//                         field="startColor"
-//                         label="Start Color"
-//                         value={formData.buttonBackground.startColor}
-//                         onChange={handleColorChange}
-//                     />
-//                     <ColorInput
-//                         section="buttonBackground"
-//                         field="endColor"
-//                         label="End Color"
-//                         value={formData.buttonBackground.endColor}
-//                         onChange={handleColorChange}
-//                     />
-//                 </div>
-
-//                 {/* List Title Size Section */}
-//                 <div className="p-4 bg-gray-50 rounded-md">
-//                     <h2 className="text-lg font-semibold mb-3 text-gray-700">List Title Size</h2>
-//                     <ColorInput
-//                         section="list_title_size"
-//                         field="color"
-//                         label="Text Color"
-//                         value={formData.list_title_size.color}
-//                         onChange={handleColorChange}
-//                     />
-//                     <ColorInput
-//                         section="list_title_size"
-//                         field="backgroundColor"
-//                         label="Background Color"
-//                         value={formData.list_title_size.backgroundColor}
-//                         onChange={handleColorChange}
-//                     />
-//                 </div>
-
-//                 {/* List Background Section */}
-//                 <div className="p-4 bg-gray-50 rounded-md">
-//                     <h2 className="text-lg font-semibold mb-3 text-gray-700">List Background</h2>
-//                     <ColorInput
-//                         section="listbackground"
-//                         field="backgroundColor"
-//                         label="Background Color"
-//                         value={formData.listbackground.backgroundColor}
-//                         onChange={handleColorChange}
-//                     />
-//                 </div>
-
-//                 {/* Search Filter Section */}
-//                 <div className="p-4 bg-gray-50 rounded-md">
-//                     <h2 className="text-lg font-semibold mb-3 text-gray-700">Search Filter</h2>
-//                     <ColorInput
-//                         section="search_filter"
-//                         field="backgroundColor"
-//                         label="Background Color"
-//                         value={formData.search_filter.backgroundColor}
-//                         onChange={handleColorChange}
-//                     />
-//                 </div>
-
-//                 {/* Other Settings Section */}
-//                 <div className="p-4 bg-gray-50 rounded-md">
-//                     <h2 className="text-lg font-semibold mb-3 text-gray-700">Other Settings</h2>
-
-//                     <div className="mb-4">
-//                         <label className="block text-sm font-medium text-gray-700 mb-1">List Price Size:</label>
-//                         <input
-//                             type="number"
-//                             value={formData.list_price_size}
-//                             onChange={(e) => handleColorChange(null, 'list_price_size', parseInt(e.target.value) || 0)}
-//                             className="w-20 p-2 border border-gray-300 rounded"
-//                         />
-//                     </div>
-
-//                     <ColorInput
-//                         section={null}
-//                         field="markerColor"
-//                         label="Marker Color"
-//                         value={formData.markerColor}
-//                         onChange={handleColorChange}
-//                     />
-//                 </div>
-
-//                 {/* Constant Data Section */}
-//                 <div className="p-4 bg-gray-50 rounded-md">
-//                     <h2 className="text-lg font-semibold mb-3 text-gray-700">Constant Data</h2>
-
-//                     {/* Toggle Switches */}
-//                     <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-//                         <div className="flex items-center">
-//                             <label className="inline-flex relative items-center cursor-pointer">
-//                                 <input
-//                                     type="checkbox"
-//                                     className="sr-only peer"
-//                                     checked={formData.constantData.autoPlayAds}
-//                                     onChange={() => handleToggleChange('autoPlayAds')}
-//                                 />
-//                                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-//                                 <span className="ml-3 text-sm font-medium text-gray-700">Autoplay Ads</span>
-//                             </label>
-//                         </div>
-
-//                         <div className="flex items-center">
-//                             <label className="inline-flex relative items-center cursor-pointer">
-//                                 <input
-//                                     type="checkbox"
-//                                     className="sr-only peer"
-//                                     checked={formData.constantData.isPropertyUpload}
-//                                     onChange={() => handleToggleChange('isPropertyUpload')}
-//                                 />
-//                                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-//                                 <span className="ml-3 text-sm font-medium text-gray-700">Is Property Upload</span>
-//                             </label>
-//                         </div>
-
-//                         <div className="flex items-center">
-//                             <label className="inline-flex relative items-center cursor-pointer">
-//                                 <input
-//                                     type="checkbox"
-//                                     className="sr-only peer"
-//                                     checked={formData.constantData.isStrokeFilter}
-//                                     onChange={() => handleToggleChange('isStrokeFilter')}
-//                                 />
-//                                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-//                                 <span className="ml-3 text-sm font-medium text-gray-700">Is Stroke Filter</span>
-//                             </label>
-//                         </div>
-
-//                         <div className="flex items-center">
-//                             <label className="inline-flex relative items-center cursor-pointer">
-//                                 <input
-//                                     type="checkbox"
-//                                     className="sr-only peer"
-//                                     checked={formData.constantData.isMaterialElevation}
-//                                     onChange={() => handleToggleChange('isMaterialElevation')}
-//                                 />
-//                                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-//                                 <span className="ml-3 text-sm font-medium text-gray-700">Is Material Elevation</span>
-//                             </label>
-//                         </div>
-
-//                         <div className="flex items-center">
-//                             <label className="inline-flex relative items-center cursor-pointer">
-//                                 <input
-//                                     type="checkbox"
-//                                     className="sr-only peer"
-//                                     checked={formData.constantData.isCallDirect}
-//                                     onChange={() => handleToggleChange('isCallDirect')}
-//                                 />
-//                                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-//                                 <span className="ml-3 text-sm font-medium text-gray-700">Is Call Direct</span>
-//                             </label>
-//                         </div>
-
-//                         <div className="flex items-center">
-//                             <label className="inline-flex relative items-center cursor-pointer">
-//                                 <input
-//                                     type="checkbox"
-//                                     className="sr-only peer"
-//                                     checked={formData.constantData.shadowOnImage}
-//                                     onChange={() => handleToggleChange('shadowOnImage')}
-//                                 />
-//                                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-//                                 <span className="ml-3 text-sm font-medium text-gray-700">Shadow On Image</span>
-//                             </label>
-//                         </div>
-//                     </div>
-
-//                     {/* URLs and Images */}
-//                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-//                         <div>
-//                             <label className="block text-sm font-medium text-gray-700 mb-1">Header Background Image:</label>
-//                             <input
-//                                 type="text"
-//                                 value={formData.constantData.headerBackgroundImage || ''}
-//                                 onChange={(e) => handleConstantDataChange('headerBackgroundImage', e.target.value)}
-//                                 className="w-full p-2 border border-gray-300 rounded text-sm"
-//                             />
-//                         </div>
-
-//                         <div>
-//                             <label className="block text-sm font-medium text-gray-700 mb-1">App Update Hide/Show:</label>
-//                             <input
-//                                 type="text"
-//                                 value={formData.constantData.appUpdateHideShow || ''}
-//                                 onChange={(e) => handleConstantDataChange('appUpdateHideShow', e.target.value)}
-//                                 className="w-full p-2 border border-gray-300 rounded text-sm"
-//                             />
-//                         </div>
-
-//                         <div>
-//                             <label className="block text-sm font-medium text-gray-700 mb-1">App Update Version Code:</label>
-//                             <input
-//                                 type="number"
-//                                 value={formData.constantData.appUpdateVersionCode || 0}
-//                                 onChange={(e) => handleConstantDataChange('appUpdateVersionCode', parseInt(e.target.value) || 0)}
-//                                 className="w-full p-2 border border-gray-300 rounded text-sm"
-//                             />
-//                         </div>
-
-//                         <div>
-//                             <label className="block text-sm font-medium text-gray-700 mb-1">App Update Link:</label>
-//                             <input
-//                                 type="url"
-//                                 value={formData.constantData.appUpdateLink || ''}
-//                                 onChange={(e) => handleConstantDataChange('appUpdateLink', e.target.value)}
-//                                 className="w-full p-2 border border-gray-300 rounded text-sm"
-//                             />
-//                         </div>
-
-//                         <div>
-//                             <label className="block text-sm font-medium text-gray-700 mb-1">App Update Cancel Option:</label>
-//                             <input
-//                                 type="text"
-//                                 value={formData.constantData.appUpdateCancelOption || ''}
-//                                 onChange={(e) => handleConstantDataChange('appUpdateCancelOption', e.target.value)}
-//                                 className="w-full p-2 border border-gray-300 rounded text-sm"
-//                             />
-//                         </div>
-//                     </div>
-
-//                     <div className="mb-4">
-//                         <label className="block text-sm font-medium text-gray-700 mb-1">App Update Description:</label>
-//                         <textarea
-//                             value={formData.constantData.appUpdateDesc || ''}
-//                             onChange={(e) => handleConstantDataChange('appUpdateDesc', e.target.value)}
-//                             className="w-full p-2 border border-gray-300 rounded text-sm"
-//                             rows="3"
-//                         ></textarea>
-//                     </div>
-
-//                     <div className="mb-4">
-//                         <label className="block text-sm font-medium text-gray-700 mb-1">Home URLs (comma-separated):</label>
-//                         <textarea
-//                             value={Array.isArray(formData.constantData.homeUrls) ? formData.constantData.homeUrls.join(', ') : formData.constantData.homeUrls || ''}
-//                             onChange={(e) => handleConstantDataChange('homeUrls', e.target.value)}
-//                             className="w-full p-2 border border-gray-300 rounded text-sm"
-//                             rows="3"
-//                         ></textarea>
-//                     </div>
-
-//                     <div className="mb-4">
-//                         <label className="block text-sm font-medium text-gray-700 mb-1">Home Page Layout Order (comma-separated):</label>
-//                         <input
-//                             type="text"
-//                             value={Array.isArray(formData.constantData.homePageLayoutOrder) ? formData.constantData.homePageLayoutOrder.join(', ') : formData.constantData.homePageLayoutOrder || ''}
-//                             onChange={(e) => handleConstantDataChange('homePageLayoutOrder', e.target.value)}
-//                             className="w-full p-2 border border-gray-300 rounded text-sm"
-//                         />
-//                     </div>
-
-//                     <div className="mb-4">
-//                         <label className="block text-sm font-medium text-gray-700 mb-1">Header Height:</label>
-//                         <input
-//                             type="number"
-//                             value={formData.constantData.headerHeight || 0}
-//                             onChange={(e) => handleConstantDataChange('headerHeight', parseInt(e.target.value) || 0)}
-//                             className="w-20 p-2 border border-gray-300 rounded text-sm"
-//                         />
-//                     </div>
-
-//                     <ColorInput
-//                         section="constantData"
-//                         field="priceColor"
-//                         label="Price Color"
-//                         value={formData.constantData.priceColor}
-//                         onChange={handleConstantDataChange}
-//                     />
-
-//                     <ColorInput
-//                         section="constantData"
-//                         field="callButtonColor"
-//                         label="Call Button Color"
-//                         value={formData.constantData.callButtonColor}
-//                         onChange={handleConstantDataChange}
-//                     />
-
-//                     <div className="mt-4">
-//                         <h3 className="text-md font-medium mb-2 text-gray-700">Detail Page Button Color</h3>
-//                         <div className="ml-4">
-//                             <div className="mb-4 flex items-center">
-//                                 <label className="min-w-40 block text-sm font-medium text-gray-700">Start Color</label>
-//                                 <div className="flex items-center gap-3">
-//                                     <input
-//                                         type="color"
-//                                         value={formData.constantData.DetailPageButtonColor.startColor}
-//                                         onChange={(e) => handleDetailButtonColorChange('startColor', e.target.value)}
-//                                         className="w-12 h-8 p-0 border border-gray-300 rounded"
-//                                     />
-//                                     <input
-//                                         type="text"
-//                                         value={formData.constantData.DetailPageButtonColor.startColor}
-//                                         onChange={(e) => handleDetailButtonColorChange('startColor', e.target.value)}
-//                                         className="w-28 p-2 border border-gray-300 rounded text-sm"
-//                                     />
-//                                 </div>
-//                             </div>
-
-//                             <div className="mb-4 flex items-center">
-//                                 <label className="min-w-40 block text-sm font-medium text-gray-700">End Color</label>
-//                                 <div className="flex items-center gap-3">
-//                                     <input
-//                                         type="color"
-//                                         value={formData.constantData.DetailPageButtonColor.endColor}
-//                                         onChange={(e) => handleDetailButtonColorChange('endColor', e.target.value)}
-//                                         className="w-12 h-8 p-0 border border-gray-300 rounded"
-//                                     />
-//                                     <input
-//                                         type="text"
-//                                         value={formData.constantData.DetailPageButtonColor.endColor}
-//                                         onChange={(e) => handleDetailButtonColorChange('endColor', e.target.value)}
-//                                         className="w-28 p-2 border border-gray-300 rounded text-sm"
-//                                     />
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>
-
-//                 {/* Submit Button */}
-//                 <div className="mt-6 flex justify-end">
-//                     <button
-//                         type="submit"
-//                         className={`px-6 py-2 rounded-md text-white font-medium ${loading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}
-//                         disabled={loading}
-//                     >
-//                         {loading ? (
-//                             <span className="flex items-center">
-//                                 <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-//                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-//                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-//                                 </svg>
-//                                 Updating...
-//                             </span>
-//                         ) : 'Update Colors'}
-//                     </button>
-//                 </div>
-//             </form>
-//         </div>
-//     );
-// };
-
-// export default ColorGradientForm;
-
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -718,7 +73,8 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
             isCallDirect: false,
             homePageLayoutOrder: [1, 3, 4, 5, 6],
             shadowOnImage: false
-        }
+        },
+       
     });
 
     // Active section state for accordion
@@ -844,6 +200,19 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
             }
         }));
     };
+
+
+    // Handle pageLink input changes
+    const handlePageLinkChange = (field, value) => {
+        setFormData(prevState => ({
+            ...prevState,
+            pageLink: {
+                ...prevState.pageLink,
+                [field]: value
+            }
+        }));
+    };
+
 
     // Handle DetailPageButtonColor changes
     const handleDetailButtonColorChange = (field, value) => {
@@ -1186,6 +555,97 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                     </div>
                 </AccordionSection>
 
+                {/* more info */}
+                <AccordionSection id="more" title="More">
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Base URL:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.baseURL || ''}
+                            onChange={(e) => handleConstantDataChange('baseURL', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Base URL"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Terms & Condition URL:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.termsAndCondition || ''}
+                            onChange={(e) => handleConstantDataChange('termsAndCondition', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter terms And Condition URL"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Support Page Link:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.supportPageLink || ''}
+                            onChange={(e) => handleConstantDataChange('supportPageLink', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Support Page Link"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Property OnBoarding Link:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.propertyOnboardingLink || ''}
+                            onChange={(e) => handleConstantDataChange('propertyOnboardingLink', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Support Page Link"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">App Rating Playstore Link:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.appRatingPlaystoreLink || ''}
+                            onChange={(e) => handleConstantDataChange('appRatingPlaystoreLink', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Support Page Link"
+                        />
+                    </div>
+                    
+                </AccordionSection>
+
+                {/* page Link */}
+                <AccordionSection id="pageLink" title="Page Link">
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">ID:</label>
+                        <input
+                            type="text"
+                            value={formData.pageLink?.id || ''}
+                            onChange={(e) => handlePageLinkChange('id', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Page ID"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Page Name:</label>
+                        <input
+                            type="text"
+                            value={formData.pageLink?.name || ''}
+                            onChange={(e) => handlePageLinkChange('name', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Page Name"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Page Deeplink:</label>
+                        <input
+                            type="text"
+                            value={formData.pageLink?.deepLink || ''}
+                            onChange={(e) => handlePageLinkChange('deepLink', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Page Deeplink"
+                        />
+                    </div>
+                   
+
+                </AccordionSection>
+
                 <AccordionSection id="buttons" title="Buttons">
                     <h3 className="text-md font-semibold mb-3 text-gray-700">Main Buttons</h3>
                     <ColorInput
@@ -1423,7 +883,7 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                     </div>
 
                     {/* Toggle Switches */}
-                    <div className="mt-6 mb-6 space-y-4">
+                    <div className="my-6 space-y-4">
                         <h3 className="text-md font-semibold text-gray-700">Features</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4">
                             <div className="flex items-center">

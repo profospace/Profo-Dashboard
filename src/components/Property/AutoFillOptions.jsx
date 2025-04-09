@@ -226,7 +226,7 @@ const AutofillOptions = ({ onSelect }) => {
                 // Property Details
                 title: 'Prime Commercial Shop in Connaught Place',
                 description: 'Prime commercial shop space available in high-footfall area. Perfect for retail, showroom or restaurant.',
-                price: '2.5',
+                price: '25',
                 priceUnit: 'crore',
                 area: '800',
                 areaUnit: 'sqft',

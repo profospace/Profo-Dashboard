@@ -120,6 +120,8 @@ const PropertyAddEdit = ({ user }) => {
             whatsappAlerts: false,
             whatsappContact: '',
             profoProxyAllowed: false,
+            religiousNearby: [],
+            inProximity: [],
         };
     };
 
@@ -216,6 +218,8 @@ const PropertyAddEdit = ({ user }) => {
             whatsappAlerts: property.whatsappAlerts || false,
             whatsappContact: property.whatsappContact || '',
             profoProxyAllowed: property.profoProxyAllowed || false,
+            religiousNearby: property.religiousNearby || '',
+            inProximity: property.inProximity || [],
         };
     };
 
@@ -371,6 +375,8 @@ const PropertyAddEdit = ({ user }) => {
     const parkingOptions = ['Open', 'Covered', 'None'];
     const constructionStatusOptions = ['Under Construction', 'Ready to Move', 'New Launch'];
     const configurationOptions = ['1RK', '1BHK', '2BHK', '3BHK', '4BHK', '4+ BHK', 'Studio Apartment'];
+    const religiousNearbyOptions = ['Near Temple', 'Near Gurudwara', 'Near Church', 'Near Mosque', 'Pilgrimage Society Proximity' ,];
+    const inProximityOptions = ['Airport', 'Near Office Hub', 'Hospital Vicinity', 'Railway Station', 'Highway Access', 'Market Area' ,'Near School', 'Near College'];
 
     // Handle form field changes - same as in PropertyAdd
     const handleChange = (e) => {
@@ -655,6 +661,8 @@ const PropertyAddEdit = ({ user }) => {
                 whatsappAlerts: formData.whatsappAlerts || false,
                 whatsappContact: formData.whatsappContact || '',
                 profoProxyAllowed: formData.profoProxyAllowed || false,
+                religiousNearby: formData.religiousNearby || '',
+                inProximity: formData.inProximity || [],
             };
 
             // Add user information

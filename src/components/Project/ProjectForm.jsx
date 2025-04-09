@@ -4,7 +4,7 @@ import { toast } from 'react-hot-toast';
 // import { base_url } from "../../../utils/base_url";
 import LocationMap from './LocationMap';
 
-const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, loading, builders = [] }) => {
+const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onFileUpdates, onChange, loading, builders = [] }) => {
     // Initialize form data from props or default values
     const [formData, setFormData] = useState({
         name: '',
@@ -58,6 +58,13 @@ const ProjectForm = ({ projectData, isEditing, onSubmit, onReset, onChange, load
             }));
         }
     }, [projectData]);
+
+    // Notify parent component about file updates
+    useEffect(() => {
+        if (onFileUpdates) {
+            onFileUpdates(galleryFiles, floorPlanFiles);
+        }
+    }, [galleryFiles, floorPlanFiles, onFileUpdates]);
 
     // Handle form field changes
     const handleChange = (e) => {

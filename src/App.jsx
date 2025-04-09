@@ -72,7 +72,6 @@ const EditProjectPage = lazy(() => import('./pages/Project/EditProjectPage'));
 const ProjectDetailPage = lazy(() => import('./pages/Project/ProjectDetailPage'));
 const ProjectDraftsPage = lazy(() => import('./pages/Project/ProjectDraftPage'));
 const CitiesManagementPage = lazy(() => import('./pages/City/CitiesManagementPage'));
-const ColorsPage = lazy(() => import('./pages/ColorApiForm/ColorsPage'));
 const AdsPage = lazy(() => import('./pages/Ads Management/AdsPage'));
 const AdCreatePage = lazy(() => import('./pages/Ads Management/AdCreatePage'));
 const AdEditPage = lazy(() => import('./pages/Ads Management/AdEditPage'));
@@ -107,6 +106,11 @@ import AdDetail from './pages/Ads Management/AdDetail';
 import ReportPage from './pages/Reports/ReportPage';
 import ColorGradientPage from './pages/ColorApiForm/ColorGradientPage';
 import Callbacks from './pages/Callback/Callbacks';
+import ListOptionDashboard from './pages/ListOption/ListOptionDashboard';
+import UnifiedListOption from './components/ListOptions/UnifiedListOption';
+import HomeScreen from './pages/ListOption/HomeScreen';
+import EntityImageUpload from './pages/UploadEnitityImages/EntityImageUpload';
+import ListOptionsSequence from './pages/ListOption/ListOptionsSequence';
 
 // Use lazy loading for page components
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -148,6 +152,16 @@ function App() {
               {/* <Route path="/projects" element={<ProjectsPage />} /> */}
               {/* <Route path="/buildings" element={<BuildingsPage />} /> */}
 
+              <Route path="/upload" element={<EntityImageUpload />} />
+
+              {/* list options */}
+              <Route path="/home" element={<HomeScreen />} />
+              <Route path="/list-options-dashboard" element={<ListOptionDashboard />} />
+              <Route path="/unified-list-options" element={<UnifiedListOption />} />
+
+              // working listoption
+              <Route path="/list-option" element={<ListOptions />} />
+              <Route path="/list-options/sequence" element={<ListOptionsSequence />} />
 
               {/* Report */}
               <Route path="/reports" element={<ReportPage />} />
@@ -162,13 +176,11 @@ function App() {
               <Route path="/leads" element={<LeadsManagementPage />} />
               <Route path="/aws-image-gallery" element={<AwsS3ImageGallery />} />
               <Route path="/new-list-option" element={<NewListOption />} />
-              <Route path="/list-option" element={<ListOptions />} />
               <Route path="/deeplink-generator" element={<DeeplinkGenerator />} />
 
               <Route path="/cities" element={<CitiesManagementPage />} />
 
               {/* color api */}
-              {/* <Route path="/color-api" element={<ColorsPage />} /> */}
               <Route path="/color-api" element={<ColorGradientPage />} />
 
               {/* callback */}

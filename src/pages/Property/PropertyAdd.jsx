@@ -166,6 +166,8 @@ const PropertyAdd = ({ user }) => {
             whatsappAlerts: false,
             whatsappContact: '',
             profoProxyAllowed: false,
+            religiousNearby: [],
+            inProximity: [],
         };
     });
 
@@ -209,6 +211,9 @@ const PropertyAdd = ({ user }) => {
     const parkingOptions = ['Open', 'Covered', 'None'];
     const constructionStatusOptions = ['Under Construction', 'Ready to Move', 'New Launch'];
     const configurationOptions = ['1RK', '1BHK', '2BHK', '3BHK', '4BHK', '4+ BHK', 'Studio Apartment'];
+    // Add these option arrays with the other options
+    const religiousNearbyOptions = ['Near Temple', 'Near Gurudwara', 'Near Church', 'Near Mosque', 'Pilgrimage Society Proximity'];
+    const inProximityOptions = ['Airport', 'Near Office Hub', 'Hospital Vicinity', 'Railway Station', 'Highway Access', 'Market Area' , 'Near School' , 'Near College'];
 
     // Handle form field changes
     const handleChange = (e) => {
@@ -617,6 +622,9 @@ const PropertyAdd = ({ user }) => {
                 whatsappAlerts: formData.whatsappAlerts || false,
                 whatsappContact: formData.whatsappContact || '',
                 profoProxyAllowed: formData.profoProxyAllowed || false,
+                // Add to mainData object in handleSubmit function
+                religiousNearby: formData.religiousNearby || [],
+                inProximity: formData.inProximity || [],
             };
 
             // Add user information
@@ -2093,6 +2101,88 @@ const PropertyAdd = ({ user }) => {
                     {currentStep === 7 && (
                         <div>
                             <h2 className="text-lg font-medium text-gray-900 mb-6">Unique Selling Points & Tags</h2>
+
+                            {/* Religious Nearby Section */}
+                            <div className="mb-6">
+                                <label htmlFor="religiousNearby" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Religious Places Nearby
+                                </label>
+                                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                                    {religiousNearbyOptions.map((option) => (
+                                        <div key={option} className="flex items-start">
+                                            <div className="flex items-center h-5">
+                                                <input
+                                                    id={`religious-${option}`}
+                                                    name="religiousNearby"
+                                                    type="checkbox"
+                                                    value={option}
+                                                    checked={(formData.religiousNearby || []).includes(option)}
+                                                    onChange={(e) => {
+                                                        if (e.target.checked) {
+                                                            setFormData({
+                                                                ...formData,
+                                                                religiousNearby: [...(formData.religiousNearby || []), option]
+                                                            });
+                                                        } else {
+                                                            setFormData({
+                                                                ...formData,
+                                                                religiousNearby: (formData.religiousNearby || []).filter(item => item !== option)
+                                                            });
+                                                        }
+                                                    }}
+                                                    className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                />
+                                            </div>
+                                            <div className="ml-2 text-sm">
+                                                <label htmlFor={`religious-${option}`} className="text-gray-700">
+                                                    {option}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* In Proximity Section - keep this as is since it was already multi-select */}
+                            <div className="mb-6">
+                                <label htmlFor="inProximity" className="block text-sm font-medium text-gray-700 mb-1">
+                                    In Proximity
+                                </label>
+                                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                                    {inProximityOptions.map((option) => (
+                                        <div key={option} className="flex items-start">
+                                            <div className="flex items-center h-5">
+                                                <input
+                                                    id={`proximity-${option}`}
+                                                    name="inProximity"
+                                                    type="checkbox"
+                                                    value={option}
+                                                    checked={(formData.inProximity || []).includes(option)}
+                                                    onChange={(e) => {
+                                                        if (e.target.checked) {
+                                                            setFormData({
+                                                                ...formData,
+                                                                inProximity: [...(formData.inProximity || []), option]
+                                                            });
+                                                        } else {
+                                                            setFormData({
+                                                                ...formData,
+                                                                inProximity: (formData.inProximity || []).filter(item => item !== option)
+                                                            });
+                                                        }
+                                                    }}
+                                                    className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                />
+                                            </div>
+                                            <div className="ml-2 text-sm">
+                                                <label htmlFor={`proximity-${option}`} className="text-gray-700">
+                                                    {option}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
 
                             <div className="mb-6">
                                 <label htmlFor="usp" className="block text-sm font-medium text-gray-700 mb-1">
