@@ -60,7 +60,7 @@ import LoadingPage from './components/Loading/LoadingPage';
 const AwsS3ImageGallery = lazy(() => import('./pages/AwsS3ImageGallery'));
 const NewListOption = lazy(() => import('./pages/NewListOption'));
 const ListOptions = lazy(() => import('./pages/ListOptions'));
-const DeeplinkGenerator = lazy(() => import('./pages/DeeplinkGenerator'));
+const DeeplinkGenerator = lazy(() => import('./pages/Deeplink/DeeplinkGenerator'));
 const PropertyManagement = lazy(() => import('./pages/Property/PropertyManagement'));
 const BuilderAuthConnection = lazy(() => import('./pages/Builder Management/BuilderAuthConnection'));
 const PropertyAdd = lazy(() => import('./pages/Property/PropertyAdd'));
@@ -111,6 +111,7 @@ import UnifiedListOption from './components/ListOptions/UnifiedListOption';
 import HomeScreen from './pages/ListOption/HomeScreen';
 import EntityImageUpload from './pages/UploadEnitityImages/EntityImageUpload';
 import ListOptionsSequence from './pages/ListOption/ListOptionsSequence';
+import DeeplinkGeneratorDemo from './components/Deeplink/LocationMapPreview';
 
 // Use lazy loading for page components
 const Dashboard = lazy(() => import('./pages/Dashboard'));
