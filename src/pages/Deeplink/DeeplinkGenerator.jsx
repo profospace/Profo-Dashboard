@@ -759,12 +759,6 @@ const DeeplinkGenerator = () => {
     };
 
     return (
-        <div className="mx-auto">
-            <div className="mb-8 text-center">
-                <h1 className="text-3xl font-bold text-gray-800 mb-2">Deeplink Generator</h1>
-                <p className="text-gray-600 max-w-2xl mx-auto">Create custom deeplinks for filtering properties in the ProfoSpace mobile app. Set location parameters, specify property details, and share filters instantly.</p>
-            </div>
-
             <div className="">
                 {/* Form Section */}
                 <div className="lg:col-span-2">
@@ -772,7 +766,7 @@ const DeeplinkGenerator = () => {
                         <div className="bg-gradient-to-r from-indigo-600 to-blue-500 py-4 px-6">
                             <h2 className="text-lg font-semibold text-white flex items-center">
                                 <Sliders className="mr-2 h-5 w-5" />
-                                Filter Criteria
+                                Deeplink Generator
                             </h2>
                         </div>
 
@@ -1030,7 +1024,7 @@ const DeeplinkGenerator = () => {
                 </div>
 
                 {/* Result Section */}
-                <div className="lg:col-span-1">
+                <div className="lg:col-span-1 mt-6">
                     <div className="bg-white rounded-xl shadow-md overflow-hidden h-full">
                         <div className="bg-gradient-to-r from-indigo-600 to-blue-500 py-4 px-6">
                             <h3 className="text-lg font-semibold text-white">Generated Deeplink</h3>
@@ -1086,7 +1080,6 @@ const DeeplinkGenerator = () => {
                     </div>
                 </div>
             </div>
-        </div>
     );
 };
 
