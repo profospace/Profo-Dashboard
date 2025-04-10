@@ -408,7 +408,7 @@ const BuilderListPage = () => {
     const handleDelete = async (builderId) => {
         if (window.confirm('Are you sure you want to delete this builder?')) {
             try {
-                const response = await fetch(`${base_url}/api/builder/building/connection/builders/${builderId}`, {
+                const response = await fetch(`${base_url}/builders/${builderId}`, {
                     method: 'DELETE'
                 });
                 if (response.ok) {

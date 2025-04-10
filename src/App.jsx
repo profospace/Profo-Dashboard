@@ -134,12 +134,7 @@ function App() {
     dispatch(getLeads());
   }, [dispatch]);
 
-  useEffect(
-    () => {
-      console.log(import.meta.env.VITE_GOOGLE_API_KEY)
-
-    }, []
-  )
+  
 
   return (
     <LoadScript loadingElement={<LoadingPage />} googleMapsApiKey={import.meta.env.VITE_GOOGLE_API_KEY}>

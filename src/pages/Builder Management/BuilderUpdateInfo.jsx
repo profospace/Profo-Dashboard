@@ -1,21 +1,27 @@
 // import React, { useState, useEffect } from 'react';
-// import { useLocation, useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 // import { base_url } from '../../../utils/base_url';
 
 // const BuilderUpdateInfo = () => {
-//     const {builderId} = useParams()
-//     console.log(builderId)
-//     // State to manage form data
+//     const { builderId } = useParams();
+
+//     // State to manage form data based on the JSON structure
 //     const [formData, setFormData] = useState({
 //         name: '',
-//         email: '',
-//         phone: '',
+//         username: '',
 //         company: '',
-//         address: '',
-//         specializations: '',
-//         yearsOfExperience: '',
-//         license: '',
-//         description: ''
+//         address: {
+//             street: '',
+//             city: '',
+//             state: '',
+//             pincode: ''
+//         },
+//         contacts: [],
+//         website: '',
+//         experience: '',
+//         status: '',
+//         operatingLocations: [],
+//         logo: null
 //     });
 
 //     // State for form submission and error handling
@@ -32,8 +38,23 @@
 //                     throw new Error('Failed to fetch builder information');
 //                 }
 //                 const data = await response.json();
-//                 console.log("data", data)
-//                 setFormData(data);
+//                 setFormData({
+//                     name: data.name || '',
+//                     username: data.username || '',
+//                     company: data.company || '',
+//                     address: {
+//                         street: data.address?.street || '',
+//                         city: data.address?.city || '',
+//                         state: data.address?.state || '',
+//                         pincode: data.address?.pincode || ''
+//                     },
+//                     contacts: data.contacts || [],
+//                     website: data.website || '',
+//                     experience: data.experience || '',
+//                     status: data.status || '',
+//                     operatingLocations: data.operatingLocations || [],
+//                     logo: data.logo || null
+//                 });
 //             } catch (err) {
 //                 setError('Failed to fetch builder information');
 //                 console.error(err);
@@ -46,6 +67,59 @@
 //     // Handle input changes
 //     const handleChange = (e) => {
 //         const { name, value } = e.target;
+
+//         // Handle nested address fields
+//         if (name.startsWith('address.')) {
+//             const field = name.split('.')[1];
+//             setFormData(prevState => ({
+//                 ...prevState,
+//                 address: {
+//                     ...prevState.address,
+//                     [field]: value
+//                 }
+//             }));
+//             return;
+//         }
+
+//         // Handle contacts (assuming a single text input for now)
+//         if (name === 'contacts') {
+//             setFormData(prevState => ({
+//                 ...prevState,
+//                 contacts: value.split(',').map(contact => contact.trim())
+//             }));
+//             return;
+//         }
+
+//         // Handle operating locations (assuming a single text input)
+//         if (name === 'operatingLocations') {
+//             const locations = value.split(',').map(loc => {
+//                 const [city, state] = loc.trim().split('-').map(part => part.trim());
+//                 return { city, state };
+//             });
+//             setFormData(prevState => ({
+//                 ...prevState,
+//                 operatingLocations: locations
+//             }));
+//             return;
+//         }
+
+//         // Handle logo file upload
+//         if (name === 'logo') {
+//             const file = e.target.files[0];
+//             const reader = new FileReader();
+//             reader.onloadend = () => {
+//                 setFormData(prevState => ({
+//                     ...prevState,
+//                     logo: reader.result
+//                 }));
+//             };
+//             if (file) {
+//                 reader.readAsDataURL(file);
+//             }
+//             return;
+//         }
+
+//         // Default handling for other fields
 //         setFormData(prevState => ({
 //             ...prevState,
 //             [name]: value
@@ -60,7 +134,7 @@
 //         setSuccess(false);
 
 //         try {
-//             const response = await fetch(`/api/builders/${builderId}`, {
+//             const response = await fetch(`${base_url}/builders/${builderId}`, {
 //                 method: 'PUT',
 //                 headers: {
 //                     'Content-Type': 'application/json',
@@ -120,74 +194,110 @@
 //                                             />
 //                                         </div>
 //                                         <div>
-//                                             <label htmlFor="email" className="text-sm font-bold text-gray-600 block">Email</label>
-//                                             <input
-//                                                 type="email"
-//                                                 name="email"
-//                                                 value={formData.email}
-//                                                 onChange={handleChange}
-//                                                 required
-//                                                 className="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-//                                                 placeholder="Enter email address"
-//                                             />
-//                                         </div>
-//                                     </div>
-
-//                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-//                                         <div>
-//                                             <label htmlFor="phone" className="text-sm font-bold text-gray-600 block">Phone</label>
-//                                             <input
-//                                                 type="tel"
-//                                                 name="phone"
-//                                                 value={formData.phone}
-//                                                 onChange={handleChange}
-//                                                 className="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-//                                                 placeholder="Enter phone number"
-//                                             />
-//                                         </div>
-//                                         <div>
-//                                             <label htmlFor="company" className="text-sm font-bold text-gray-600 block">Company</label>
+//                                             <label htmlFor="username" className="text-sm font-bold text-gray-600 block">Username</label>
 //                                             <input
 //                                                 type="text"
-//                                                 name="company"
-//                                                 value={formData.company}
+//                                                 name="username"
+//                                                 value={formData.username}
 //                                                 onChange={handleChange}
 //                                                 className="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-//                                                 placeholder="Enter company name"
+//                                                 placeholder="Enter username"
 //                                             />
 //                                         </div>
 //                                     </div>
 
 //                                     <div>
-//                                         <label htmlFor="address" className="text-sm font-bold text-gray-600 block">Address</label>
+//                                         <label htmlFor="company" className="text-sm font-bold text-gray-600 block">Company</label>
 //                                         <input
 //                                             type="text"
-//                                             name="address"
-//                                             value={formData.address}
+//                                             name="company"
+//                                             value={formData.company}
 //                                             onChange={handleChange}
 //                                             className="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-//                                             placeholder="Enter full address"
+//                                             placeholder="Enter company name"
 //                                         />
 //                                     </div>
 
 //                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 //                                         <div>
-//                                             <label htmlFor="specializations" className="text-sm font-bold text-gray-600 block">Specializations</label>
+//                                             <label htmlFor="address.street" className="text-sm font-bold text-gray-600 block">Street</label>
 //                                             <input
 //                                                 type="text"
-//                                                 name="specializations"
-//                                                 value={formData.specializations}
+//                                                 name="address.street"
+//                                                 value={formData.address.street}
 //                                                 onChange={handleChange}
 //                                                 className="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-//                                                 placeholder="Enter specializations"
+//                                                 placeholder="Enter street address"
 //                                             />
 //                                         </div>
 //                                         <div>
-//                                             <label htmlFor="yearsOfExperience" className="text-sm font-bold text-gray-600 block">Years of Experience</label>
+//                                             <label htmlFor="address.city" className="text-sm font-bold text-gray-600 block">City</label>
+//                                             <input
+//                                                 type="text"
+//                                                 name="address.city"
+//                                                 value={formData.address.city}
+//                                                 onChange={handleChange}
+//                                                 className="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+//                                                 placeholder="Enter city"
+//                                             />
+//                                         </div>
+//                                     </div>
+
+//                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+//                                         <div>
+//                                             <label htmlFor="address.state" className="text-sm font-bold text-gray-600 block">State</label>
+//                                             <input
+//                                                 type="text"
+//                                                 name="address.state"
+//                                                 value={formData.address.state}
+//                                                 onChange={handleChange}
+//                                                 className="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+//                                                 placeholder="Enter state"
+//                                             />
+//                                         </div>
+//                                         <div>
+//                                             <label htmlFor="address.pincode" className="text-sm font-bold text-gray-600 block">Pincode</label>
+//                                             <input
+//                                                 type="text"
+//                                                 name="address.pincode"
+//                                                 value={formData.address.pincode}
+//                                                 onChange={handleChange}
+//                                                 className="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+//                                                 placeholder="Enter pincode"
+//                                             />
+//                                         </div>
+//                                     </div>
+
+//                                     <div>
+//                                         <label htmlFor="contacts" className="text-sm font-bold text-gray-600 block">Contacts (comma-separated)</label>
+//                                         <input
+//                                             type="text"
+//                                             name="contacts"
+//                                             value={formData.contacts.join(', ')}
+//                                             onChange={handleChange}
+//                                             className="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+//                                             placeholder="Enter contacts (phone, email)"
+//                                         />
+//                                     </div>
+
+//                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+//                                         <div>
+//                                             <label htmlFor="website" className="text-sm font-bold text-gray-600 block">Website</label>
+//                                             <input
+//                                                 type="url"
+//                                                 name="website"
+//                                                 value={formData.website}
+//                                                 onChange={handleChange}
+//                                                 className="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+//                                                 placeholder="Enter website URL"
+//                                             />
+//                                         </div>
+//                                         <div>
+//                                             <label htmlFor="experience" className="text-sm font-bold text-gray-600 block">Years of Experience</label>
 //                                             <input
 //                                                 type="number"
-//                                                 name="yearsOfExperience"
-//                                                 value={formData.yearsOfExperience}
+//                                                 name="experience"
+//                                                 value={formData.experience}
 //                                                 onChange={handleChange}
 //                                                 className="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
 //                                                 placeholder="Enter years of experience"
@@ -197,27 +307,49 @@
 //                                     </div>
 
 //                                     <div>
-//                                         <label htmlFor="license" className="text-sm font-bold text-gray-600 block">License Number</label>
+//                                         <label htmlFor="operatingLocations" className="text-sm font-bold text-gray-600 block">Operating Locations (city-state, comma-separated)</label>
 //                                         <input
 //                                             type="text"
-//                                             name="license"
-//                                             value={formData.license}
+//                                             name="operatingLocations"
+//                                             value={formData.operatingLocations.map(loc => `${loc.city}-${loc.state}`).join(', ')}
 //                                             onChange={handleChange}
 //                                             className="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-//                                             placeholder="Enter license number"
+//                                             placeholder="Enter locations (city-state)"
 //                                         />
 //                                     </div>
 
 //                                     <div>
-//                                         <label htmlFor="description" className="text-sm font-bold text-gray-600 block">Description</label>
-//                                         <textarea
-//                                             name="description"
-//                                             value={formData.description}
+//                                         <label htmlFor="status" className="text-sm font-bold text-gray-600 block">Status</label>
+//                                         <select
+//                                             name="status"
+//                                             value={formData.status}
 //                                             onChange={handleChange}
-//                                             rows="4"
 //                                             className="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-//                                             placeholder="Enter builder description"
-//                                         ></textarea>
+//                                         >
+//                                             <option value="">Select Status</option>
+//                                             <option value="ACTIVE">Active</option>
+//                                             <option value="INACTIVE">Inactive</option>
+//                                         </select>
+//                                     </div>
+
+//                                     <div>
+//                                         <label htmlFor="logo" className="text-sm font-bold text-gray-600 block">Logo</label>
+//                                         <input
+//                                             type="file"
+//                                             name="logo"
+//                                             accept="image/*"
+//                                             onChange={handleChange}
+//                                             className="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+//                                         />
+//                                         {formData.logo && (
+//                                             <div className="mt-2">
+//                                                 <img
+//                                                     src={formData.logo}
+//                                                     alt="Logo Preview"
+//                                                     className="max-w-full h-auto rounded"
+//                                                 />
+//                                             </div>
+//                                         )}
 //                                     </div>
 
 //                                     <div className="pt-4 flex items-center space-x-4">
@@ -248,8 +380,6 @@
 
 // export default BuilderUpdateInfo;
 
-
-
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { base_url } from '../../../utils/base_url';
@@ -272,9 +402,12 @@ const BuilderUpdateInfo = () => {
         website: '',
         experience: '',
         status: '',
-        operatingLocations: [],
-        logo: null
+        operatingLocations: []
     });
+
+    // State for logo file
+    const [logoFile, setLogoFile] = useState(null);
+    const [logoPreview, setLogoPreview] = useState(null);
 
     // State for form submission and error handling
     const [isLoading, setIsLoading] = useState(false);
@@ -304,9 +437,13 @@ const BuilderUpdateInfo = () => {
                     website: data.website || '',
                     experience: data.experience || '',
                     status: data.status || '',
-                    operatingLocations: data.operatingLocations || [],
-                    logo: data.logo || null
+                    operatingLocations: data.operatingLocations || []
                 });
+
+                // Set logo preview if exists
+                if (data.logo) {
+                    setLogoPreview(data.logo);
+                }
             } catch (err) {
                 setError('Failed to fetch builder information');
                 console.error(err);
@@ -358,15 +495,10 @@ const BuilderUpdateInfo = () => {
         // Handle logo file upload
         if (name === 'logo') {
             const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setFormData(prevState => ({
-                    ...prevState,
-                    logo: reader.result
-                }));
-            };
             if (file) {
-                reader.readAsDataURL(file);
+                setLogoFile(file);
+                const previewUrl = URL.createObjectURL(file);
+                setLogoPreview(previewUrl);
             }
             return;
         }
@@ -386,17 +518,33 @@ const BuilderUpdateInfo = () => {
         setSuccess(false);
 
         try {
+            // Create FormData object for multipart submission
+            const formDataToSend = new FormData();
+
+            // Add the main form data as a JSON string like in the property upload API
+            formDataToSend.append('data', JSON.stringify(formData));
+
+            // Add the logo file if a new one was selected
+            if (logoFile) {
+                formDataToSend.append('logo', logoFile);
+            }
+
+            // Send the data to the server
             const response = await fetch(`${base_url}/builders/${builderId}`, {
                 method: 'PUT',
+                // Don't set Content-Type header - browser will set it with boundary
                 headers: {
-                    'Content-Type': 'application/json',
+                    // Include authorization header if needed
+                    Authorization: localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : '',
                 },
-                body: JSON.stringify(formData)
+                body: formDataToSend
             });
 
+            // Parse response
+            const result = await response.json();
+
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Failed to update builder information');
+                throw new Error(result.error || 'Failed to update builder information');
             }
 
             setSuccess(true);
@@ -406,6 +554,15 @@ const BuilderUpdateInfo = () => {
             setIsLoading(false);
         }
     };
+
+    // Clean up object URLs to avoid memory leaks
+    useEffect(() => {
+        return () => {
+            if (logoPreview && logoPreview.startsWith('blob:')) {
+                URL.revokeObjectURL(logoPreview);
+            }
+        };
+    }, [logoPreview]);
 
     return (
         <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
@@ -593,12 +750,13 @@ const BuilderUpdateInfo = () => {
                                             onChange={handleChange}
                                             className="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                         />
-                                        {formData.logo && (
+                                        {logoPreview && (
                                             <div className="mt-2">
                                                 <img
-                                                    src={formData.logo}
+                                                    src={logoPreview}
                                                     alt="Logo Preview"
                                                     className="max-w-full h-auto rounded"
+                                                    style={{ maxHeight: '200px' }}
                                                 />
                                             </div>
                                         )}
