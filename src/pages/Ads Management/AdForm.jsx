@@ -215,6 +215,61 @@ const AdForm = () => {
     };
 
     // Handle form submission
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     setLoading(true);
+    //     setError('');
+    //     setSuccess('');
+
+    //     try {
+    //         // Format the data for submission
+    //         const submissionData = { ...formData };
+
+    //         // Convert string numbers to actual numbers for relevant fields
+    //         if (submissionData.type.location.latitude) {
+    //             submissionData.type.location.latitude = parseFloat(submissionData.type.location.latitude);
+    //         }
+    //         if (submissionData.type.location.longitude) {
+    //             submissionData.type.location.longitude = parseFloat(submissionData.type.location.longitude);
+    //         }
+    //         if (submissionData.type.location.radius) {
+    //             submissionData.type.location.radius = parseFloat(submissionData.type.location.radius);
+    //         }
+    //         if (submissionData.type.delay) {
+    //             submissionData.type.delay = parseInt(submissionData.type.delay);
+    //         }
+    //         if (submissionData.type.displayDuration) {
+    //             submissionData.type.displayDuration = parseInt(submissionData.type.displayDuration);
+    //         }
+    //         if (submissionData.priority) {
+    //             submissionData.priority = parseInt(submissionData.priority);
+    //         }
+
+    //         // Submit data
+    //         if (isEditMode) {
+    //             await axios.put(`${base_url}/ads/${id}`, submissionData);
+    //             setSuccess('Ad updated successfully!');
+    //         } else {
+    //             await axios.post(`${base_url}/ads/`, submissionData);
+    //             setSuccess('Ad created successfully!');
+    //             setFormData(initialFormState); // Reset form after successful creation
+    //         }
+
+    //         // Redirect to ads list after short delay
+    //         setTimeout(() => {
+    //             navigate('/ads');
+    //         }, 2000);
+
+    //     } catch (err) {
+    //         setError(err.response?.data?.message || 'Error submitting the form');
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
+    // In handleSubmit function, modify to ensure only Ad schema fields are sent
+
+    // Update handleSubmit function in AdForm.jsx
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -222,35 +277,68 @@ const AdForm = () => {
         setSuccess('');
 
         try {
-            // Format the data for submission
-            const submissionData = { ...formData };
+            // Format the data for submission - only include fields from the Ad schema
+            const submissionData = {
+                name: formData.name,
+                header: formData.header,
+                pagelink: formData.pagelink,
+                imagelinks: formData.imagelinks,
+                contact: formData.contact,
+                status: formData.status,
+                startDate: formData.startDate,
+                endDate: formData.endDate,
+                priority: parseInt(formData.priority) || 0,
+                type: {
+                    type: formData.type.type,
+                    // Add conditional fields based on type
+                    ...(formData.type.type === 'BANNER' && {
+                        width: formData.type.width,
+                        height: formData.type.height
+                    }),
+                    ...(formData.type.type === 'POPUP' && {
+                        delay: parseInt(formData.type.delay) || 0
+                    }),
+                    ...(formData.type.type === 'INTERSTITIAL' && {
+                        fullscreen: formData.type.fullscreen
+                    }),
+                    ...(formData.type.type === 'PAGE_END' && {
+                        showAfterScroll: formData.type.showAfterScroll
+                    }),
+                    ...(['SEARCH_PAGE', 'FILTER_PAGE', 'BUILDING_PAGE', 'PROPERTIES_PAGE', 'PROJECT_PAGE', 'CALL_PAGE'].includes(formData.type.type) && {
+                        position: formData.type.position
+                    }),
+                    // Common fields
+                    displayDuration: parseInt(formData.type.displayDuration) || 0,
+                    showOnce: formData.type.showOnce,
+                    location: {
+                        latitude: parseFloat(formData.type.location.latitude) || null,
+                        longitude: parseFloat(formData.type.location.longitude) || null,
+                        radius: parseFloat(formData.type.location.radius) || 5
+                    },
+                    pincode: formData.type.pincode,
+                    city: formData.type.city
+                },
+                targeted_audience: {
+                    ageRange: {
+                        min: parseInt(formData.targeted_audience.ageRange.min) || 18,
+                        max: parseInt(formData.targeted_audience.ageRange.max) || 65
+                    },
+                    interests: formData.targeted_audience.interests,
+                    gender: formData.targeted_audience.gender
+                },
+                // These fields are part of the Ad schema but are typically managed by the backend
+                // Leave them out if they're not in your formData
+                ...(formData.impressions !== undefined && { impressions: formData.impressions }),
+                ...(formData.clicks !== undefined && { clicks: formData.clicks }),
+                ...(formData.clickthrough_rate !== undefined && { clickthrough_rate: formData.clickthrough_rate })
+            };
 
-            // Convert string numbers to actual numbers for relevant fields
-            if (submissionData.type.location.latitude) {
-                submissionData.type.location.latitude = parseFloat(submissionData.type.location.latitude);
-            }
-            if (submissionData.type.location.longitude) {
-                submissionData.type.location.longitude = parseFloat(submissionData.type.location.longitude);
-            }
-            if (submissionData.type.location.radius) {
-                submissionData.type.location.radius = parseFloat(submissionData.type.location.radius);
-            }
-            if (submissionData.type.delay) {
-                submissionData.type.delay = parseInt(submissionData.type.delay);
-            }
-            if (submissionData.type.displayDuration) {
-                submissionData.type.displayDuration = parseInt(submissionData.type.displayDuration);
-            }
-            if (submissionData.priority) {
-                submissionData.priority = parseInt(submissionData.priority);
-            }
-
-            // Submit data
+            // Submit data to the standalone Ad endpoint
             if (isEditMode) {
-                await axios.put(`${base_url}/ads/${id}`, submissionData);
+                await axios.put(`${base_url}/api/ads/${id}`, submissionData);
                 setSuccess('Ad updated successfully!');
             } else {
-                await axios.post(`${base_url}/ads/`, submissionData);
+                await axios.post(`${base_url}/api/ads`, submissionData);
                 setSuccess('Ad created successfully!');
                 setFormData(initialFormState); // Reset form after successful creation
             }

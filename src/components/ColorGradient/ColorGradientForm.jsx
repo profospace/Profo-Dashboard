@@ -296,6 +296,11 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
         try {
             // Process homeUrls if it's a string
             const processedFormData = { ...formData };
+
+            // ADD THIS CODE: Remove ads from the payload
+            if (processedFormData.ads) {
+                delete processedFormData.ads;
+            }
             if (typeof processedFormData.constantData.homeUrls === 'string') {
                 processedFormData.constantData.homeUrls = processedFormData.constantData.homeUrls
                     .split(',')

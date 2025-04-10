@@ -12,10 +12,22 @@ const AdDetail = () => {
     const [deleteConfirm, setDeleteConfirm] = useState(false);
 
     useEffect(() => {
+        // const fetchAd = async () => {
+        //     try {
+        //         setLoading(true);
+        //         const response = await axios.get(`${base_url}/ads/${id}`);
+        //         setAd(response.data.data);
+        //         setLoading(false);
+        //     } catch (err) {
+        //         setError('Failed to fetch ad details');
+        //         setLoading(false);
+        //     }
+        // };
+
         const fetchAd = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get(`${base_url}/ads/${id}`);
+                const response = await axios.get(`${base_url}/api/ads/${id}`);
                 setAd(response.data.data);
                 setLoading(false);
             } catch (err) {
@@ -27,9 +39,18 @@ const AdDetail = () => {
         fetchAd();
     }, [id]);
 
+    // const handleDelete = async () => {
+    //     try {
+    //         await axios.delete(`/api/ads/${id}`);
+    //         navigate('/ads', { replace: true });
+    //     } catch (err) {
+    //         setError('Failed to delete ad');
+    //     }
+    // };
+
     const handleDelete = async () => {
         try {
-            await axios.delete(`/api/ads/${id}`);
+            await axios.delete(`${base_url}/api/ads/${id}`);
             navigate('/ads', { replace: true });
         } catch (err) {
             setError('Failed to delete ad');

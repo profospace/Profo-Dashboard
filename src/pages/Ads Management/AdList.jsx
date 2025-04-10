@@ -18,6 +18,32 @@ const AdList = () => {
     const [deleteConfirm, setDeleteConfirm] = useState({ show: false, id: null });
 
     // Fetch ads with pagination and filters
+    // const fetchAds = async () => {
+    //     try {
+    //         setLoading(true);
+
+    //         // Build query parameters
+    //         const params = new URLSearchParams();
+    //         params.append('page', currentPage);
+    //         params.append('limit', 10);
+
+    //         // Add any active filters
+    //         Object.entries(filters).forEach(([key, value]) => {
+    //             if (value) params.append(key, value);
+    //         });
+
+    //         const response = await axios.get(`${base_url}/ads/view-ads?${params.toString()}`);
+
+    //         setAds(response.data.data);
+    //         setTotalPages(response.data.totalPages);
+    //         setLoading(false);
+    //     } catch (err) {
+    //         setError('Failed to fetch ads');
+    //         setLoading(false);
+    //     }
+    // };
+
+    // Update fetchAds function in AdList.jsx
     const fetchAds = async () => {
         try {
             setLoading(true);
@@ -32,8 +58,10 @@ const AdList = () => {
                 if (value) params.append(key, value);
             });
 
-            const response = await axios.get(`${base_url}/ads/view-ads?${params.toString()}`);
+            const response = await axios.get(`${base_url}/api/ads?${params.toString()}`);
+            console.log("response", response)
 
+            // Update the data extraction to match the new response format
             setAds(response.data.data);
             setTotalPages(response.data.totalPages);
             setLoading(false);
