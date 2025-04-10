@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Save, Loader2 } from 'lucide-react';
-import { project_upload_url } from '../utils/base_url';
+import { base_url, project_upload_url } from '../utils/base_url';
 
 const ConfigManager = ({
     id,
-    targetType = 'building',
+    targetType = 'property',
     version = '1.0',
     image,
     buildings,
@@ -27,7 +27,7 @@ const ConfigManager = ({
         setStatus(null);
 
         try {
-            const response = await fetch(`https://propertify.onrender.com/api/export-config`, {
+            const response = await fetch(`${base_url}/api/export-config`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

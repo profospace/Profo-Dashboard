@@ -72,7 +72,13 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
             },
             isCallDirect: false,
             homePageLayoutOrder: [1, 3, 4, 5, 6],
-            shadowOnImage: false
+            shadowOnImage: false,
+
+            progressGif: "",
+            listEndImage: "",
+            listAds: "",
+            searchAds: "",
+            maxListAds: "",
         },
        
     });
@@ -558,6 +564,56 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                 {/* more info */}
                 <AccordionSection id="more" title="More">
                     <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Progress Gif:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.progressGif || ''}
+                            onChange={(e) => handleConstantDataChange('progressGif', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Progress GIF URL"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">List End Image:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.listEndImage || ''}
+                            onChange={(e) => handleConstantDataChange('listEndImage', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter List End Image URL"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">List Ads:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.listAds || ''}
+                            onChange={(e) => handleConstantDataChange('listAds', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter List Ads URL"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Search Ads:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.searchAds || ''}
+                            onChange={(e) => handleConstantDataChange('searchAds', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Search Ads URL"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Max List Ads:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.maxListAds || ''}
+                            onChange={(e) => handleConstantDataChange('maxListAds', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Max List Ads URL"
+                        />
+                    </div>
+                    <div className="mt-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Base URL:</label>
                         <input
                             type="text"
@@ -796,6 +852,7 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                             <span className="ml-3 text-sm font-medium text-gray-700">Shadow On Images</span>
                         </label>
                     </div>
+                    
                 </AccordionSection>
 
                 <AccordionSection id="search" title="Search Filter">
