@@ -14,7 +14,7 @@ const EntityFilterPanel = ({ entityType, onSelectEntities, selectedEntities = []
     const [bathrooms, setBathrooms] = useState('');
     const [furnishing, setFurnishing] = useState('');
     const [locality, setLocality] = useState('');
-    const [limit, setLimit] = useState(20);
+    const [limit, setLimit] = useState('');
 
     // States for available options in dropdowns
     const [availableCities, setAvailableCities] = useState([]);
@@ -410,6 +410,7 @@ const EntityFilterPanel = ({ entityType, onSelectEntities, selectedEntities = []
                             onChange={(e) => setLimit(e.target.value)}
                             className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                         >
+                            <option value="">All</option>
                             <option value="10">10</option>
                             <option value="20">20</option>
                             <option value="50">50</option>
