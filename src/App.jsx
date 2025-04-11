@@ -53,26 +53,42 @@ const ConnectPropertiesToBuildingPage = lazy(() => import('./pages/Building/Conn
 const DisconnectPropertiesFromBuildingPage = lazy(() => import('./pages/Building/DisconnectPropertiesFromBuildingPage'));
 
 
-import ConnectBuilderBuildingsPage from './pages/Builder Management/ConnectBuilderBuildingsPage';
-import DisconnectBuilderBuildingsPage from './pages/Builder Management/DisconnectBuilderBuildingsPage';
-import ConnectBuilderProjectsPage from './pages/Builder Management/ConnectBuilderProjectsPage';
-import DisconnectBuilderProjectsPage from './pages/Builder Management/DisconnectBuilderProjectsPage';
-import ConnectBuilderPropertiesPage from './pages/Builder Management/ConnectBuilderPropertiesPage';
-import DisconnectBuilderPropertiesPage from './pages/Builder Management/DisconnectBuilderPropertiesPage';
-import UsersManagement from './pages/User/UsersManagement';
-import UserActivity from './pages/User/UserActivity';
-import AdList from './pages/Ads Management/AdList';
-import AdForm from './pages/Ads Management/AdForm';
-import AdDetail from './pages/Ads Management/AdDetail';
-import ReportPage from './pages/Reports/ReportPage';
-import ColorGradientPage from './pages/ColorApiForm/ColorGradientPage';
-import Callbacks from './pages/Callback/Callbacks';
-import ListOptionDashboard from './pages/ListOption/ListOptionDashboard';
-import UnifiedListOption from './components/ListOptions/UnifiedListOption';
-import HomeScreen from './pages/ListOption/HomeScreen';
-import EntityImageUpload from './pages/UploadEnitityImages/EntityImageUpload';
-import ListOptionsSequence from './pages/ListOption/ListOptionsSequence';
-import DeeplinkGeneratorDemo from './components/Deeplink/LocationMapPreview';
+// Builder Management Pages
+const ConnectBuilderBuildingsPage = lazy(() => import('./pages/Builder Management/ConnectBuilderBuildingsPage'));
+const DisconnectBuilderBuildingsPage = lazy(() => import('./pages/Builder Management/DisconnectBuilderBuildingsPage'));
+const ConnectBuilderProjectsPage = lazy(() => import('./pages/Builder Management/ConnectBuilderProjectsPage'));
+const DisconnectBuilderProjectsPage = lazy(() => import('./pages/Builder Management/DisconnectBuilderProjectsPage'));
+const ConnectBuilderPropertiesPage = lazy(() => import('./pages/Builder Management/ConnectBuilderPropertiesPage'));
+const DisconnectBuilderPropertiesPage = lazy(() => import('./pages/Builder Management/DisconnectBuilderPropertiesPage'));
+
+// User Management Pages
+const UsersManagement = lazy(() => import('./pages/User/UsersManagement'));
+const UserActivity = lazy(() => import('./pages/User/UserActivity'));
+
+// Ads Management
+const AdList = lazy(() => import('./pages/Ads Management/AdList'));
+const AdForm = lazy(() => import('./pages/Ads Management/AdForm'));
+const AdDetail = lazy(() => import('./pages/Ads Management/AdDetail'));
+
+// Reports
+const ReportPage = lazy(() => import('./pages/Reports/ReportPage'));
+
+// Color API Form
+const ColorGradientPage = lazy(() => import('./pages/ColorApiForm/ColorGradientPage'));
+
+// Callbacks
+const Callbacks = lazy(() => import('./pages/Callback/Callbacks'));
+
+// List Option
+const ListOptionDashboard = lazy(() => import('./pages/ListOption/ListOptionDashboard'));
+const UnifiedListOption = lazy(() => import('./components/ListOptions/UnifiedListOption'));
+const HomeScreen = lazy(() => import('./pages/ListOption/HomeScreen'));
+const ListOptionsSequence = lazy(() => import('./pages/ListOption/ListOptionsSequence'));
+
+// Upload Entity Images
+const EntityImageUpload = lazy(() => import('./pages/UploadEnitityImages/EntityImageUpload'));
+
+
 import BuildingViewer from './components/BuildingViewer';
 import BuildingManager from './components/BuildingManager';
 
