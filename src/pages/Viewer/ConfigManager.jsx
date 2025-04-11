@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Save, Loader2 } from 'lucide-react';
-import { base_url, project_upload_url } from '../../../utils/base_url';
+import { base_url } from '../../../utils/base_url';
 
 const ConfigManager = ({
     id,

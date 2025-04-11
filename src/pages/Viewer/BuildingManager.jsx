@@ -1,6 +1,6 @@
 // import React, { useState, useRef, useEffect } from 'react';
 // import { Upload, Trash2, Download, Building, Home, X, Crop, Move, Lasso } from 'lucide-react';
-// import { project_upload_url } from '../utils/base_url';
+// import { base_url } from '../utils/base_url';
 // import ConfigManager from './ConfigManager';
 
 // const BuildingManager = () => {
@@ -187,7 +187,7 @@
 //             formData.append('image', file);
 
 //             try {
-//                 const response = await fetch(`${project_upload_url}/profo/image/upload`, {
+//                 const response = await fetch(`${base_url}/profo/image/upload`, {
 //                     method: 'POST',
 //                     body: formData
 //                 });
@@ -497,7 +497,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Upload, Trash2, Download, Crop, Move, Lasso, X } from 'lucide-react';
 
 import { simplifyPath, optimizePathData } from '../../pathUtils';
-import { project_upload_url } from '../../../utils/base_url';
+import { base_url } from '../../../utils/base_url';
 import ConfigManager from './ConfigManager';
 import { useSearchParams } from 'react-router-dom';
 
@@ -518,9 +518,9 @@ const BuildingManager = () => {
     const drawingContextRef = useRef(null);
 
     const [searchParams] = useSearchParams();
-    const paramsType = searchParams.get('targetType'); 
+    const paramsType = searchParams.get('targetType');
     const paramsId = searchParams.get('id');
-    console.log(paramsType , paramsId)
+    console.log(paramsType, paramsId)
 
     // Initialize canvas context
     useEffect(() => {
@@ -705,7 +705,7 @@ const BuildingManager = () => {
             formData.append('image', file);
 
             try {
-                const response = await fetch(`${project_upload_url}/profo/image/upload`, {
+                const response = await fetch(`${base_url}/profo/image/upload`, {
                     method: 'POST',
                     body: formData
                 });
