@@ -498,7 +498,7 @@ import { Upload, Trash2, Download, Crop, Move, Lasso, X } from 'lucide-react';
 
 import { simplifyPath, optimizePathData } from '../../pathUtils';
 import { base_url } from '../../../utils/base_url';
-import ConfigManager from './ConfigManager';
+import ConfigManager from '../../components/Viewer/ConfigManager';
 import { useSearchParams } from 'react-router-dom';
 
 const BuildingManager = () => {
