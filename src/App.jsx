@@ -89,8 +89,8 @@ const ListOptionsSequence = lazy(() => import('./pages/ListOption/ListOptionsSeq
 const EntityImageUpload = lazy(() => import('./pages/UploadEnitityImages/EntityImageUpload'));
 
 
-import BuildingViewer from './components/BuildingViewer';
-import BuildingManager from './components/BuildingManager';
+import BuildingViewer from './pages/Viewer/BuildingViewer';
+import BuildingManager from './pages/Viewer/BuildingManager';
 
 // Use lazy loading for page components
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -113,7 +113,7 @@ function App() {
     dispatch(getLeads());
   }, [dispatch]);
 
-  
+
 
   return (
     <LoadScript loadingElement={<LoadingPage />} googleMapsApiKey={import.meta.env.VITE_GOOGLE_API_KEY}>
@@ -127,6 +127,7 @@ function App() {
               {/* <Route path="/projects" element={<ProjectsPage />} /> */}
               {/* <Route path="/buildings" element={<BuildingsPage />} /> */}
 
+              {/* Viewer */}
               <Route path="/viewer" element={<BuildingViewer />} />
               <Route path="/manager" element={<BuildingManager />} />
 

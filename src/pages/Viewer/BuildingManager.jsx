@@ -494,13 +494,14 @@
 
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Upload, Trash2, Download, Crop, Move, Lasso , X } from 'lucide-react';
+import { Upload, Trash2, Download, Crop, Move, Lasso, X } from 'lucide-react';
 
-import { simplifyPath, optimizePathData } from '../pathUtils';
-import { project_upload_url } from '../../utils/base_url';
-import ConfigManager from '../ConfigManager';
+import { simplifyPath, optimizePathData } from '../../pathUtils';
+import { project_upload_url } from '../../../utils/base_url';
+import ConfigManager from './ConfigManager';
+import { useSearchParams } from 'react-router-dom';
 
-const BuildingManager = ({id}) => {
+const BuildingManager = () => {
     const [images, setImages] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);
     const [buildings, setBuildings] = useState({});
@@ -515,6 +516,11 @@ const BuildingManager = ({id}) => {
     const imageRef = useRef(null);
     const canvasRef = useRef(null);
     const drawingContextRef = useRef(null);
+
+    const [searchParams] = useSearchParams();
+    const paramsType = searchParams.get('targetType'); 
+    const paramsId = searchParams.get('id');
+    console.log(paramsType , paramsId)
 
     // Initialize canvas context
     useEffect(() => {
@@ -625,19 +631,19 @@ const BuildingManager = ({id}) => {
         ctx.stroke();
     }, [drawExistingAreas]);
 
-        const calculateCentroid = (points) => {
-            if (!points || points.length === 0) return { top: '50%', left: '50%' };
+    const calculateCentroid = (points) => {
+        if (!points || points.length === 0) return { top: '50%', left: '50%' };
 
-            const sum = points.reduce((acc, point) => ({
-                x: acc.x + point.x,
-                y: acc.y + point.y
-            }), { x: 0, y: 0 });
+        const sum = points.reduce((acc, point) => ({
+            x: acc.x + point.x,
+            y: acc.y + point.y
+        }), { x: 0, y: 0 });
 
-            return {
-                top: `${(sum.y / points.length) * 100}%`,
-                left: `${(sum.x / points.length) * 100}%`
-            };
+        return {
+            top: `${(sum.y / points.length) * 100}%`,
+            left: `${(sum.x / points.length) * 100}%`
         };
+    };
 
     // Handle building submission
     const handlePopupSubmit = useCallback(() => {
@@ -977,8 +983,8 @@ const BuildingManager = ({id}) => {
             {selectedImage && (
                 <div className="flex flex-col gap-4 mb-4">
                     <ConfigManager
-                        id={id}
-                        targetType="building"
+                        id={paramsId}
+                        targetType={paramsType}
                         version="1.0"
                         image={{
                             src: selectedImage.src,

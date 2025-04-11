@@ -84,6 +84,25 @@ const PropertyManagerLayout = ({ children }) => {
             ],
         },
         {
+            key: 'viewer-management',
+            icon: <TeamOutlined />,
+            label: 'Viewer Management',
+            children: [
+                {
+                    key: '/viewer',
+                    label: <Link to="/viewer">Viewer</Link>,
+                },
+                {
+                    key: '/manager',
+                    label: <Link to="/manager">Viewer Manager</Link>,
+                },
+                // {
+                //     key: '/users',
+                //     label: <Link to="/users">User Management</Link>,
+                // },
+            ],
+        },
+        {
             key: '/aws-image-gallery',
             icon: <BuildOutlined />,
             label: <Link to="/aws-image-gallery">AWS Image Gallery</Link>,

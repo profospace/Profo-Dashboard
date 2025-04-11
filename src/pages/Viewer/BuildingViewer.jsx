@@ -2170,8 +2170,10 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { Maximize2, Minimize2 } from 'lucide-react';
 import _ from 'lodash';
+import { useSearchParams } from 'react-router-dom';
+import { base_url } from '../../../utils/base_url';
 
-const BuildingViewer = ({ id }) => {
+const BuildingViewer = () => {
     const [hoveredBuilding, setHoveredBuilding] = useState(null);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [config, setConfig] = useState(null);
@@ -2182,12 +2184,15 @@ const BuildingViewer = ({ id }) => {
     const containerRef = useRef(null);
     const drawingContextRef = useRef(null);
 
+    const [searchParams] = useSearchParams()
+    const id = searchParams.get('id')
+
 
     const fetchConfig = async () => {
         try {
             // const response = await fetch(`https://propertify.onrender.com/api/export-config/PROP1738374316908`);
             // const response = await fetch(`https://propertify.onrender.com/api/export-config/PROP1738742741391`);
-            const response = await fetch(`https://propertify.onrender.com/api/export-config/${id}`);
+            const response = await fetch(`${base_url}/api/export-config/${id}`);
 
             if (!response.ok) {
                 throw new Error(`Error: ${response.status} - ${response.statusText}`);

@@ -104,10 +104,12 @@
 
 // export default BuildingCard;
 
+import { Button } from 'antd';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const BuildingCard = ({ building, onDelete }) => {
+    const navigate = useNavigate()
     const statusColors = {
         'Ready': 'bg-green-100 text-green-800',
         'Under Construction': 'bg-yellow-100 text-yellow-800',
@@ -124,6 +126,16 @@ const BuildingCard = ({ building, onDelete }) => {
             onDelete(building._id);
         }
     };
+
+
+    const handleAddBuildingViewer = (id)=>{
+        navigate(`/manager?id=${id}&targetType=building`)
+    }
+    
+    const handleViewBuildingViewer = (id)=>{
+        navigate(`/viewer?id=${id}`)
+
+    }
 
     return (
         <div className="bg-white rounded-lg shadow overflow-hidden transition-all duration-200 hover:shadow-md">
@@ -217,6 +229,10 @@ const BuildingCard = ({ building, onDelete }) => {
                 >
                     Disconnect Properties
                 </Link>
+                
+                {/* Buttons to Add Viewer */}
+                <Button onClick={()=>handleAddBuildingViewer(building?.buildingId)}>Add Buliding Viewer</Button>
+                <Button onClick={()=>handleViewBuildingViewer(building?.buildingId)}>View Building Viewer</Button>
             </div>
         </div>
     );

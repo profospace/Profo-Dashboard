@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Save, Loader2 } from 'lucide-react';
-import { base_url, project_upload_url } from '../utils/base_url';
+import { base_url, project_upload_url } from '../../../utils/base_url';
 
 const ConfigManager = ({
     id,
@@ -89,8 +89,8 @@ const ConfigManager = ({
                         onClick={handleSave}
                         disabled={isSaving}
                         className={`px-4 py-2 rounded-lg flex items-center gap-2 ${isSaving
-                                ? 'bg-gray-300 cursor-not-allowed'
-                                : 'bg-blue-500 hover:bg-blue-600'
+                            ? 'bg-gray-300 cursor-not-allowed'
+                            : 'bg-blue-500 hover:bg-blue-600'
                             } text-white transition-colors`}
                     >
                         {isSaving ? (
@@ -105,8 +105,8 @@ const ConfigManager = ({
 
             {status && (
                 <div className={`p-4 rounded-lg ${status.type === 'error'
-                        ? 'bg-red-50 text-red-700 border border-red-200'
-                        : 'bg-green-50 text-green-700 border border-green-200'
+                    ? 'bg-red-50 text-red-700 border border-red-200'
+                    : 'bg-green-50 text-green-700 border border-green-200'
                     }`}>
                     {status.message}
                 </div>

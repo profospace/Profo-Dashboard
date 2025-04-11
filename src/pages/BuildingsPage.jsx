@@ -126,8 +126,8 @@ import {
     getBuildingConfig,
     clearSelectedBuilding
 } from '../redux/features/Buildings/buildingsSlice';
-import BuildingManager from '../components/BuildingManager';
-import BuildingViewer from '../components/BuildingViewer';
+import BuildingManager from './Viewer/BuildingManager';
+import BuildingViewer from './Viewer/BuildingViewer';
 
 const BuildingsPage = () => {
     const dispatch = useDispatch();

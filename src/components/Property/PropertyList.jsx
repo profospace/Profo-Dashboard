@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDownIcon, ChevronUpIcon, EyeIcon, PencilIcon, SearchIcon, TrashIcon } from 'lucide-react';
+import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function PropertyList({
@@ -254,6 +256,16 @@ function PropertyCard({ property, onEdit, onDelete, onUpdateStatus, onViewDetail
         }
     };
 
+    const navigate = useNavigate()
+    const handleAddPropertyViewer = (id) => {
+        navigate(`/manager?id=${id}&targetType=property`)
+        
+    }
+    const handleViewPropertyViewer = (id) => {
+        navigate(`/viewer?id=${id}`)
+
+    }
+
     return (
         <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300 h-full flex flex-col">
             {/* Property Image */}
@@ -370,6 +382,10 @@ function PropertyCard({ property, onEdit, onDelete, onUpdateStatus, onViewDetail
                             <TrashIcon className="h-4 w-4 mr-1" />
                             Delete
                         </button>
+                    </div>
+                    <div>
+                        <Button onClick={() => handleAddPropertyViewer(property?.post_id)}>Add Property Viewer</Button>
+                        <Button onClick={() => handleViewPropertyViewer(property.post_id)}>View Property Viewer</Button>
                     </div>
                 </div>
             </div>
