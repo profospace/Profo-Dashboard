@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import { Search, Filter, ChevronDown, ChevronUp, User, Mail, Phone, Calendar, RefreshCw, Download, MoreHorizontal, X, Check, Eye } from 'lucide-react';
+import { Search, Filter, ChevronDown, ChevronUp, User, Mail, Phone, Calendar, RefreshCw, Download, MoreHorizontal, X, Check, Eye, Trash } from 'lucide-react';
 import { base_url } from '../../../utils/base_url';
 
 const UsersManagement = () => {
@@ -221,6 +221,15 @@ const UsersManagement = () => {
     if (status === false) return <X size={16} className="text-red-500" />;
     return <div className="w-4 h-4 rounded-full bg-gray-300"></div>;
   };
+
+
+  // delete user 
+  const handleDeleteUser = async (id) => {
+    console.log(id)
+    const response = await axios.delete(`${base_url}/api/delete/user/${id}`)
+
+    console.log(response)
+  }
 
   return (
     <div className="w-full">
@@ -535,6 +544,9 @@ const UsersManagement = () => {
                         className="text-blue-600 hover:text-blue-900 mr-3"
                       >
                         <Eye size={18} />
+                      </button>
+                      <button onClick={() => handleDeleteUser(user._id)} >
+                          <Trash size={18} />
                       </button>
                       <button className="text-gray-600 hover:text-gray-900">
                         <MoreHorizontal size={18} />

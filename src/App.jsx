@@ -92,6 +92,7 @@ const EntityImageUpload = lazy(() => import('./pages/UploadEnitityImages/EntityI
 import BuildingViewer from './pages/Viewer/BuildingViewer';
 import BuildingManager from './pages/Viewer/BuildingManager';
 import Manager from './pages/Viewer/Manager';
+import AdminEmailDashboard from './pages/AdminEmailDashboard';
 
 // Use lazy loading for page components
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -128,6 +129,7 @@ function App() {
               {/* <Route path="/projects" element={<ProjectsPage />} /> */}
               {/* <Route path="/buildings" element={<BuildingsPage />} /> */}
 
+              <Route path="/testing-dash" element={<AdminEmailDashboard />} />
               {/* Viewer */}
               <Route path="/viewer-manager" element={<Manager />} />
               <Route path="/viewer" element={<BuildingViewer />} />
