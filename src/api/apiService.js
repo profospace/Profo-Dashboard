@@ -6,9 +6,9 @@ const base_url = import.meta.env.VITE_BASE_URL;
 // Create axios instance with base URL
 const api = axios.create({
     baseURL: base_url,
-    headers: {
-        'Content-Type': 'application/json',
-    },
+    // headers: {
+    //     'Content-Type': 'application/json',
+    // },
 });
 
 // Add auth token to requests if available
