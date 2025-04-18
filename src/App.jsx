@@ -102,7 +102,6 @@ const PropertiesPage = lazy(() => import('./pages/PropertiesPage'));
 const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
 const BuildingsPage = lazy(() => import('./pages/BuildingsPage'));
 const LeadsManagementPage = lazy(() => import('./pages/LeadsManagementPage'));
-const UserManagementPage = lazy(() => import('./pages/UserManagementPage'));
 
 
 function App() {
