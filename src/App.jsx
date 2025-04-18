@@ -93,6 +93,8 @@ import BuildingViewer from './pages/Viewer/BuildingViewer';
 import BuildingManager from './pages/Viewer/BuildingManager';
 import Manager from './pages/Viewer/Manager';
 import AdminEmailDashboard from './pages/AdminEmailDashboard';
+import UsersPage from './pages/UsersPage';
+import UserProfilePage from './pages/UserProfilePage';
 
 // Use lazy loading for page components
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -129,6 +131,14 @@ function App() {
               {/* <Route path="/projects" element={<ProjectsPage />} /> */}
               {/* <Route path="/buildings" element={<BuildingsPage />} /> */}
 
+              {/* users */}
+              <Route path="/users" element={<UsersPage />} />
+              <Route path="/users/:userId" element={<UserProfilePage />} />
+
+              {/* Leads Management */}
+              <Route path="/leads" element={<LeadsManagementPage />} />
+
+
               <Route path="/testing-dash" element={<AdminEmailDashboard />} />
               {/* Viewer */}
               <Route path="/viewer-manager" element={<Manager />} />
@@ -150,14 +160,6 @@ function App() {
               {/* Report */}
               <Route path="/reports" element={<ReportPage />} />
 
-              {/* User */}
-              <Route path="/user-management" element={<UsersManagement />} />
-              {/* <Route path="/user-activity/:userId/history" element={<UserActivity />} /> */}
-              {/* <Route path="/users" element={<UserManagementPage />} /> */}
-
-
-
-              <Route path="/leads" element={<LeadsManagementPage />} />
               <Route path="/aws-image-gallery" element={<AwsS3ImageGallery />} />
               <Route path="/new-list-option" element={<NewListOption />} />
               <Route path="/deeplink-generator" element={<DeeplinkGenerator />} />

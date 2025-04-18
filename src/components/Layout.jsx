@@ -65,17 +65,18 @@ const PropertyManagerLayout = ({ children }) => {
             label: <Link to="/callbacks">Callback</Link>,
         },
         {
+            key: '/leads',
+            icon: <HomeOutlined />,
+            label: <Link to="/leads">Leads Management</Link>,
+        },
+        {
             key: 'user-management',
             icon: <TeamOutlined />,
             label: 'User Management',
             children: [
                 {
-                    key: '/leads',
-                    label: <Link to="/leads">Leads Management</Link>,
-                },
-                {
-                    key: '/user-management',
-                    label: <Link to="/user-management">User Management 🆕</Link>,
+                    key: '/users',
+                    label: <Link to="/users">Users</Link>,
                 },
                 // {
                 //     key: '/users',
