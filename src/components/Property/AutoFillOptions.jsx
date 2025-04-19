@@ -64,7 +64,8 @@ const AutofillOptions = ({ onSelect }) => {
                 bathrooms: '2',
                 balconies: '1',
                 furnishingStatus: 'Semi-Furnished',
-                propertyAge: '<5',
+                propertyAge: '5',
+                reraWebsite: 'https://profo-dashboard.netlify.app/list-option' , 
                 floorNumber: '5',
                 totalFloors: '10',
                 facingDirection: 'East',
@@ -90,11 +91,10 @@ const AutofillOptions = ({ onSelect }) => {
                 // Photos & Amenities
                 amenities: ['Parking', 'Lift', 'Power Backup', 'Security', 'Gym', 'Swimming Pool'],
                 postImageUrl: 'https://wityysaver.s3.ap-south-1.amazonaws.com/gallery_images/PROP1742202858454/34f30911-bfc3-4595-95b0-bcb40806a924_67777496d2deebfe7188efac_DSC02589-HDR.webp',
-                floorPlanImageUrl: 'https://wityysaver.s3.ap-south-1.amazonaws.com/gallery_images/PROP1742202858454/54df7ae5-6c69-4cef-9bcc-b8e78aa0bd3d_761c8c51c6631174_1440.png',
+                floorPlanImageUrl: 'https://wityysaver.s3.ap-south-1.amazonaws.com/1745050191639-IMG_0576.png',
                 galleryImageUrls: [
                     'https://wityysaver.s3.ap-south-1.amazonaws.com/projects/Passion%20Group/gallery/a822f871-ee30-4222-b825-11184fbca432original-4d2d4ee3c82cc526d5c7d00b5adc1627.png',
-                    'https://wityysaver.s3.ap-south-1.amazonaws.com/gallery_images/PROP1742202858454/34f30911-bfc3-4595-95b0-bcb40806a924_67777496d2deebfe7188efac_DSC02589-HDR.webp',
-                    'https://wityysaver.s3.ap-south-1.amazonaws.com/gallery_images/PROP1742202858454/6f0e42a2-7f7f-4eff-839183a07e019183df23221808_63219_172468_large.jpg'
+                    'https://wityysaver.s3.ap-south-1.amazonaws.com/gallery_images/PROP1742202858454/34f30911-bfc3-4595-95b0-bcb40806a924_67777496d2deebfe7188efac_DSC02589-HDR.webp'
                 ],
 
                 // Ownership & Legal
@@ -139,7 +139,7 @@ const AutofillOptions = ({ onSelect }) => {
                 bathrooms: '2',
                 balconies: '1',
                 furnishingStatus: 'Fully Furnished',
-                propertyAge: '5-10',
+                propertyAge: '10',
                 floorNumber: '3',
                 totalFloors: '5',
                 facingDirection: 'North',
@@ -209,7 +209,7 @@ const AutofillOptions = ({ onSelect }) => {
                 propertyType: 'Shops',
                 propertyCategory: 'Commercial',
                 furnishingStatus: 'Unfurnished',
-                propertyAge: 'new',
+                propertyAge: '18',
                 floorNumber: '0',
                 totalFloors: '3',
                 facingDirection: 'South',

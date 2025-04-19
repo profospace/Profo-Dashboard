@@ -168,10 +168,41 @@ const PropertyAdd = ({ user }) => {
             profoProxyAllowed: false,
             religiousNearby: [],
             inProximity: [],
+            vastuCompliance: [],
+            loanApprovalStatus: [],
+            builderReputation: [],
+            legalClearance: [],
+            environmentalFactors: [],
+            kitchenType: [],
+            bathroomFeatures: [],
+            specialCategories: [],
+            flooringType: [],
+            socialInfrastructure: [],
+            financingOptions: [],
+            maintenanceCharges: {
+                minPrice: '',
+                maxPrice: '',
+                priceUnit: '',
+                areaUnit: ''
+            },
         };
     });
 
+    // Add this function to your PropertyAdd component
+    const navigateToStep = (stepIndex) => {
+        // Validate if the user can navigate to this step
+        // For example, you might want to prevent skipping forward without completing required fields
 
+        // Option 1: Allow skipping to any completed step and the next available step
+        if (stepIndex < currentStep || stepIndex === currentStep) {
+            setCurrentStep(stepIndex);
+            window.scrollTo(0, 0);
+        }
+
+        // Option 2: Allow navigation to any step (more flexible but less controlled)
+        // setCurrentStep(stepIndex);
+        // window.scrollTo(0, 0);
+    };
     console.log("formData", formData)
 
     const categoryMap = {
@@ -193,7 +224,7 @@ const PropertyAdd = ({ user }) => {
     // Available options for select fields
     const propertyTypes = ['Apartment', 'House', 'Shops', 'Warehouses', 'Halls', 'Land'];
     const propertyCategories = ['Residential', 'Commercial', 'Industrial', 'Agricultural'];
-    const furnishingOptions = ['Unfurnished', 'Semi-Furnished', 'Fully Furnished'];
+    const furnishingOptions = ['Unfurnished', 'Semi-Furnished', 'Fully-Furnished', 'Modular-Kitchen', 'Wardrobes-Included', 'Air-Conditioners-Included', 'Premium-Furnishings'];
     const directionOptions = ['North', 'South', 'East', 'West', 'North-East', 'North-West', 'South-East', 'South-West'];
     const amenitiesOptions = [
         'Parking', 'Lift', 'Power Backup', 'Gas Pipeline', 'Swimming Pool', 'Gym',
@@ -205,20 +236,73 @@ const PropertyAdd = ({ user }) => {
     const transactionTypeOptions = ['New Property', 'Resale'];
     const ownershipOptions = ['Freehold', 'Leasehold', 'Power of Attorney', 'Co-operative Society'];
     const reraStatusOptions = ['Registered', 'Applied', 'Not Applicable'];
-    const waterSourceOptions = ['Municipal', 'Borewell', 'Tanker', 'Well'];
+    const waterSourceOptions = ['24/7 Municipal Supply', 'Timed Municipal Supply', 'Borewell', 'Tanker', 'Well', 'Rainwater Harvesting', 'Water Treatment Plant'];
     const powerBackupOptions = ['None', 'Partial', 'Full'];
     const flooringOptions = ['Marble', 'Vitrified', 'Wooden', 'Ceramic Tiles', 'Cement', 'Granite', 'Stone'];
-    const parkingOptions = ['Open', 'Covered', 'None'];
+    const parkingOptions = ['Open Parking', 'Covered Parking', 'None', 'No Parking', 'Single Covered Parking', 'Multiple Covered Parking', 'Stilt Parking', 'Basement Parking', 'Mechanical Parking'];
     const constructionStatusOptions = ['Under Construction', 'Ready to Move', 'New Launch'];
     const configurationOptions = ['1RK', '1BHK', '2BHK', '3BHK', '4BHK', '4+ BHK', 'Studio Apartment'];
     // Add these option arrays with the other options
     const religiousNearbyOptions = ['Near Temple', 'Near Gurudwara', 'Near Church', 'Near Mosque', 'Pilgrimage Society Proximity'];
-    const inProximityOptions = ['Airport', 'Near Office Hub', 'Hospital Vicinity', 'Railway Station', 'Highway Access', 'Market Area' , 'Near School' , 'Near College'];
+    const inProximityOptions = ['Airport', 'Near Office Hub', 'Hospital Vicinity', 'Railway Station', 'Highway Access', 'Market Area', 'Near School', 'Near College'];
+
+    const vastuCompliance = ['Vastu Friendly Layout', 'East Facing', 'North East Facing', 'North Facing', 'South East Facing', 'West Facing', 'Proper Room Placement', 'Vastu Compliant Kitchen', 'Vastu Compliant Main Door']
+
+    const loanApprovalStatus = ['Bank Approved Project', 'Pre-Approved Loans', 'Government Subsidy Eligible', 'PMAY Eligible', 'Home Loan Available', 'No Loan Available']
+
+    const builderReputation = ['Premium/Luxury Developer', 'Mid-Tier Developer', 'Budget Developer', 'Government Housing', 'Award-Winning Developer', 'Timely Delivery Track Record']
+
+    const legalClearance = ['Clear Title', 'RERA Registered', 'Occupancy Certificate', 'Completion Certificate', 'NOC from Authorities', 'Approved Building Plan']
+
+    const environmentalFactors = ['Green Building Certified', 'Solar Power Installation', 'Waste Management System', 'EV Charging Points', 'Low Pollution Area', 'Green Belt Proximity']
+
+    const kitchenType = ['Modular Kitchen', 'Semi-Modular Kitchen', 'Open Kitchen', 'Closed Kitchen', 'Kitchen with Utility Area', 'Kitchen Garden Access']
+
+    const bathroomFeatures = ['Standard Bathroom',
+        'Premium Fittings',
+        'Western Toilet',
+        'Bathtub',
+        'Shower Enclosure',
+        'Master Bath',
+        'Common Bath']
+
+    const specialCategories = [
+        'Senior Citizen Friendly',
+        'Gated Community',
+        'Farm House',
+        'Weekend Home',
+        'Investment Property',
+        'Rental Income Property',
+        'NRI Preferred'
+    ];
+
+    const flooringType = [
+        'Vitrified Tiles',
+        'Marble Flooring',
+        'Wooden Flooring',
+        'Granite Flooring',
+        'Ceramic Tiles',
+        'Italian Marble',
+        'Anti-Skid Tiles'
+    ];
+
+    const socialInfrastructure = [
+        'School Proximity',
+        'College Vicinity',
+        'Hospital Access',
+        'Shopping Mall Proximity',
+        'Restaurant/Food Hub Nearby',
+        'Entertainment Zone Access'
+    ];
+
+    const financingOptionsArray = ["Conventional Mortgage", "FHA Loan", "VA Loan", "Cash Only"];
+
+
 
     // Handle form field changes
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-
+        console.log("NAME VALUE", name, value)
         if (type === 'checkbox') {
             // Handle amenities checkboxes
             if (checked) {
@@ -559,7 +643,7 @@ const PropertyAdd = ({ user }) => {
                 bathrooms: formData.bathrooms,
                 balconies: formData.balconies,
                 furnishStatus: formData.furnishingStatus,
-                property_age: formData.propertyAge,
+                propertyAge: formData.propertyAge,
                 floorNumber: formData.floorNumber,
                 totalFloors: formData.totalFloors,
                 facing: formData.facingDirection,
@@ -615,7 +699,7 @@ const PropertyAdd = ({ user }) => {
                 legalStatuses: formData.legalStatuses,
                 constructionStatuses: [formData.construction_status].filter(Boolean),
                 ownershipTypes: [formData.propertyOwnership].filter(Boolean),
-                financingOptions: formData.financingOptions,
+                financingOptions: formData.financingOptions || [],
                 environmentalCertifications: formData.environmentalCertifications,
                 propertyManagementServices: formData.propertyManagementServices,
                 investmentStrategies: formData.investmentStrategies,
@@ -625,6 +709,22 @@ const PropertyAdd = ({ user }) => {
                 // Add to mainData object in handleSubmit function
                 religiousNearby: formData.religiousNearby || [],
                 inProximity: formData.inProximity || [],
+                vastuCompliance: formData.vastuCompliance || [],
+                loanApprovalStatus: formData.loanApprovalStatus || [],
+                builderReputation: formData.builderReputation || [],
+                legalClearance: formData.legalClearance || [],
+                environmentalFactors: formData.environmentalFactors || [],
+                kitchenType: formData.kitchenType || [],
+                bathroomFeatures: formData.bathroomFeatures || [],
+                specialCategories: formData.specialCategories || [],
+                flooringType: formData.flooringType || [],
+                socialInfrastructure: formData.socialInfrastructure || [],
+                maintenanceCharges: formData.maintenanceCharges || {
+                    minPrice: '',
+                    maxPrice: '',
+                    priceUnit: '',
+                    areaUnit: ''
+                },
             };
 
             // Add user information
@@ -692,6 +792,41 @@ const PropertyAdd = ({ user }) => {
     };
 
 
+    // 1. Add a function to generate the dynamic title
+    const generateDynamicTitle = () => {
+        const { configuration, propertyType, purpose, locality } = formData;
+
+        if (!configuration || !propertyType || !purpose || !locality) {
+            return ''; // Return empty string if required fields are missing
+        }
+
+        // Format: "{configuration} {type} for {purpose} in {locality}"
+        return `${configuration} ${propertyType} for ${purpose} in ${locality}`;
+    };
+
+    // 2. Create a useEffect to update the title when relevant fields change
+    useEffect(() => {
+        // Only auto-generate if the user hasn't manually edited the title yet
+        // or if the title field is empty
+        if (!formData.titleModifiedByUser &&
+            (formData.configuration && formData.propertyType &&
+                formData.purpose && formData.locality)) {
+            setFormData(prevData => ({
+                ...prevData,
+                title: generateDynamicTitle()
+            }));
+        }
+    }, [formData.configuration, formData.propertyType, formData.purpose, formData.locality]);
+
+    // 3. Add a flag to track if the user has manually edited the title
+    const handleTitleChange = (e) => {
+        setFormData({
+            ...formData,
+            title: e.target.value,
+            titleModifiedByUser: true // Set this flag when user edits the title
+        });
+    };
+
 
     return (
         <div className="">
@@ -711,7 +846,8 @@ const PropertyAdd = ({ user }) => {
                 </div>
                 <Steps
                     current={currentStep - 1}
-                    percent={((currentStep - 1) / 3) * 100}
+                    percent={((currentStep - 1) / 7) * 100}
+                    onChange={(current) => navigateToStep(current + 1)}
                     items={[
                         {
                             title: 'Basic Details',
@@ -1127,7 +1263,7 @@ const PropertyAdd = ({ user }) => {
                                         id="title"
                                         name="title"
                                         value={formData.title}
-                                        onChange={handleChange}
+                                        onChange={handleTitleChange} // Use the custom handler instead of the generic one
                                         required
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                         placeholder="e.g. 3BHK Apartment in Civil Lines"
@@ -1211,7 +1347,16 @@ const PropertyAdd = ({ user }) => {
                                         <label htmlFor="propertyAge" className="block text-sm font-medium text-gray-700 mb-1">
                                             Property Age
                                         </label>
-                                        <select
+                                        <input
+                                            type="number"
+                                            id="propertyAge"
+                                            name="propertyAge"
+                                            value={formData.propertyAge}
+                                            onChange={handleChange}
+                                            className="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="Property Age"
+                                        />
+                                        {/* <select
                                             id="propertyAge"
                                             name="propertyAge"
                                             value={formData.propertyAge}
@@ -1223,7 +1368,7 @@ const PropertyAdd = ({ user }) => {
                                             <option value="<5">Less than 5 years</option>
                                             <option value="5-10">5-10 years</option>
                                             <option value="10+">10+ years</option>
-                                        </select>
+                                        </select> */}
                                     </div>
 
                                     <div className="grid grid-cols-2 gap-4">
@@ -1762,6 +1907,21 @@ const PropertyAdd = ({ user }) => {
                                 )}
 
                                 <div>
+                                    <label htmlFor="ownerName" className="block text-sm font-medium text-gray-700 mb-1">
+                                        Rera Website
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="reraWebsite"
+                                        name="reraWebsite"
+                                        value={formData.reraWebsite}
+                                        onChange={handleChange}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Rera Website URL"
+                                    />
+                                </div>
+
+                                <div>
                                     <label htmlFor="possession" className="block text-sm font-medium text-gray-700 mb-1">
                                         Possession
                                     </label>
@@ -1994,109 +2154,7 @@ const PropertyAdd = ({ user }) => {
 
                     {/* Step 7: USP and Tags */}
                     {/* {currentStep === 7 && (
-                        <div>
-                            <h2 className="text-lg font-medium text-gray-900 mb-6">Unique Selling Points & Tags</h2>
-
-                            <div className="mb-6">
-                                <label htmlFor="usp" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Unique Selling Points (Comma separated)
-                                </label>
-                                <textarea
-                                    id="usp"
-                                    name="usp"
-                                    placeholder="e.g. Close to metro, 24x7 security, Clubhouse access"
-                                    rows="3"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                    value={formData.usp.join(', ')}
-                                    onChange={(e) => {
-                                        const uspArray = e.target.value.split(',').map(item => item.trim()).filter(item => item);
-                                        setFormData({ ...formData, usp: uspArray });
-                                    }}
-                                ></textarea>
-                                <p className="mt-1 text-xs text-gray-500">
-                                    Add key selling points of your property that make it stand out
-                                </p>
-                            </div>
-
-                            <div className="mb-6">
-                                <label htmlFor="tags" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Tags (Comma separated)
-                                </label>
-                                <textarea
-                                    id="tags"
-                                    name="tags"
-                                    placeholder="e.g. spacious, corner unit, garden view"
-                                    rows="3"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                    value={formData.tags.join(', ')}
-                                    onChange={(e) => {
-                                        const tagsArray = e.target.value.split(',').map(item => item.trim()).filter(item => item);
-                                        setFormData({ ...formData, tags: tagsArray });
-                                    }}
-                                ></textarea>
-                                <p className="mt-1 text-xs text-gray-500">
-                                    Add relevant tags to make your property easily discoverable in searches
-                                </p>
-                            </div>
-
-                            <div className="mb-6">
-                                <label htmlFor="overlookingAmenities" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Overlooking Amenities (Comma separated)
-                                </label>
-                                <textarea
-                                    id="overlookingAmenities"
-                                    name="overlookingAmenities"
-                                    placeholder="e.g. Pool, Garden, Park"
-                                    rows="2"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                    value={formData.overlookingAmenities.join(', ')}
-                                    onChange={(e) => {
-                                        const amenitiesArray = e.target.value.split(',').map(item => item.trim()).filter(item => item);
-                                        setFormData({ ...formData, overlookingAmenities: amenitiesArray });
-                                    }}
-                                ></textarea>
-                            </div>
-
-                            <div className="mb-6">
-                                <label htmlFor="location_advantage" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Location Advantages (Comma separated)
-                                </label>
-                                <textarea
-                                    id="location_advantage"
-                                    name="location_advantage"
-                                    placeholder="e.g. Near school, Shopping mall nearby, Medical facilities"
-                                    rows="2"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                    value={formData.location_advantage.join(', ')}
-                                    onChange={(e) => {
-                                        const locationArray = e.target.value.split(',').map(item => item.trim()).filter(item => item);
-                                        setFormData({ ...formData, location_advantage: locationArray });
-                                    }}
-                                ></textarea>
-                            </div>
-
-                            <div>
-                                <label htmlFor="contactList" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Contact Numbers (Comma separated)
-                                </label>
-                                <textarea
-                                    id="contactList"
-                                    name="contactList"
-                                    placeholder="e.g. 9876543210, 9876543211"
-                                    rows="2"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                    value={formData.contactList.join(', ')}
-                                    onChange={(e) => {
-                                        const contactArray = e.target.value.split(',').map(item => item.trim()).filter(item => item);
-                                        setFormData({ ...formData, contactList: contactArray.map(Number) });
-                                    }}
-                                ></textarea>
-                                <p className="mt-1 text-xs text-gray-500">
-                                    Add contact numbers for interested buyers or renters to reach you
-                                </p>
-                            </div>
-                        </div>
-                    )} */}
+                
                     {/* Step 7: USP and Tags */}
                     {currentStep === 7 && (
                         <div>
@@ -2554,6 +2612,549 @@ const PropertyAdd = ({ user }) => {
                                 )}
                             </div>
 
+
+                            <div className="mt-6 border-t pt-6">
+                                <h3 className="text-md font-medium text-gray-800 mb-4">Advanced Property Details</h3>
+
+                                {/* Vastu Compliance */}
+                                <div className="mb-6">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Vastu Compliance
+                                    </label>
+                                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                                        {vastuCompliance.map((option) => (
+                                            <div key={option} className="flex items-start">
+                                                <div className="flex items-center h-5">
+                                                    <input
+                                                        id={`vastu-${option}`}
+                                                        type="checkbox"
+                                                        value={option}
+                                                        checked={(formData.vastuCompliance || []).includes(option)}
+                                                        onChange={(e) => {
+                                                            if (e.target.checked) {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    vastuCompliance: [...(formData.vastuCompliance || []), option]
+                                                                });
+                                                            } else {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    vastuCompliance: (formData.vastuCompliance || []).filter(item => item !== option)
+                                                                });
+                                                            }
+                                                        }}
+                                                        className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                    />
+                                                </div>
+                                                <div className="ml-2 text-sm">
+                                                    <label htmlFor={`vastu-${option}`} className="text-gray-700">
+                                                        {option}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Loan Approval Status */}
+                                <div className="mb-6">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Loan Approval Status
+                                    </label>
+                                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                                        {loanApprovalStatus.map((option) => (
+                                            <div key={option} className="flex items-start">
+                                                <div className="flex items-center h-5">
+                                                    <input
+                                                        id={`loan-${option}`}
+                                                        type="checkbox"
+                                                        value={option}
+                                                        checked={(formData.loanApprovalStatus || []).includes(option)}
+                                                        onChange={(e) => {
+                                                            if (e.target.checked) {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    loanApprovalStatus: [...(formData.loanApprovalStatus || []), option]
+                                                                });
+                                                            } else {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    loanApprovalStatus: (formData.loanApprovalStatus || []).filter(item => item !== option)
+                                                                });
+                                                            }
+                                                        }}
+                                                        className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                    />
+                                                </div>
+                                                <div className="ml-2 text-sm">
+                                                    <label htmlFor={`loan-${option}`} className="text-gray-700">
+                                                        {option}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Builder Reputation */}
+                                <div className="mb-6">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Builder Reputation
+                                    </label>
+                                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                                        {builderReputation.map((option) => (
+                                            <div key={option} className="flex items-start">
+                                                <div className="flex items-center h-5">
+                                                    <input
+                                                        id={`builder-${option}`}
+                                                        type="checkbox"
+                                                        value={option}
+                                                        checked={(formData.builderReputation || []).includes(option)}
+                                                        onChange={(e) => {
+                                                            if (e.target.checked) {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    builderReputation: [...(formData.builderReputation || []), option]
+                                                                });
+                                                            } else {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    builderReputation: (formData.builderReputation || []).filter(item => item !== option)
+                                                                });
+                                                            }
+                                                        }}
+                                                        className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                    />
+                                                </div>
+                                                <div className="ml-2 text-sm">
+                                                    <label htmlFor={`builder-${option}`} className="text-gray-700">
+                                                        {option}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Legal Clearance */}
+                                <div className="mb-6">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Legal Clearance
+                                    </label>
+                                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                                        {legalClearance.map((option) => (
+                                            <div key={option} className="flex items-start">
+                                                <div className="flex items-center h-5">
+                                                    <input
+                                                        id={`legal-${option}`}
+                                                        type="checkbox"
+                                                        value={option}
+                                                        checked={(formData.legalClearance || []).includes(option)}
+                                                        onChange={(e) => {
+                                                            if (e.target.checked) {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    legalClearance: [...(formData.legalClearance || []), option]
+                                                                });
+                                                            } else {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    legalClearance: (formData.legalClearance || []).filter(item => item !== option)
+                                                                });
+                                                            }
+                                                        }}
+                                                        className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                    />
+                                                </div>
+                                                <div className="ml-2 text-sm">
+                                                    <label htmlFor={`legal-${option}`} className="text-gray-700">
+                                                        {option}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Maintenance Charges */}
+                                <div className="mb-6">
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Maintenance Charges
+                                    </label>
+                                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                        <div>
+                                            <label htmlFor="minPrice" className="block text-sm font-medium text-gray-700 mb-1">
+                                                Minimum Price
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="minPrice"
+                                                value={formData.maintenanceCharges?.minPrice || ''}
+                                                onChange={(e) => {
+                                                    setFormData({
+                                                        ...formData,
+                                                        maintenanceCharges: {
+                                                            ...(formData.maintenanceCharges || {}),
+                                                            minPrice: e.target.value
+                                                        }
+                                                    });
+                                                }}
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                                placeholder="Min Price"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="maxPrice" className="block text-sm font-medium text-gray-700 mb-1">
+                                                Maximum Price
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="maxPrice"
+                                                value={formData.maintenanceCharges?.maxPrice || ''}
+                                                onChange={(e) => {
+                                                    setFormData({
+                                                        ...formData,
+                                                        maintenanceCharges: {
+                                                            ...(formData.maintenanceCharges || {}),
+                                                            maxPrice: e.target.value
+                                                        }
+                                                    });
+                                                }}
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                                placeholder="Max Price"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="maintPriceUnit" className="block text-sm font-medium text-gray-700 mb-1">
+                                                Price Unit
+                                            </label>
+                                            <select
+                                                id="maintPriceUnit"
+                                                value={formData.maintenanceCharges?.priceUnit || ''}
+                                                onChange={(e) => {
+                                                    setFormData({
+                                                        ...formData,
+                                                        maintenanceCharges: {
+                                                            ...(formData.maintenanceCharges || {}),
+                                                            priceUnit: e.target.value
+                                                        }
+                                                    });
+                                                }}
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            >
+                                                <option value="">Select Unit</option>
+                                                <option value="₹">₹ (Rupees)</option>
+                                                <option value="$">$ (Dollars)</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label htmlFor="maintAreaUnit" className="block text-sm font-medium text-gray-700 mb-1">
+                                                Area Unit
+                                            </label>
+                                            <select
+                                                id="maintAreaUnit"
+                                                value={formData.maintenanceCharges?.areaUnit || ''}
+                                                onChange={(e) => {
+                                                    setFormData({
+                                                        ...formData,
+                                                        maintenanceCharges: {
+                                                            ...(formData.maintenanceCharges || {}),
+                                                            areaUnit: e.target.value
+                                                        }
+                                                    });
+                                                }}
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            >
+                                                <option value="">Select Unit</option>
+                                                <option value="sqft">sq.ft</option>
+                                                <option value="sqm">sq.m</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Environmental Factors */}
+                                <div className="mb-6">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Environmental Factors
+                                    </label>
+                                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                                        {environmentalFactors.map((option) => (
+                                            <div key={option} className="flex items-start">
+                                                <div className="flex items-center h-5">
+                                                    <input
+                                                        id={`env-${option}`}
+                                                        type="checkbox"
+                                                        value={option}
+                                                        checked={(formData.environmentalFactors || []).includes(option)}
+                                                        onChange={(e) => {
+                                                            if (e.target.checked) {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    environmentalFactors: [...(formData.environmentalFactors || []), option]
+                                                                });
+                                                            } else {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    environmentalFactors: (formData.environmentalFactors || []).filter(item => item !== option)
+                                                                });
+                                                            }
+                                                        }}
+                                                        className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                    />
+                                                </div>
+                                                <div className="ml-2 text-sm">
+                                                    <label htmlFor={`env-${option}`} className="text-gray-700">
+                                                        {option}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Kitchen Type */}
+                                <div className="mb-6">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Kitchen Type
+                                    </label>
+                                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                                        {kitchenType.map((option) => (
+                                            <div key={option} className="flex items-start">
+                                                <div className="flex items-center h-5">
+                                                    <input
+                                                        id={`kitchen-${option}`}
+                                                        type="checkbox"
+                                                        value={option}
+                                                        checked={(formData.kitchenType || []).includes(option)}
+                                                        onChange={(e) => {
+                                                            if (e.target.checked) {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    kitchenType: [...(formData.kitchenType || []), option]
+                                                                });
+                                                            } else {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    kitchenType: (formData.kitchenType || []).filter(item => item !== option)
+                                                                });
+                                                            }
+                                                        }}
+                                                        className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                    />
+                                                </div>
+                                                <div className="ml-2 text-sm">
+                                                    <label htmlFor={`kitchen-${option}`} className="text-gray-700">
+                                                        {option}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Bathroom Features */}
+                                <div className="mb-6">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Bathroom Features
+                                    </label>
+                                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                                        {bathroomFeatures.map((option) => (
+                                            <div key={option} className="flex items-start">
+                                                <div className="flex items-center h-5">
+                                                    <input
+                                                        id={`bathroom-${option}`}
+                                                        type="checkbox"
+                                                        value={option}
+                                                        checked={(formData.bathroomFeatures || []).includes(option)}
+                                                        onChange={(e) => {
+                                                            if (e.target.checked) {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    bathroomFeatures: [...(formData.bathroomFeatures || []), option]
+                                                                });
+                                                            } else {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    bathroomFeatures: (formData.bathroomFeatures || []).filter(item => item !== option)
+                                                                });
+                                                            }
+                                                        }}
+                                                        className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                    />
+                                                </div>
+                                                <div className="ml-2 text-sm">
+                                                    <label htmlFor={`bathroom-${option}`} className="text-gray-700">
+                                                        {option}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Special Categories */}
+                                <div className="mb-6">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Special Categories
+                                    </label>
+                                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                                        {specialCategories.map((option) => (
+                                            <div key={option} className="flex items-start">
+                                                <div className="flex items-center h-5">
+                                                    <input
+                                                        id={`special-${option}`}
+                                                        type="checkbox"
+                                                        value={option}
+                                                        checked={(formData.specialCategories || []).includes(option)}
+                                                        onChange={(e) => {
+                                                            if (e.target.checked) {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    specialCategories: [...(formData.specialCategories || []), option]
+                                                                });
+                                                            } else {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    specialCategories: (formData.specialCategories || []).filter(item => item !== option)
+                                                                });
+                                                            }
+                                                        }}
+                                                        className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                    />
+                                                </div>
+                                                <div className="ml-2 text-sm">
+                                                    <label htmlFor={`special-${option}`} className="text-gray-700">
+                                                        {option}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Flooring Type */}
+                                <div className="mb-6">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Flooring Type
+                                    </label>
+                                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                                        {flooringType.map((option) => (
+                                            <div key={option} className="flex items-start">
+                                                <div className="flex items-center h-5">
+                                                    <input
+                                                        id={`flooring-${option}`}
+                                                        type="checkbox"
+                                                        value={option}
+                                                        checked={(formData.flooringType || []).includes(option)}
+                                                        onChange={(e) => {
+                                                            if (e.target.checked) {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    flooringType: [...(formData.flooringType || []), option]
+                                                                });
+                                                            } else {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    flooringType: (formData.flooringType || []).filter(item => item !== option)
+                                                                });
+                                                            }
+                                                        }}
+                                                        className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                    />
+                                                </div>
+                                                <div className="ml-2 text-sm">
+                                                    <label htmlFor={`flooring-${option}`} className="text-gray-700">
+                                                        {option}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Social Infrastructure */}
+                                <div className="mb-6">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Social Infrastructure
+                                    </label>
+                                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                                        {socialInfrastructure.map((option) => (
+                                            <div key={option} className="flex items-start">
+                                                <div className="flex items-center h-5">
+                                                    <input
+                                                        id={`social-${option}`}
+                                                        type="checkbox"
+                                                        value={option}
+                                                        checked={(formData.socialInfrastructure || []).includes(option)}
+                                                        onChange={(e) => {
+                                                            if (e.target.checked) {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    socialInfrastructure: [...(formData.socialInfrastructure || []), option]
+                                                                });
+                                                            } else {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    socialInfrastructure: (formData.socialInfrastructure || []).filter(item => item !== option)
+                                                                });
+                                                            }
+                                                        }}
+                                                        className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                    />
+                                                </div>
+                                                <div className="ml-2 text-sm">
+                                                    <label htmlFor={`social-${option}`} className="text-gray-700">
+                                                        {option}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            {/* Financing Options */}
+                            <div className="mb-6">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    Financing Options
+                                </label>
+                                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                                    {financingOptionsArray.map((option) => (
+                                        <div key={option} className="flex items-start">
+                                            <div className="flex items-center h-5">
+                                                <input
+                                                    id={`finance-${option}`}
+                                                    type="checkbox"
+                                                    value={option}
+                                                    checked={(formData.financingOptions || []).includes(option)}
+                                                    onChange={(e) => {
+                                                        if (e.target.checked) {
+                                                            setFormData({
+                                                                ...formData,
+                                                                financingOptions: [...(formData.financingOptions || []), option]
+                                                            });
+                                                        } else {
+                                                            setFormData({
+                                                                ...formData,
+                                                                financingOptions: (formData.financingOptions || []).filter(item => item !== option)
+                                                            });
+                                                        }
+                                                    }}
+                                                    className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                />
+                                            </div>
+                                            <div className="ml-2 text-sm">
+                                                <label htmlFor={`finance-${option}`} className="text-gray-700">
+                                                    {option}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                             {/* WhatsApp and ProxiPro Options - Add this below the contact numbers section in Step 7 */}
                             <div className="mt-6 border-t pt-6">
                                 <h3 className="text-md font-medium text-gray-800 mb-4">Communication Preferences</h3>

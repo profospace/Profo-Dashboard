@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
 
 const UserCard = ({ user, onDeleteUser }) => {
-    console.log("user", user)
     const navigate = useNavigate();
 
     const handleViewProfile = () => {
