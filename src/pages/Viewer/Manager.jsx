@@ -57,6 +57,7 @@ const ExportConfigsList = () => {
             });
 
             const response = await axios.get(`${base_url}/api/export-configs?${queryParams}`);
+            console.log("response" , response)
             setConfigs(response.data.data);
             setPagination({
                 total: response.data.total,
@@ -149,8 +150,64 @@ const ExportConfigsList = () => {
             : <FiChevronDown className="w-4 h-4 ml-1" />;
     };
 
+    // const renderPagination = () => {
+    //     const { page, pages, total } = pagination;
+
+    //     return (
+    //         <div className="flex items-center justify-between mt-6 px-4">
+    //             <div className="text-sm text-gray-600">
+    //                 Showing {Math.min((page - 1) * filters.limit + 1, total)} to {Math.min(page * filters.limit, total)} of {total} results
+    //             </div>
+
+    //             <div className="flex space-x-2">
+    //                 <button
+    //                     onClick={() => handleFilterChange('page', Math.max(1, page - 1))}
+    //                     disabled={page === 1}
+    //                     className={`px-3 py-1 rounded-md ${page === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-blue-600 hover:bg-blue-50 border border-gray-300'}`}
+    //                 >
+    //                     Previous
+    //                 </button>
+
+    //                 {[...Array(Math.min(5, pages))].map((_, i) => {
+    //                     const pageNum = page <= 3
+    //                         ? i + 1
+    //                         : page >= pages - 2
+    //                             ? pages - 4 + i
+    //                             : page - 2 + i;
+
+    //                     if (pageNum <= 0 || pageNum > pages) return null;
+
+    //                     return (
+    //                         <button
+    //                             key={pageNum}
+    //                             onClick={() => handleFilterChange('page', pageNum)}
+    //                             className={`px-3 py-1 rounded-md ${pageNum === page
+    //                                 ? 'bg-blue-600 text-white'
+    //                                 : 'bg-white text-blue-600 hover:bg-blue-50 border border-gray-300'}`}
+    //                         >
+    //                             {pageNum}
+    //                         </button>
+    //                     );
+    //                 })}
+
+    //                 <button
+    //                     onClick={() => handleFilterChange('page', Math.min(pages, page + 1))}
+    //                     disabled={page === pages}
+    //                     className={`px-3 py-1 rounded-md ${page === pages ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-blue-600 hover:bg-blue-50 border border-gray-300'}`}
+    //                 >
+    //                     Next
+    //                 </button>
+    //             </div>
+    //         </div>
+    //     );
+    // };
+
+
     const renderPagination = () => {
         const { page, pages, total } = pagination;
+
+        // Ensure pages is a valid number greater than or equal to 0
+        const validPages = Math.max(0, isNaN(pages) ? 0 : pages);
 
         return (
             <div className="flex items-center justify-between mt-6 px-4">
@@ -167,14 +224,14 @@ const ExportConfigsList = () => {
                         Previous
                     </button>
 
-                    {[...Array(Math.min(5, pages))].map((_, i) => {
+                    {validPages > 0 && Array.from({ length: Math.min(5, validPages) }).map((_, i) => {
                         const pageNum = page <= 3
                             ? i + 1
-                            : page >= pages - 2
-                                ? pages - 4 + i
+                            : page >= validPages - 2
+                                ? validPages - 4 + i
                                 : page - 2 + i;
 
-                        if (pageNum <= 0 || pageNum > pages) return null;
+                        if (pageNum <= 0 || pageNum > validPages) return null;
 
                         return (
                             <button
@@ -190,9 +247,9 @@ const ExportConfigsList = () => {
                     })}
 
                     <button
-                        onClick={() => handleFilterChange('page', Math.min(pages, page + 1))}
-                        disabled={page === pages}
-                        className={`px-3 py-1 rounded-md ${page === pages ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-blue-600 hover:bg-blue-50 border border-gray-300'}`}
+                        onClick={() => handleFilterChange('page', Math.min(validPages, page + 1))}
+                        disabled={page === validPages || validPages === 0}
+                        className={`px-3 py-1 rounded-md ${page === validPages || validPages === 0 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-blue-600 hover:bg-blue-50 border border-gray-300'}`}
                     >
                         Next
                     </button>
@@ -200,7 +257,6 @@ const ExportConfigsList = () => {
             </div>
         );
     };
-
     return (
         <div className="mx-auto ">
             <div className="bg-white  rounded-lg overflow-hidden">
@@ -482,7 +538,7 @@ const ExportConfigsList = () => {
                         </div>
 
                         {/* Pagination */}
-                        {configs.length > 0 && renderPagination()}
+                        {configs?.length > 0 && renderPagination()}
                     </>
                 )}
             </div>

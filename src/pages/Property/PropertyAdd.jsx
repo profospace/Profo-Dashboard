@@ -846,7 +846,7 @@ const PropertyAdd = ({ user }) => {
                 </div>
                 <Steps
                     current={currentStep - 1}
-                    percent={((currentStep - 1) / 7) * 100}
+                    percent={((currentStep - 1) / 6) * 100}
                     onChange={(current) => navigateToStep(current + 1)}
                     items={[
                         {
