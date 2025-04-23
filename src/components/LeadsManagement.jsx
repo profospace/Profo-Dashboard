@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { base_url } from '../../utils/base_url';
+import { getAuthConfig } from '../../utils/authConfig';
 
 const LeadsManagement = () => {
   const [leads, setLeads] = useState([]);
@@ -12,7 +13,7 @@ const LeadsManagement = () => {
 
   const fetchLeads = async () => {
     try {
-      const response = await fetch(`${base_url}/property-lead/api/leads`);
+      const response = await fetch(`${base_url}/property-lead/api/leads` , getAuthConfig());
       if (!response.ok) throw new Error('Failed to fetch leads');
       const data = await response.json();
       setLeads(data);

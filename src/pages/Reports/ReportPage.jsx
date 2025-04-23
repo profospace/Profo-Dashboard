@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast';
 import { FiChevronLeft, FiChevronRight, FiFilter, FiRefreshCw, FiAlertCircle, FiCheckCircle, FiClock, FiXCircle, FiPhone, FiHome } from 'react-icons/fi';
 import { BiBuilding, BiBuildings } from 'react-icons/bi';
 import { base_url } from '../../../utils/base_url';
+import { getAuthConfig } from '../../../utils/authConfig';
 
 const ReportPage = () => {
     // State variables
@@ -90,7 +91,7 @@ const ReportPage = () => {
                 )
             }).toString();
 
-            const response = await axios.get(`${base_url}/api/report?${queryParams}`);
+            const response = await axios.get(`${base_url}/api/report?${queryParams}`, getAuthConfig());
 
             if (response.data.success) {
                 setReports(response.data.data);
@@ -108,7 +109,7 @@ const ReportPage = () => {
     // Fetch report statistics
     const fetchStats = async () => {
         try {
-            const response = await axios.get(`${base_url}/api/report/stats`);
+            const response = await axios.get(`${base_url}/api/report/stats` , getAuthConfig());
 
             if (response.data.success) {
                 setStats(response.data.data);
@@ -165,11 +166,7 @@ const ReportPage = () => {
                     status: statusUpdate,
                     adminNotes: adminNotes.trim() ? adminNotes : undefined
                 },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`
-                    }
-                }
+                getAuthConfig()
             );
 
             if (response.data.success) {

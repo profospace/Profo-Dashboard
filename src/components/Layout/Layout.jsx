@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Layout, Menu, theme, Breadcrumb } from 'antd';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, Outlet } from 'react-router-dom';
 import {
     HomeOutlined,
     BuildOutlined,
@@ -37,7 +37,7 @@ const PropertyManagerLayout = ({ children }) => {
         {
             key: '/',
             icon: <HomeOutlined />,
-            label: <Link to="/">Dashboard</Link>,
+            label: <Link to="/dashboard">Dashboard</Link>,
         },
         // {
         //     key: '/properties',
@@ -58,6 +58,11 @@ const PropertyManagerLayout = ({ children }) => {
             key: '/reports',
             icon: <HomeOutlined />,
             label: <Link to="/reports">Reports</Link>,
+        },
+        {
+            key: '/sync-db-prod',
+            icon: <HomeOutlined />,
+            label: <Link to="/sync-db-prod">Admin Sync Dashboard</Link>,
         },
         {
             key: '/callbacks',
@@ -308,7 +313,7 @@ const PropertyManagerLayout = ({ children }) => {
                         <span style={{ marginLeft: 12, fontSize: 18, fontWeight: 'bold' }}>Property Manager</span>
                     </div>
                 </Header>
-                <Content style={{ margin: '0 16px' }}>
+                {/* <Content style={{ margin: '0 16px' }}>
                     <Breadcrumb style={{ margin: '16px 0' }} items={breadcrumbItems} />
                     <div
                         style={{
@@ -320,6 +325,10 @@ const PropertyManagerLayout = ({ children }) => {
                     >
                         {children}
                     </div>
+                </Content> */}
+                <Content style={{ margin: '24px 16px', padding: 24, minHeight: 280, background: colorBgContainer }}>
+                    <Breadcrumb items={breadcrumbItems} style={{ marginBottom: 16 }} />
+                    {children || <Outlet />}
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>
                     Property Manager ©{new Date().getFullYear()}

@@ -7,6 +7,8 @@ import Pagination from '../common/Pagination';
 import Spinner from '../common/Spinner';
 import { ConfirmationModal } from '../common/Modal';
 import { userService } from '../../api/apiService';
+import axios from 'axios';
+import { base_url } from '../../../utils/base_url';
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
@@ -83,12 +85,16 @@ const UserList = () => {
         setPagination((prev) => ({ ...prev, page: 1 })); // Reset to first page on filter reset
     };
 
-    const handleDeleteUser = (userId, userName) => {
+    const handleDeleteUser = async(userId, userName) => {
         setDeleteModal({
             isOpen: true,
             userId,
             userName,
         });
+
+        const response = await axios.delete(`${base_url}/api/delete/user/${userId}`)
+        
+            console.log(response)
     };
 
     const confirmDeleteUser = async () => {

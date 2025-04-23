@@ -126,7 +126,7 @@ const UserCard = ({ user, onDeleteUser }) => {
                         <Button
                             variant="danger"
                             size="sm"
-                            onClick={() => onDeleteUser(user.id, user.name || 'this user')}
+                            onClick={() => onDeleteUser(user._id, user.name || 'this user')}
                         >
                             Delete
                         </Button>

@@ -3030,8 +3030,8 @@ const ListOptions = () => {
             {/* Notification Toast */}
             {notification.show && (
                 <div className={`fixed bottom-4 right-4 px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 ${notification.type === 'success' ? 'bg-green-500 text-white' :
-                        notification.type === 'error' ? 'bg-red-500 text-white' :
-                            'bg-blue-500 text-white'
+                    notification.type === 'error' ? 'bg-red-500 text-white' :
+                        'bg-blue-500 text-white'
                     }`}>
                     <span>{notification.message}</span>
                     <button onClick={() => setNotification({ ...notification, show: false })} className="text-white">

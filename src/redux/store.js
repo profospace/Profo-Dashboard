@@ -4,6 +4,7 @@ import projectsReducer from './features/Projects/projectsSlice';
 import buildingsReducer from './features/Buildings/buildingsSlice';
 import leadsReducer from './features/Leads/leadsSlice';
 import usersReducer from './features/Users/usersSlice';
+import authReducer from "./features/auth/authSlice";
 
 export const store = configureStore({
     reducer: {
@@ -12,6 +13,8 @@ export const store = configureStore({
         buildings: buildingsReducer,
         leads: leadsReducer,
         users: usersReducer,
+        auth: authReducer,
+
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

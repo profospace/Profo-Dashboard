@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
 import { base_url } from '../../../utils/base_url';
+import { getAuthConfig } from '../../../utils/authConfig';
 
 // Status Badge Component
 const StatusBadge = ({ status }) => {
@@ -114,7 +115,7 @@ const Callbacks = () => {
         try {
             const params = { ...filters };
 
-            const response = await axios.get(`${base_url}/api/callback/admin/callbacks`, { params });
+            const response = await axios.get(`${base_url}/api/callback/admin/callbacks`, getAuthConfig(), { params } , );
 
             setCallbacks(response.data.data);
             setPagination(response.data.pagination);
@@ -198,7 +199,7 @@ const Callbacks = () => {
     // Update callback status
     const updateCallbackStatus = async () => {
         try {
-            await axios.patch(`${base_url}/api/callback/admin/callbacks/${selectedCallback._id}`, updateData);
+            await axios.patch(`${base_url}/api/callback/admin/callbacks/${selectedCallback._id}`, updateData, getAuthConfig());
             fetchCallbacks();
             setShowModal(false);
         } catch (error) {
