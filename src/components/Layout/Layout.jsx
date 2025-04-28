@@ -60,6 +60,34 @@ const PropertyManagerLayout = ({ children }) => {
             label: <Link to="/reports">Reports</Link>,
         },
         {
+            key: 'property',
+            icon: <AppstoreOutlined />,
+            label: 'Properties',
+            children: [
+                {
+                    key: '/properties-management',
+                    label: <Link to="/properties-management">All Properties</Link>,
+                },
+                {
+                    key: '/property-add',
+                    label: <Link to="/property-add">Add New Property</Link>,
+                },
+                {
+                    key: '/property-edit/:propertyId',
+                    label: <Link to="/property-edit/:propertyId">Edit Property</Link>,
+                },
+                {
+                    key: '/property-drafts',
+                    label: <Link to="/property-drafts">Property Drafts</Link>,
+                }
+            ]
+        },
+        {
+            key: '/watermark',
+            icon: <HomeOutlined />,
+            label: <Link to="/watermark">Watermark</Link>,
+        },
+        {
             key: '/sync-db-prod',
             icon: <HomeOutlined />,
             label: <Link to="/sync-db-prod">Admin Sync Dashboard</Link>,
@@ -231,29 +259,7 @@ const PropertyManagerLayout = ({ children }) => {
                 },
             ],
         },
-        {
-            key: 'property',
-            icon: <AppstoreOutlined />,
-            label: 'Properties',
-            children: [
-                {
-                    key: '/properties-management',
-                    label: <Link to="/properties-management">All Properties</Link>,
-                },
-                {
-                    key: '/property-add',
-                    label: <Link to="/property-add">Add New Property</Link>,
-                },
-                {
-                    key: '/property-edit/:propertyId',
-                    label: <Link to="/property-edit/:propertyId">Edit Property</Link>,
-                },
-                {
-                    key: '/property-drafts',
-                    label: <Link to="/property-drafts">Property Drafts</Link>,
-                }
-            ]
-        },
+        
 
         {
             key: 'project',
@@ -294,7 +300,25 @@ const PropertyManagerLayout = ({ children }) => {
                 breakpoint="lg"
                 collapsedWidth="80"
             >
-                <div style={{ height: 32, margin: 16, background: 'rgba(255, 255, 255, 0.2)', borderRadius: 6 }} />
+                {/* <div style={{ height: 32, margin: 16, background: 'rgba(255, 255, 255, 0.2)', borderRadius: 6 }} /> */}
+                <div className="logo" style={{
+                    height: '64px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: collapsed ? 'center' : 'flex-start',
+                    padding: collapsed ? '0' : '0 16px',
+                    color: '#000',
+                    fontSize: '18px',
+                    fontWeight: 'bold',
+                    overflow: 'hidden',
+                }}>
+                    {collapsed ?
+                        <img src='/assets/logo.png' className='w-12 h-12' /> :
+                        <>
+                            <h1 className='text-5xl text-[crimson] font-bold' >PROFO</h1>
+                        </>
+                    }
+                </div>
                 <Menu
                     theme="dark"
                     mode="inline"
@@ -310,7 +334,8 @@ const PropertyManagerLayout = ({ children }) => {
                             onClick: () => setCollapsed(!collapsed),
                             style: { fontSize: 18 }
                         })}
-                        <span style={{ marginLeft: 12, fontSize: 18, fontWeight: 'bold' }}>Property Manager</span>
+                        {/* dynamic Heading will be added in future */}
+                        {/* <span style={{ marginLeft: 12, fontSize: 18, fontWeight: 'bold' }}>Property Manager</span> */}
                     </div>
                 </Header>
                 {/* <Content style={{ margin: '0 16px' }}>

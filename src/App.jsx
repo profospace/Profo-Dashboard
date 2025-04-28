@@ -110,6 +110,7 @@ const Error = lazy(() => import('./pages/PageNotfound/Error'));
 import ProtectedRoutes from './routing/ProtectedRoutes';
 import { jwtDecode } from "jwt-decode";
 import AdminSyncDashboard from './pages/AdminSyncDashboard';
+import WatermarkManager from './pages/Watermark/WatermarkManager';
 
 function App() {
   const dispatch = useDispatch();
@@ -158,6 +159,11 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
 
             <Route path="/testing-dash" element={<AdminEmailDashboard />} />
+
+
+            {/* watermark */}
+            <Route path="/watermark" element={<WatermarkManager />} />
+
 
             {/* Db sync */}
             <Route path="/sync-db-prod" element={<AdminSyncDashboard />} />
