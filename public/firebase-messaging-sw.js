@@ -1,31 +1,76 @@
-// // 3. Register the service worker (create a file called firebase-messaging-sw.js in your public folder)
-// // Content of firebase-messaging-sw.js:
+// // // 3. Register the service worker (create a file called firebase-messaging-sw.js in your public folder)
+// // // Content of firebase-messaging-sw.js:
+// // importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js');
+// // importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js');
+
+// // firebase.initializeApp({
+// //     apiKey: 'AIzaSyCkrk6Ytxnb4ynSxEYYZBX_UjUQm4DHjc8',
+// //     authDomain: 'propertify-3f513.firebaseapp.com',
+// //     projectId: 'propertify-3f513',
+// //     storageBucket: ' propertify-3f513.appspot.com',
+// //     messagingSenderId: '73124242596',
+// //     appId: '1:73124242596:android:b12e8e412e4357346df231'
+// // });
+
+// // const messaging = firebase.messaging();
+
+// // messaging.onBackgroundMessage((payload) => {
+// //   console.log('Background message received:', payload);
+
+// //   // Customize notification here
+// //   const notificationTitle = payload.notification.title;
+// //   const notificationOptions = {
+// //     body: payload.notification.body,
+// //     icon: '/logo192.png'
+// //   };
+
+// //   self.registration.showNotification(notificationTitle, notificationOptions);
+// // });
+
+// // Firebase Cloud Messaging Service Worker
 // importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js');
 // importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js');
 
+// // Listen for the 'install' event to ensure SW is properly installed
+// self.addEventListener('install', (event) => {
+//     console.log('Service Worker installing...');
+//     self.skipWaiting(); // Force activation on install
+// });
+
+// // Listen for the 'activate' event to ensure SW is active
+// self.addEventListener('activate', (event) => {
+//     console.log('Service Worker activated.');
+// });
+
+// // Initialize Firebase
 // firebase.initializeApp({
 //     apiKey: 'AIzaSyCkrk6Ytxnb4ynSxEYYZBX_UjUQm4DHjc8',
 //     authDomain: 'propertify-3f513.firebaseapp.com',
 //     projectId: 'propertify-3f513',
-//     storageBucket: ' propertify-3f513.appspot.com',
+//     storageBucket: 'propertify-3f513.appspot.com', // Fixed: removed space
 //     messagingSenderId: '73124242596',
 //     appId: '1:73124242596:android:b12e8e412e4357346df231'
 // });
 
+// // Get messaging instance
 // const messaging = firebase.messaging();
 
+// // Handle background messages
 // messaging.onBackgroundMessage((payload) => {
-//   console.log('Background message received:', payload);
+//     console.log('Background message received:', payload);
 
-//   // Customize notification here
-//   const notificationTitle = payload.notification.title;
-//   const notificationOptions = {
-//     body: payload.notification.body,
-//     icon: '/logo192.png'
-//   };
+//     // Customize notification here
+//     const notificationTitle = payload.notification.title || 'New Notification';
+//     const notificationOptions = {
+//         body: payload.notification.body || '',
+//         icon: '/logo192.png',
+//         badge: '/badge-icon.png',
+//         data: payload.data
+//     };
 
-//   self.registration.showNotification(notificationTitle, notificationOptions);
+//     self.registration.showNotification(notificationTitle, notificationOptions);
 // });
+
 
 // Firebase Cloud Messaging Service Worker
 importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js');
@@ -40,6 +85,15 @@ self.addEventListener('install', (event) => {
 // Listen for the 'activate' event to ensure SW is active
 self.addEventListener('activate', (event) => {
     console.log('Service Worker activated.');
+    event.waitUntil(self.clients.claim()); // Take control immediately
+});
+
+// Add push event listener for debugging purposes
+self.addEventListener('push', function (event) {
+    console.log('Push event received:', event);
+    if (event.data) {
+        console.log('Push data:', event.data.json());
+    }
 });
 
 // Initialize Firebase
@@ -47,7 +101,7 @@ firebase.initializeApp({
     apiKey: 'AIzaSyCkrk6Ytxnb4ynSxEYYZBX_UjUQm4DHjc8',
     authDomain: 'propertify-3f513.firebaseapp.com',
     projectId: 'propertify-3f513',
-    storageBucket: 'propertify-3f513.appspot.com', // Fixed: removed space
+    storageBucket: 'propertify-3f513.appspot.com',
     messagingSenderId: '73124242596',
     appId: '1:73124242596:android:b12e8e412e4357346df231'
 });
@@ -59,14 +113,57 @@ const messaging = firebase.messaging();
 messaging.onBackgroundMessage((payload) => {
     console.log('Background message received:', payload);
 
-    // Customize notification here
-    const notificationTitle = payload.notification.title || 'New Notification';
-    const notificationOptions = {
-        body: payload.notification.body || '',
-        icon: '/logo192.png',
+    // Extract notification data
+    const notificationTitle = payload.notification?.title || 'New Notification';
+    const notificationBody = payload.notification?.body || '';
+    const notificationImage = payload.notification?.image || '/logo192.png';
+    const notificationData = payload.data || {};
+
+    // Show notification
+    const options = {
+        body: notificationBody,
+        icon: notificationImage,
         badge: '/badge-icon.png',
-        data: payload.data
+        data: notificationData,
+        vibrate: [100, 50, 100],
+        requireInteraction: true // Keep notification until user interacts with it
     };
 
-    self.registration.showNotification(notificationTitle, notificationOptions);
+    // Add click action if available
+    if (notificationData.clickAction) {
+        options.data.clickAction = notificationData.clickAction;
+    }
+
+    // Register for notification click events
+    self.addEventListener('notificationclick', (event) => {
+        console.log('Notification clicked', event);
+        event.notification.close();
+
+        // Get the click action URL or default to opening the app
+        const clickAction = event.notification.data.clickAction || '/';
+
+        // Focus on existing window or open a new one
+        event.waitUntil(
+            self.clients.matchAll({ type: 'window', includeUncontrolled: true })
+                .then((clientList) => {
+                    // Check if there's already a window/tab open with the target URL
+                    for (const client of clientList) {
+                        if (client.url.includes(clickAction) && 'focus' in client) {
+                            return client.focus();
+                        }
+                    }
+                    // If no window/tab is open with the target URL, open a new one
+                    if (self.clients.openWindow) {
+                        return self.clients.openWindow(clickAction);
+                    }
+                })
+        );
+    });
+
+    self.registration.showNotification(notificationTitle, options);
+});
+
+// Log errors to help with debugging
+self.addEventListener('error', function (event) {
+    console.error('Service Worker error:', event.message, event.filename, event.lineno);
 });
