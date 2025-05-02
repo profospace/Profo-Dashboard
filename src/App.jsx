@@ -125,30 +125,30 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
-  const CheckAuth = () => {
-    const token = localStorage.getItem("authToken");
+  // const CheckAuth = () => {
+  //   const token = localStorage.getItem("authToken");
 
-    if (token) {
-      const decoded = jwtDecode(token); // doesn't verify, just decodes
-      const currentTime = Date.now() / 1000;
+  //   if (token) {
+  //     const decoded = jwtDecode(token); // doesn't verify, just decodes
+  //     const currentTime = Date.now() / 1000;
 
-      if (decoded?.exp && decoded.exp < currentTime) {
-        localStorage.removeItem("authToken");
-        navigate("/");
-      } else {
-        // console.log("User authenticated", decoded);
-        // Optionally dispatch to redux: dispatch(setUser(decoded));
-      }
-    } else {
-      navigate("/");
-    }
-  };
+  //     if (decoded?.exp && decoded.exp < currentTime) {
+  //       localStorage.removeItem("authToken");
+  //       navigate("/");
+  //     } else {
+  //       // console.log("User authenticated", decoded);
+  //       // Optionally dispatch to redux: dispatch(setUser(decoded));
+  //     }
+  //   } else {
+  //     navigate("/");
+  //   }
+  // };
 
-  useEffect(
-    () => {
-      CheckAuth()
-    }, []
-  )
+  // useEffect(
+  //   () => {
+  //     CheckAuth()
+  //   }, []
+  // )
 
 
   // const [deviceToken, setDeviceToken] = useState(null);
