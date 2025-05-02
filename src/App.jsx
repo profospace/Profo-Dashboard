@@ -294,8 +294,8 @@ function App() {
           <Route path='/login' element={<LoginForm />} />
           <Route path="/api/admin/verify-email/:token" element={<VerifyEmail />} />
 
-          {/* <Route path='/' element={<ProtectedRoutes><PropertyManagerLayout /></ProtectedRoutes>}> */}
-          <Route path='/' element={<><PropertyManagerLayout /></>}>
+          <Route path='/' element={<ProtectedRoutes><PropertyManagerLayout /></ProtectedRoutes>}>
+          {/* <Route path='/' element={<><PropertyManagerLayout /></>}> */}
             <Route path="/dashboard" element={<Dashboard />} />
 
             <Route path="/testing-dash" element={<AdminEmailDashboard />} />
