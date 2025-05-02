@@ -69,15 +69,16 @@ function VerifyEmail() {
     useEffect(() => {
         const verifyEmail = async () => {
             try {
-                // Call the verification endpoint
+                // Call the verification endpoint - backend 
                 const response = await axios.get(`${base_url}/api/admin/verify-email/${token}`);
+                console.log("response", response)
                 setStatus("success");
                 setMessage(response.data || "Email verified successfully! You can now login.");
 
                 // Redirect to login page after 3 seconds
                 setTimeout(() => {
                     navigate("/login");
-                }, 3000);
+                }, 10000);
             } catch (error) {
                 // Even if we get an error, there's a possibility the email was verified
                 // This happens if the token was used before but the UI shows an error

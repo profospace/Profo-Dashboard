@@ -135,11 +135,11 @@ function App() {
     }
   };
 
-  useEffect(
-    () => {
-      CheckAuth()
-    }, []
-  )
+  // useEffect(
+  //   () => {
+  //     CheckAuth()
+  //   }, []
+  // )
 
 
 
