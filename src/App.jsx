@@ -289,7 +289,7 @@ function App() {
           />
         )}
         <Routes>
-          <Route path='/' element={<AuthenticationForm />} />
+          {/* <Route path='/' element={<AuthenticationForm />} /> */}
           <Route path='/signup' element={<SignupForm />} />
           <Route path='/login' element={<LoginForm />} />
           <Route path="/api/admin/verify-email/:token" element={<VerifyEmail />} />
