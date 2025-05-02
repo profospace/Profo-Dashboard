@@ -1,0 +1,226 @@
+import React, { useState, useEffect } from 'react';
+import { Plus, Edit, Trash } from './icons';
+import { Alert } from './Alert';
+import TemplateForm from './TemplateForm';
+
+// Sample data for templates
+const sampleTemplates = [
+    {
+        _id: '1',
+        name: 'price-drop',
+        title: 'Price Drop Alert',
+        body: 'The price of {{propertyTitle}} in {{location}} has dropped by {{dropPercentage}}!',
+        imageUrl: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        clickAction: '/property/{{propertyId}}',
+        category: 'property',
+        active: true,
+        variables: ['propertyTitle', 'location', 'dropPercentage', 'propertyId'],
+        sendCount: 1243,
+        lastSentAt: '2023-05-10T08:15:30'
+    },
+    {
+        _id: '2',
+        name: 'new-property',
+        title: 'New Property Alert',
+        body: 'A new property matching your preferences is now available in {{location}}.',
+        imageUrl: 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        clickAction: '/property/{{propertyId}}',
+        category: 'property',
+        active: true,
+        variables: ['location', 'propertyId'],
+        sendCount: 5678,
+        lastSentAt: '2023-05-12T14:30:00'
+    },
+    {
+        _id: '3',
+        name: 'weekly-digest',
+        title: 'Your Weekly Property Digest',
+        body: 'Check out the {{count}} new properties that match your saved searches this week.',
+        imageUrl: '',
+        clickAction: '/saved-searches',
+        category: 'system',
+        active: true,
+        variables: ['count'],
+        sendCount: 12445,
+        lastSentAt: '2023-05-14T09:00:00'
+    }
+];
+
+// Templates Tab Component
+const TemplatesTab = () => {
+    const [templates, setTemplates] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [showAddTemplate, setShowAddTemplate] = useState(false);
+    const [selectedTemplate, setSelectedTemplate] = useState(null);
+
+    useEffect(() => {
+        fetchTemplates();
+    }, []);
+
+    const fetchTemplates = async () => {
+        try {
+            setLoading(true);
+            // Simulate API call with timeout
+            setTimeout(() => {
+                setTemplates(sampleTemplates);
+                setLoading(false);
+            }, 1000);
+        } catch (err) {
+            setError('Error connecting to server');
+            console.error('Failed to fetch templates:', err);
+            setLoading(false);
+        }
+    };
+
+    const handleEditTemplate = (template) => {
+        setSelectedTemplate(template);
+        setShowAddTemplate(true);
+    };
+
+    const handleDeleteTemplate = async (id) => {
+        if (!window.confirm('Are you sure you want to delete this template?')) {
+            return;
+        }
+
+        try {
+            // Simulate API call
+            setTemplates(templates.filter(t => t._id !== id));
+        } catch (err) {
+            setError('Error connecting to server');
+            console.error('Failed to delete template:', err);
+        }
+    };
+
+    return (
+        <div>
+            <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold">Notification Templates</h2>
+                <button
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md flex items-center transition-colors duration-200"
+                    onClick={() => {
+                        setSelectedTemplate(null);
+                        setShowAddTemplate(true);
+                    }}
+                >
+                    <Plus size={16} className="mr-1" />
+                    Add Template
+                </button>
+            </div>
+
+            {error && (
+                <Alert
+                    variant="error"
+                    title="Error"
+                    description={error}
+                    className="mb-4"
+                />
+            )}
+
+            {loading ? (
+                <div className="text-center py-8">
+                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                    <p className="mt-2 text-gray-600">Loading templates...</p>
+                </div>
+            ) : (
+                <>
+                    {templates.length === 0 ? (
+                        <div className="text-center py-8">
+                            <p className="text-gray-500">No templates found. Create your first template to get started.</p>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {templates.map(template => (
+                                <div key={template._id} className="border rounded-lg overflow-hidden bg-white transition-all duration-300 hover:shadow-md">
+                                    <div className="p-4 border-b bg-gray-50 flex justify-between items-center">
+                                        <div>
+                                            <h3 className="font-medium">{template.name}</h3>
+                                            <span className={`text-xs px-2 py-1 rounded-full ${template.active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
+                                                {template.active ? 'Active' : 'Inactive'}
+                                            </span>
+                                            <span className="text-xs ml-2 text-gray-500">{template.category}</span>
+                                        </div>
+                                        <div className="flex space-x-2">
+                                            <button
+                                                className="p-1 text-gray-500 hover:text-blue-500 transition-colors duration-150"
+                                                onClick={() => handleEditTemplate(template)}
+                                            >
+                                                <Edit size={16} />
+                                            </button>
+                                            <button
+                                                className="p-1 text-gray-500 hover:text-red-500 transition-colors duration-150"
+                                                onClick={() => handleDeleteTemplate(template._id)}
+                                            >
+                                                <Trash size={16} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="p-4">
+                                        <div className="mb-2">
+                                            <span className="font-medium text-sm text-gray-500">Title:</span>
+                                            <p>{template.title}</p>
+                                        </div>
+                                        <div className="mb-2">
+                                            <span className="font-medium text-sm text-gray-500">Body:</span>
+                                            <p>{template.body}</p>
+                                        </div>
+                                        {template.imageUrl && (
+                                            <div className="mb-2">
+                                                <span className="font-medium text-sm text-gray-500">Image:</span>
+                                                <div className="mt-1">
+                                                    <img
+                                                        src={template.imageUrl}
+                                                        alt="Template image"
+                                                        className="h-20 object-cover rounded"
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
+                                        {template.variables && template.variables.length > 0 && (
+                                            <div className="mb-2">
+                                                <span className="font-medium text-sm text-gray-500">Variables:</span>
+                                                <div className="flex flex-wrap gap-1 mt-1">
+                                                    {template.variables.map(variable => (
+                                                        <span key={variable} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+                                                            {'{{'}{variable}{'}}'}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                        <div className="text-xs text-gray-500 mt-3">
+                                            Sent {template.sendCount || 0} times
+                                            {template.lastSentAt && ` • Last sent ${new Date(template.lastSentAt).toLocaleDateString()}`}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </>
+            )}
+
+            {showAddTemplate && (
+                <TemplateForm
+                    template={selectedTemplate}
+                    onClose={() => setShowAddTemplate(false)}
+                    onSave={(newTemplate) => {
+                        setShowAddTemplate(false);
+                        if (selectedTemplate) {
+                            setTemplates(templates.map(t =>
+                                t._id === newTemplate._id ? newTemplate : t
+                            ));
+                        } else {
+                            setTemplates([...templates, {
+                                ...newTemplate,
+                                _id: String(Date.now()) // Simple ID for demo
+                            }]);
+                        }
+                    }}
+                />
+            )}
+        </div>
+    );
+};
+
+export default TemplatesTab;

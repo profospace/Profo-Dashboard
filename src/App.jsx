@@ -1,4 +1,4 @@
-import React, { useEffect, lazy, Suspense } from 'react';
+import React, { useEffect, lazy, Suspense, useState } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
@@ -111,29 +111,38 @@ import ProtectedRoutes from './routing/ProtectedRoutes';
 import { jwtDecode } from "jwt-decode";
 import AdminSyncDashboard from './pages/AdminSyncDashboard';
 import WatermarkManager from './pages/Watermark/WatermarkManager';
+import NotificationDashboard from './pages/Notification/NotificationDashboard';
+
+// import { getDeviceToken } from './services/notification';
+// import { onMessage } from 'firebase/messaging';
+// import { messaging } from './services/firebaseInitialize';
+import { getDeviceToken } from './services/notification';
+import NotificationToast from './components/NotificationDashboard/NotificationToast';
+import { onMessage } from 'firebase/messaging';
+import { messaging } from './services/firebaseInitialize';
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
-  const CheckAuth = () => {
-    const token = localStorage.getItem("authToken");
+  // const CheckAuth = () => {
+  //   const token = localStorage.getItem("authToken");
 
-    if (token) {
-      const decoded = jwtDecode(token); // doesn't verify, just decodes
-      const currentTime = Date.now() / 1000;
+  //   if (token) {
+  //     const decoded = jwtDecode(token); // doesn't verify, just decodes
+  //     const currentTime = Date.now() / 1000;
 
-      if (decoded?.exp && decoded.exp < currentTime) {
-        localStorage.removeItem("authToken");
-        navigate("/");
-      } else {
-        // console.log("User authenticated", decoded);
-        // Optionally dispatch to redux: dispatch(setUser(decoded));
-      }
-    } else {
-      navigate("/");
-    }
-  };
+  //     if (decoded?.exp && decoded.exp < currentTime) {
+  //       localStorage.removeItem("authToken");
+  //       navigate("/");
+  //     } else {
+  //       // console.log("User authenticated", decoded);
+  //       // Optionally dispatch to redux: dispatch(setUser(decoded));
+  //     }
+  //   } else {
+  //     navigate("/");
+  //   }
+  // };
 
   // useEffect(
   //   () => {
@@ -142,13 +151,143 @@ function App() {
   // )
 
 
+  // const [deviceToken, setDeviceToken] = useState(null);
+  // const [notification, setNotification] = useState(null);
 
+  // useEffect(() => {
+  //   // Register service worker first to ensure it's available
+  //   const registerServiceWorker = async () => {
+  //     if ('serviceWorker' in navigator) {
+  //       try {
+  //         console.log('Registering service worker...');
+  //         const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
+  //           scope: '/'
+  //         });
+  //         console.log('Service worker registered successfully:', registration);
+  //         return true;
+  //       } catch (error) {
+  //         console.error('Service worker registration failed:', error);
+  //         return false;
+  //       }
+  //     } else {
+  //       console.warn('Service workers not supported in this browser');
+  //       return false;
+  //     }
+  //   };
+
+  //   // Request notification permission and get device token when component mounts
+  //   const initializeNotifications = async () => {
+  //     try {
+  //       // First ensure service worker is registered
+  //       const swRegistered = await registerServiceWorker();
+
+  //       if (!swRegistered) {
+  //         console.warn('Skipping FCM token retrieval due to service worker registration failure');
+  //         return;
+  //       }
+
+  //       // Wait a moment for service worker to initialize
+  //       setTimeout(async () => {
+  //         const token = await getDeviceToken();
+  //         if (token) {
+  //           console.log('Successfully retrieved FCM token');
+  //           setDeviceToken(token);
+
+  //           // You might want to send this token to your backend
+  //           // Example: await sendTokenToBackend(token);
+  //         } else {
+  //           console.warn('FCM token retrieval failed or was denied');
+  //         }
+  //       }, 1000);
+  //     } catch (error) {
+  //       console.error('Error initializing notifications:', error);
+  //     }
+  //   };
+
+  //   initializeNotifications();
+
+  //   // Set up foreground message listener
+  //   let unsubscribe = () => { };
+  //   try {
+  //     unsubscribe = onMessage(messaging, (payload) => {
+  //       console.log('Foreground message received:', payload);
+  //       setNotification({
+  //         title: payload.notification?.title || 'New notification',
+  //         body: payload.notification?.body || '',
+  //         timestamp: new Date().toLocaleTimeString()
+  //       });
+  //     });
+  //   } catch (error) {
+  //     console.error('Error setting up message listener:', error);
+  //   }
+
+  //   // Clean up listener on component unmount
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, []);
+
+  // console.log("deviceToken", deviceToken)
+
+  const [deviceToken, setDeviceToken] = useState(null);
+  const [notification, setNotification] = useState(null);
+  const [tokenRegistered, setTokenRegistered] = useState(false);
+
+  useEffect(() => {
+    // Initialize notifications when component mounts
+    initializeNotifications();
+
+    // Set up foreground notification listener
+    const unsubscribe = onMessage(messaging, (payload) => {
+      console.log('Foreground message received:', payload);
+      setNotification({
+        title: payload.notification?.title || 'New notification',
+        body: payload.notification?.body || '',
+        data: payload.data || {},
+        timestamp: new Date().toLocaleTimeString()
+      });
+    });
+
+    // Clean up listener on component unmount
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  // Initialize notification system
+  const initializeNotifications = async () => {
+    try {
+      // Get device token
+      const token = await getDeviceToken();
+
+      if (token) {
+        console.log('Successfully retrieved FCM token');
+        setDeviceToken(token);
+        setTokenRegistered(true);
+      }
+    } catch (error) {
+      console.error('Error initializing notifications:', error);
+    }
+  };
+
+  // Clear current notification
+  const dismissNotification = () => {
+    setNotification(null);
+  };
+
+  console.log("deviceToken", deviceToken)
 
   return (
     <LoadScript loadingElement={<LoadingPage />} googleMapsApiKey={import.meta.env.VITE_GOOGLE_API_KEY}>
       <Toaster position="top-center" />
       {/* Routes outside of layout */}
       <Suspense fallback={<LoadingFallback />}>
+        {notification && (
+          <NotificationToast
+            notification={notification}
+            onClose={dismissNotification}
+          />
+        )}
         <Routes>
           <Route path='/' element={<AuthenticationForm />} />
           <Route path='/signup' element={<SignupForm />} />
@@ -160,6 +299,7 @@ function App() {
 
             <Route path="/testing-dash" element={<AdminEmailDashboard />} />
 
+            <Route path="/notification" element={<NotificationDashboard />} />
 
             {/* watermark */}
             <Route path="/watermark" element={<WatermarkManager />} />
