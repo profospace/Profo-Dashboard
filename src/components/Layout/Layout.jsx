@@ -60,6 +60,11 @@ const PropertyManagerLayout = ({ children }) => {
             label: <Link to="/reports">Reports</Link>,
         },
         {
+            key: '/notification',
+            icon: <HomeOutlined />,
+            label: <Link to="/notification">Notification</Link>,
+        },
+        {
             key: 'property',
             icon: <AppstoreOutlined />,
             label: 'Properties',

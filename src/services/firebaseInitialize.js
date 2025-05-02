@@ -1,30 +1,14 @@
-// import { initializeApp } from 'firebase/app';
-// import { getMessaging, getToken, onMessage } from 'firebase/messaging';
-
-// const firebaseConfig = {
-//     apiKey: 'AIzaSyCkrk6Ytxnb4ynSxEYYZBX_UjUQm4DHjc8',
-//     authDomain: 'propertify-3f513.firebaseapp.com',
-//     projectId: 'propertify-3f513',
-//     storageBucket: 'propertify-3f513.appspot.com',
-//     messagingSenderId: '73124242596',
-//     appId: '1:73124242596:android:b12e8e412e4357346df231'
-// };
-
-// // Initialize Firebase
-// const firebaseApp = initializeApp(firebaseConfig);
-// export const messaging = getMessaging(firebaseApp);
-
 import { initializeApp } from 'firebase/app';
 import { getMessaging } from 'firebase/messaging';
 
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: 'AIzaSyCkrk6Ytxnb4ynSxEYYZBX_UjUQm4DHjc8',
-    authDomain: 'propertify-3f513.firebaseapp.com',
-    projectId: 'propertify-3f513',
-    storageBucket: 'propertify-3f513.appspot.com',
-    messagingSenderId: '73124242596',
-    appId: '1:73124242596:android:b12e8e412e4357346df231'
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
