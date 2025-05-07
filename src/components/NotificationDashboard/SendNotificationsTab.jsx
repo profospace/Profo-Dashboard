@@ -806,7 +806,7 @@ const SendNotificationsTab = () => {
             // const testUserId = "6801f64ddc168a8e9c2ee495";
             // const testUserId = "68185a22706a3e3493adca9d"; // Anurag
             // const testUserId = "681871785c10e6cae833e83a"; // Anurag - propertify
-            // const testUserId = "680b7c80b7e398771890d49b"; // Aryan - propertify
+            // const testUserId = "6819ca884bcdb3aeb9946fcb"; // Aryan - propertify
             const testUserId = "664e1388301a1e7f55c358f8"; // sir
 
             const response = await axios.post(
