@@ -679,6 +679,8 @@ const SendNotificationsTab = () => {
     const [variableValue, setVariableValue] = useState('');
     const [previewNotification, setPreviewNotification] = useState(null);
 
+    console.log("selectedTemplate", selectedTemplate)
+
     useEffect(() => {
         fetchTemplates();
     }, []);
@@ -852,6 +854,9 @@ const SendNotificationsTab = () => {
                 },
                 testMode: formData.testMode
             };
+
+            // setting up tempplate id 
+            payload.templateId = selectedTemplate?._id
 
             // Add send mode specific data
             if (sendMode === 'filter' && Object.keys(formData.filter).length > 0) {
