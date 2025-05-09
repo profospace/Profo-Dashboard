@@ -677,7 +677,7 @@ const SendNotificationsTab = () => {
     });
     const [variableKey, setVariableKey] = useState('');
     const [variableValue, setVariableValue] = useState('');
-    const [previewNotification, setPreviewNotification] = useState(null);
+    const [previewNotification, setPreviewNotification] = useState(true);
 
     console.log("selectedTemplate", selectedTemplate)
 

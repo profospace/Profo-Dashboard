@@ -78,7 +78,23 @@ const TemplateSelector = ({ onSelectTemplate }) => {
             },
             tags: ['payment', 'reminder', 'due'],
             active: true
+        },
+        {
+            id: 'template6',
+            name: 'subscribed-topic-alert',
+            title: 'New Update on Subscribed Topic',
+            body: 'There’s a new update in your subscribed topic: {{topicName}}. {{updateSummary}}. Tap to explore the latest details!',
+            imageUrl: 'https://wityysaver.s3.ap-south-1.amazonaws.com/gallery_images/PROP1745925467699/2d5a6d8e-9f92-4c3e-9f14-89b5db52b89d_1.jpg',
+            clickAction: 'https://www.profospace.in/topics/{{topicName}}',
+            category: 'system',
+            additionalData: {
+                'postedBy': 'Admin Team',
+                'postedAt': '2025-05-08T10:30:00Z',
+            },
+            tags: ['topic', 'alert', 'update'],
+            active: true
         }
+
     ];
 
     const handleChange = (e) => {
