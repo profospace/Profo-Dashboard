@@ -1,18 +1,20 @@
+
 // import React, { useState, useEffect } from 'react';
 // import { Filter, Users, Zap, Eye, Send } from 'lucide-react';
-// import Alert from '../../components/NotificationDashboard/Alert';
+// import Alert from './Alert';
 // import { base_url } from '../../../utils/base_url';
 // import { getAuthConfig } from '../../../utils/authConfig';
 // import axios from 'axios';
 
 // const SendNotificationsTab = () => {
+//     // Component state remains unchanged
 //     const [templates, setTemplates] = useState([]);
 //     const [selectedTemplate, setSelectedTemplate] = useState(null);
 //     const [loading, setLoading] = useState(true);
 //     const [sending, setSending] = useState(false);
 //     const [error, setError] = useState(null);
 //     const [success, setSuccess] = useState(null);
-//     const [sendMode, setSendMode] = useState('filter'); // filter, users, topic
+//     const [sendMode, setSendMode] = useState('filter');
 //     const [formData, setFormData] = useState({
 //         filter: {},
 //         userIds: '',
@@ -22,7 +24,9 @@
 //     });
 //     const [variableKey, setVariableKey] = useState('');
 //     const [variableValue, setVariableValue] = useState('');
-//     const [previewNotification, setPreviewNotification] = useState(null);
+//     const [previewNotification, setPreviewNotification] = useState(true);
+
+//     console.log("selectedTemplate", selectedTemplate)
 
 //     useEffect(() => {
 //         fetchTemplates();
@@ -31,18 +35,19 @@
 //     const fetchTemplates = async () => {
 //         try {
 //             setLoading(true);
+//             const response = await axios.get(`${base_url}/api/notifications/admin/templates`, getAuthConfig());
 
-//             const res = await axios.get(`${base_url}/api/notifications/admin/templates` , )
-//             console.log("res", res)
-//             setTemplates(res?.data?.templates)
-//             // Mock data for demonstration
-           
+//             if (response.data && response.data.templates) {
+//                 setTemplates(response.data.templates);
+//             } else {
+//                 console.warn('No templates returned from API');
+//                 setTemplates([]);
+//             }
 //         } catch (err) {
 //             setError('Error connecting to server');
 //             console.error('Failed to fetch templates:', err);
+//         } finally {
 //             setLoading(false);
-//         }finally{
-//             setLoading(false)
 //         }
 //     };
 
@@ -113,65 +118,27 @@
 //             setError(null);
 //             setSuccess(null);
 
-//             // Mock preview generation
-//             setTimeout(() => {
-//                 const preview = {
-//                     title: selectedTemplate.title,
-//                     body: selectedTemplate.body
-//                 };
+//             // Create preview from template
+//             const preview = {
+//                 title: selectedTemplate.title,
+//                 body: selectedTemplate.body
+//             };
 
-//                 // Replace variables in title and body
-//                 Object.entries(formData.variables).forEach(([key, value]) => {
-//                     const regex = new RegExp(`{{${key}}}`, 'g');
-//                     preview.title = preview.title.replace(regex, value);
-//                     preview.body = preview.body.replace(regex, value);
-//                 });
+//             // Replace variables in title and body
+//             Object.entries(formData.variables).forEach(([key, value]) => {
+//                 const regex = new RegExp(`\\{\\{${key}\\}\\}`, 'g');
+//                 preview.title = preview.title.replace(regex, value);
+//                 preview.body = preview.body.replace(regex, value);
+//             });
 
-//                 setPreviewNotification(preview);
-//                 setLoading(false);
-//             }, 500);
+//             setPreviewNotification(preview);
 //         } catch (err) {
 //             setError('Error generating preview');
 //             console.error('Failed to preview notification:', err);
+//         } finally {
 //             setLoading(false);
 //         }
 //     };
-
-//     // const handleSendTest = async () => {
-//     //     if (!selectedTemplate) return;
-
-//     //     try {
-//     //         setSending(true);
-//     //         setError(null);
-//     //         setSuccess(null);
-
-//     //         // This would need to be replaced with actual test user ID
-//     //         // const testUserId = "6801f64ddc168a8e9c2ee495"; // Example user ID
-//     //         const testUserId = "6801f64ddc168a8e9c2ee495"; // Example user ID
-
-//     //         const response = await axios.post(
-//     //             `${base_url}/api/notifications/admin/templates/${selectedTemplate._id}/send-test`,
-//     //             {
-//     //                 recipientId: testUserId,
-//     //                 variables: formData.variables
-//     //             },
-//     //             getAuthConfig() // This will include headers like Authorization
-//     //         );
-
-//     //         const data = await response.json();
-
-//     //         if (data.success) {
-//     //             setSuccess('Test notification sent successfully!');
-//     //         } else {
-//     //             setError(data.message || 'Failed to send test notification');
-//     //         }
-//     //     } catch (err) {
-//     //         setError('Error connecting to server');
-//     //         console.error('Failed to send test notification:', err);
-//     //     } finally {
-//     //         setSending(false);
-//     //     }
-//     // };
 
 //     const handleSendTest = async () => {
 //         if (!selectedTemplate) {
@@ -184,8 +151,12 @@
 //             setError(null);
 //             setSuccess(null);
 
-//             // This would need to be replaced with actual test user ID
-//             const testUserId = "6801f64ddc168a8e9c2ee495"; // Example user ID
+//             // Test user ID - this should be a valid user ID with registered FCM tokens
+//             // const testUserId = "6801f64ddc168a8e9c2ee495";
+//             // const testUserId = "68185a22706a3e3493adca9d"; // Anurag
+//             // const testUserId = "681871785c10e6cae833e83a"; // Anurag - propertify
+//             // const testUserId = "6819ca884bcdb3aeb9946fcb"; // Aryan - propertify
+//             const testUserId = "664e1388301a1e7f55c358f8"; // sir
 
 //             const response = await axios.post(
 //                 `${base_url}/api/notifications/admin/templates/${selectedTemplate._id}/send-test`,
@@ -193,8 +164,10 @@
 //                     recipientId: testUserId,
 //                     variables: formData.variables
 //                 },
-//                 getAuthConfig() // This will include headers like Authorization
+//                 getAuthConfig()
 //             );
+
+//             console.log('Test notification response:', response.data);
 
 //             // Check if response is successful
 //             if (response.data && response.data.success) {
@@ -203,16 +176,16 @@
 //                 setError(response.data?.message || 'Failed to send test notification');
 //             }
 //         } catch (err) {
-//             setError(err.response?.data?.message || 'Error connecting to server');
 //             console.error('Failed to send test notification:', err);
+//             setError(err.response?.data?.message || 'Error connecting to server');
 //         } finally {
 //             setSending(false);
 //         }
 //     };
-    
+
 //     const handleSend = async () => {
-//         if (!selectedTemplate) {
-//             setError('Please select a template first');
+//         if (!selectedTemplate || !previewNotification) {
+//             setError('Please select a template and generate a preview first');
 //             return;
 //         }
 
@@ -222,16 +195,22 @@
 //             setSuccess(null);
 
 //             let payload = {
-//                 notification: previewNotification,
+//                 notification: {
+//                     ...previewNotification,
+//                     data: {} // Add any additional data needed
+//                 },
 //                 testMode: formData.testMode
 //             };
+
+//             // setting up tempplate id 
+//             payload.templateId = selectedTemplate?._id
 
 //             // Add send mode specific data
 //             if (sendMode === 'filter' && Object.keys(formData.filter).length > 0) {
 //                 payload.filter = formData.filter;
-//             } else if (sendMode === 'users' && formData.userIds.length > 0) {
+//             } else if (sendMode === 'users' && formData.userIds.trim()) {
 //                 payload.userIds = formData.userIds.split(',').map(id => id.trim());
-//             } else if (sendMode === 'topic' && formData.topic) {
+//             } else if (sendMode === 'topic' && formData.topic.trim()) {
 //                 payload.topic = formData.topic;
 //             } else {
 //                 setError('Please complete the required fields for your selected send mode');
@@ -239,21 +218,24 @@
 //                 return;
 //             }
 
+//             console.log('Sending notification with payload:', payload);
+
 //             const response = await axios.post(
 //                 `${base_url}/api/notifications/admin/send`,
 //                 payload,
 //                 getAuthConfig()
 //             );
 
-//             const data = await response.json();
+//             console.log('Send notification response:', response.data);
 
-//             if (data.success) {
+//             if (response.data && response.data.success) {
 //                 setSuccess('Notification sent successfully!');
-//                 // Reset form after successful send
+
+//                 // Reset form after successful send if not in test mode
 //                 if (!formData.testMode) {
 //                     setFormData({
 //                         filter: {},
-//                         userIds: [],
+//                         userIds: '',
 //                         topic: '',
 //                         variables: {},
 //                         testMode: true
@@ -262,17 +244,17 @@
 //                     setPreviewNotification(null);
 //                 }
 //             } else {
-//                 setError(data.message || 'Failed to send notification');
+//                 setError(response.data?.message || 'Failed to send notification');
 //             }
 //         } catch (err) {
-//             setError('Error connecting to server');
 //             console.error('Failed to send notification:', err);
+//             setError(err.response?.data?.message || 'Error connecting to server');
 //         } finally {
 //             setSending(false);
 //         }
-//     }
+//     };
 
-
+//     // Rest of component remain unchanged
 //     const sendModeButton = (mode, icon, label) => {
 //         const isActive = sendMode === mode;
 //         return (
@@ -652,12 +634,14 @@
 
 // export default SendNotificationsTab;
 
+
 import React, { useState, useEffect } from 'react';
-import { Filter, Users, Zap, Eye, Send } from 'lucide-react';
+import { Filter, Users, Zap, Eye, Send, Check } from 'lucide-react';
 import Alert from './Alert';
 import { base_url } from '../../../utils/base_url';
 import { getAuthConfig } from '../../../utils/authConfig';
 import axios from 'axios';
+import { Select, Button, Spin } from 'antd';
 
 const SendNotificationsTab = () => {
     // Component state remains unchanged
@@ -678,12 +662,29 @@ const SendNotificationsTab = () => {
     const [variableKey, setVariableKey] = useState('');
     const [variableValue, setVariableValue] = useState('');
     const [previewNotification, setPreviewNotification] = useState(true);
+    const [usersWithTokens, setUsersWithTokens] = useState([]);
+    const [loadingUsers, setLoadingUsers] = useState(false);
+    const [selectedUsers, setSelectedUsers] = useState([]);
 
     console.log("selectedTemplate", selectedTemplate)
 
     useEffect(() => {
         fetchTemplates();
     }, []);
+
+    useEffect(() => {
+        if (sendMode === 'users') {
+            fetchUsersWithTokens();
+        }
+    }, [sendMode]);
+
+    // Update formData.userIds when selectedUsers changes
+    useEffect(() => {
+        setFormData(prev => ({
+            ...prev,
+            userIds: selectedUsers.join(',')
+        }));
+    }, [selectedUsers]);
 
     const fetchTemplates = async () => {
         try {
@@ -704,6 +705,25 @@ const SendNotificationsTab = () => {
         }
     };
 
+    const fetchUsersWithTokens = async () => {
+        try {
+            setLoadingUsers(true);
+            const response = await axios.get(`${base_url}/api/notifications/users/with-notification-tokens`, getAuthConfig());
+
+            if (response.data && response.data.users) {
+                setUsersWithTokens(response.data.users);
+            } else {
+                console.warn('No users with notification tokens returned from API');
+                setUsersWithTokens([]);
+            }
+        } catch (err) {
+            setError('Error fetching users with notification tokens');
+            console.error('Failed to fetch users with notification tokens:', err);
+        } finally {
+            setLoadingUsers(false);
+        }
+    };
+
     const handleTemplateSelect = (templateId) => {
         const template = templates.find(t => t._id === templateId);
         setSelectedTemplate(template);
@@ -718,6 +738,11 @@ const SendNotificationsTab = () => {
         setSendMode(mode);
         setError(null);
         setSuccess(null);
+
+        // Reset selected users when switching from users mode
+        if (mode !== 'users') {
+            setSelectedUsers([]);
+        }
     };
 
     const handleInputChange = (e) => {
@@ -736,6 +761,15 @@ const SendNotificationsTab = () => {
                 [field]: value
             }
         }));
+    };
+
+    const handleUserSelection = (selectedUserIds) => {
+        setSelectedUsers(selectedUserIds);
+    };
+
+    const selectAllUsers = () => {
+        const allUserIds = usersWithTokens.map(user => user._id);
+        setSelectedUsers(allUserIds);
     };
 
     const addVariable = () => {
@@ -805,10 +839,6 @@ const SendNotificationsTab = () => {
             setSuccess(null);
 
             // Test user ID - this should be a valid user ID with registered FCM tokens
-            // const testUserId = "6801f64ddc168a8e9c2ee495";
-            // const testUserId = "68185a22706a3e3493adca9d"; // Anurag
-            // const testUserId = "681871785c10e6cae833e83a"; // Anurag - propertify
-            // const testUserId = "6819ca884bcdb3aeb9946fcb"; // Aryan - propertify
             const testUserId = "664e1388301a1e7f55c358f8"; // sir
 
             const response = await axios.post(
@@ -861,8 +891,8 @@ const SendNotificationsTab = () => {
             // Add send mode specific data
             if (sendMode === 'filter' && Object.keys(formData.filter).length > 0) {
                 payload.filter = formData.filter;
-            } else if (sendMode === 'users' && formData.userIds.trim()) {
-                payload.userIds = formData.userIds.split(',').map(id => id.trim());
+            } else if (sendMode === 'users' && selectedUsers.length > 0) {
+                payload.userIds = selectedUsers;
             } else if (sendMode === 'topic' && formData.topic.trim()) {
                 payload.topic = formData.topic;
             } else {
@@ -895,6 +925,7 @@ const SendNotificationsTab = () => {
                     });
                     setSelectedTemplate(null);
                     setPreviewNotification(null);
+                    setSelectedUsers([]);
                 }
             } else {
                 setError(response.data?.message || 'Failed to send notification');
@@ -1118,20 +1149,59 @@ const SendNotificationsTab = () => {
 
                             {sendMode === 'users' && (
                                 <div>
-                                    <p className="text-sm mb-3">Send to specific users by ID:</p>
+                                    <p className="text-sm mb-3">Send to specific users:</p>
 
-                                    <textarea
-                                        className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-300 focus:border-blue-500 outline-none transition"
-                                        rows="4"
-                                        name="userIds"
-                                        value={formData.userIds}
-                                        onChange={handleInputChange}
-                                        placeholder="Enter user IDs separated by commas"
-                                    ></textarea>
+                                    {loadingUsers ? (
+                                        <div className="text-center py-4">
+                                            <Spin size="small" />
+                                            <p className="text-sm text-gray-500 mt-2">Loading users...</p>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <div className="flex mb-2">
+                                                <Button
+                                                    type="primary"
+                                                    onClick={selectAllUsers}
+                                                    className="flex items-center"
+                                                    style={{ background: '#1890ff', borderColor: '#1890ff' }}
+                                                >
+                                                    <Check size={14} className="mr-1" />
+                                                    Select All Users
+                                                </Button>
+                                            </div>
 
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        Enter user IDs separated by commas (e.g., 5f8a3b2c1d4e5f6a7b8c9d0e, 5f8a3b2c1d4e5f6a7b8c9d0f)
-                                    </p>
+                                            <Select
+                                                mode="multiple"
+                                                allowClear
+                                                style={{ width: '100%' }}
+                                                placeholder="Select users"
+                                                value={selectedUsers}
+                                                onChange={handleUserSelection}
+                                                optionFilterProp="children"
+                                                optionLabelProp="label"
+                                                className="mb-2"
+                                            >
+                                                {usersWithTokens.map(user => (
+                                                    <Select.Option
+                                                        key={user._id}
+                                                        value={user._id}
+                                                        label={`${user.name || 'Unknown'} (${user.email || user.phone || 'No contact'})`}
+                                                    >
+                                                        <div className="flex flex-col">
+                                                            <span className="font-medium">{user.name || 'Unknown User'}</span>
+                                                            <span className="text-xs text-gray-500">
+                                                                {user.email || user.phone || 'No contact info'}
+                                                            </span>
+                                                        </div>
+                                                    </Select.Option>
+                                                ))}
+                                            </Select>
+
+                                            <p className="text-xs text-gray-500 mt-1">
+                                                {selectedUsers.length} users selected
+                                            </p>
+                                        </>
+                                    )}
                                 </div>
                             )}
 
@@ -1219,12 +1289,12 @@ const SendNotificationsTab = () => {
                                             {sendMode === 'users' && (
                                                 <div className="text-sm">
                                                     <p><span className="font-medium">Method:</span> Specific Users</p>
-                                                    {formData.userIds ? (
+                                                    {selectedUsers.length > 0 ? (
                                                         <div className="mt-1">
-                                                            <p>{formData.userIds.split(',').length} users selected</p>
+                                                            <p>{selectedUsers.length} users selected</p>
                                                         </div>
                                                     ) : (
-                                                        <p className="text-red-500 mt-1">No users specified</p>
+                                                        <p className="text-red-500 mt-1">No users selected</p>
                                                     )}
                                                 </div>
                                             )}
