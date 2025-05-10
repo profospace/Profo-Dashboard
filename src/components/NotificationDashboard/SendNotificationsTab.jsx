@@ -880,7 +880,9 @@ const SendNotificationsTab = () => {
             let payload = {
                 notification: {
                     ...previewNotification,
-                    data: {} // Add any additional data needed
+                    data: {
+                        ...selectedTemplate.additionalData
+                    } // Add any additional data needed
                 },
                 testMode: formData.testMode
             };
