@@ -79,7 +79,11 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
             listAds: "",
             searchAds: "",
             maxListAds: "",
+
+            userprofileHeader: "",
+            bottomImage: ""
         },
+
        
     });
 
@@ -568,6 +572,26 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
 
                 {/* more info */}
                 <AccordionSection id="more" title="More">
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">User Profile Header:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.userprofileHeader || ''}
+                            onChange={(e) => handleConstantDataChange('userprofileHeader', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter user profile Header"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Bottom Image:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.bottomImage || ''}
+                            onChange={(e) => handleConstantDataChange('bottomImage', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter bottom Image"
+                        />
+                    </div>
                     <div className="mt-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Progress Gif:</label>
                         <input
