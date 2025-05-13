@@ -120,6 +120,7 @@ import { getDeviceToken } from './services/notification';
 import NotificationToast from './components/NotificationDashboard/NotificationToast';
 import { onMessage } from 'firebase/messaging';
 import { messaging } from './services/firebaseInitialize';
+import NotificationStats from './pages/Notification/NotificationStats';
 
 function App() {
   const dispatch = useDispatch();
@@ -300,6 +301,7 @@ function App() {
             <Route path="/testing-dash" element={<AdminEmailDashboard />} />
 
             <Route path="/notification" element={<NotificationDashboard />} />
+            <Route path="/notification-stats" element={<NotificationStats />} />
 
             {/* watermark */}
             <Route path="/watermark" element={<WatermarkManager />} />
