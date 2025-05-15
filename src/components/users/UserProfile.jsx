@@ -7,6 +7,7 @@ import UserActivity from './UserActivity';
 import Button from '../common/Button';
 import Spinner from '../common/Spinner';
 import { ConfirmationModal } from '../common/Modal';
+import UserNotifications from './UserNotifications';
 
 const UserProfile = () => {
     const { userId } = useParams();
@@ -41,6 +42,8 @@ const UserProfile = () => {
             setLoading(false);
         }
     };
+
+    console.log("User" , user)
 
     const confirmDeleteUser = async () => {
         try {
@@ -130,6 +133,12 @@ const UserProfile = () => {
                         onClick={() => setActiveTab('profile')}
                     >
                         Profile
+                    </Button>
+                    <Button
+                        variant={activeTab === 'notification' ? 'primary' : 'secondary'}
+                        onClick={() => setActiveTab('notification')}
+                    >
+                        Notification
                     </Button>
                     <Button
                         variant={activeTab === 'history' ? 'primary' : 'secondary'}
@@ -326,6 +335,16 @@ const UserProfile = () => {
                 {activeTab === 'activity' && (
                     <UserActivity activityLog={user.activityLog} />
                 )}
+
+                {activeTab === 'notification' && (
+                    <UserNotifications notifications={user?.notifications}
+                        notificationTopics={user?.notificationTopics}
+                        notificationTokens={user?.notificationTokens} />
+                )}
+
+
+
+
             </div>
 
             {/* Delete Confirmation Modal */}
