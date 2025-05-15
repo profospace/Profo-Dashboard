@@ -109,7 +109,7 @@ const SignupForm = lazy(() => import("./pages/Authentication/Signup/Signup"));
 const Error = lazy(() => import('./pages/PageNotfound/Error'));
 import ProtectedRoutes from './routing/ProtectedRoutes';
 // import { jwtDecode } from "jwt-decode";
-import AdminSyncDashboard from './pages/AdminSyncDashboard';
+import AdminSyncDashboard from './pages/AdminDBSync/AdminSyncDashboard';
 import WatermarkManager from './pages/Watermark/WatermarkManager';
 import NotificationDashboard from './pages/Notification/NotificationDashboard';
 
@@ -121,6 +121,7 @@ import NotificationToast from './components/NotificationDashboard/NotificationTo
 import { onMessage } from 'firebase/messaging';
 import { messaging } from './services/firebaseInitialize';
 import NotificationStats from './pages/Notification/NotificationStats';
+import AdminDBSyncHistory from './pages/AdminDBSync/AdminDBSyncHistory';
 
 function App() {
   const dispatch = useDispatch();
@@ -309,6 +310,7 @@ function App() {
 
             {/* Db sync */}
             <Route path="/sync-db-prod" element={<AdminSyncDashboard />} />
+            <Route path="/admin/sync-history" element={<AdminDBSyncHistory />} />
 
             {/* users */}
             <Route path="/users" element={<UsersPage />} />
