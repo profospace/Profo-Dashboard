@@ -603,6 +603,16 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                         />
                     </div>
                     <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">App Website:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.appWebsite || ''}
+                            onChange={(e) => handleConstantDataChange('appWebsite', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter App Webiste URL"
+                        />
+                    </div>
+                    <div className="mt-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">List End Image:</label>
                         <input
                             type="text"
