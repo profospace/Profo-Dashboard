@@ -6,9 +6,9 @@ import Footer from '../../components/Footer';
 
 const HomePage = () => {
     return (
-        <div className="container mx-auto px-4 py-12">
+        <div className=" mx-auto px-4 ">
             {/* <Navbar /> */}
-            <div className="text-center mb-16">
+            <div className="text-center mb-8">
                 <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                     Video Management Solution
                 </h1>
@@ -17,7 +17,7 @@ const HomePage = () => {
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-6xl mx-auto">
                 {/* Upload Feature */}
                 <div className="bg-white rounded-lg shadow-lg p-8 transform transition duration-300 hover:-translate-y-1 hover:shadow-xl">
                     <div className="flex justify-center mb-4">
