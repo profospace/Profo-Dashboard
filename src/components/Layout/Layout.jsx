@@ -719,6 +719,11 @@ const PropertyManagerLayout = ({ children }) => {
                 }
             ]
         },
+        {
+            key: '/',
+            icon: <HomeOutlined />,
+            label: <Link to="/dashboard">Dashboard</Link>,
+        },
 
     ];
 
