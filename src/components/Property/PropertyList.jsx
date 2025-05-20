@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDownIcon, ChevronUpIcon, EyeIcon, PencilIcon, SearchIcon, TrashIcon } from 'lucide-react';
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import VideoCard from '../Video/VideoCard';
 
 
 export default function PropertyList({
@@ -387,6 +388,9 @@ function PropertyCard({ property, onEdit, onDelete, onUpdateStatus, onViewDetail
                         <Button onClick={() => handleAddPropertyViewer(property?.post_id)}>Add Property Viewer</Button>
                         <Button onClick={() => handleViewPropertyViewer(property.post_id)}>View Property Viewer</Button>
                     </div>
+                    {
+                        property?.videos?.length > 0 && <VideoCard playlist={property?.videos} />
+                    }
                 </div>
             </div>
         </div>
