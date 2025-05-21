@@ -317,9 +317,10 @@ function SignupForm({ setSignIn }) {
     // }
     if (!email) {
       newErrors.emailError = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.emailError = "Enter a valid email";
-    }
+    } 
+    // else if (!/\S+@\S+\.\S+/.test(email)) {
+    //   newErrors.emailError = "Enter a valid email";
+    // }
     if (!password) {
       newErrors.passwordError = "Password is required";
     }
