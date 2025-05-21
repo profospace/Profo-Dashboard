@@ -263,7 +263,7 @@ function App() {
   // Initialize notification system
   const initializeNotifications = async () => {
     try {
-      // Get device token
+      // Get device token 
       const token = await getDeviceToken();
 
       if (token) {
@@ -281,7 +281,7 @@ function App() {
     setNotification(null);
   };
 
-  console.log("deviceToken", deviceToken)
+  // console.log("deviceToken", deviceToken)
 
   return (
     <LoadScript loadingElement={<LoadingPage />} googleMapsApiKey={import.meta.env.VITE_GOOGLE_API_KEY}>
