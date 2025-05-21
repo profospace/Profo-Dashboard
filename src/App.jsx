@@ -122,6 +122,10 @@ import { onMessage } from 'firebase/messaging';
 import { messaging } from './services/firebaseInitialize';
 import NotificationStats from './pages/Notification/NotificationStats';
 import AdminDBSyncHistory from './pages/AdminDBSync/AdminDBSyncHistory';
+import HomePage from './pages/Video/HomePage';
+import VideoUploadPage from './pages/Video/VideoUploadPage';
+import VideoGalleryPage from './pages/Video/VideoGalleryPage';
+import VideoPlayerPage from './pages/Video/VideoPlayerPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -301,8 +305,15 @@ function App() {
 
             <Route path="/testing-dash" element={<AdminEmailDashboard />} />
 
+            {/* Notification */}
             <Route path="/notification" element={<NotificationDashboard />} />
             <Route path="/notification-stats" element={<NotificationStats />} />
+
+            {/* Video Streaming */}
+            <Route path="/video/home" element={<HomePage />} />
+            <Route path="/upload" element={<VideoUploadPage />} />
+            <Route path="/videos" element={<VideoGalleryPage />} />
+            <Route path="/videos/:videoId" element={<VideoPlayerPage />} />
 
             {/* watermark */}
             <Route path="/watermark" element={<WatermarkManager />} />

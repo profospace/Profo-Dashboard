@@ -504,6 +504,29 @@ const PropertyManagerLayout = ({ children }) => {
             ]
         },
         {
+            key: 'streaming',
+            icon: <AppstoreOutlined />,
+            label: 'Streaming',
+            children: [
+                {
+                    key: '/video/home',
+                    label: <Link to="/video/home">Video Home</Link>,
+                },
+                {
+                    key: '/upload',
+                    label: <Link to="/upload">Video Upload Page</Link>,
+                },
+                {
+                    key: '/videos',
+                    label: <Link to="/videos">Video Gallery Page</Link>,
+                },
+                {
+                    key: '/videos/:videoId',
+                    label: <Link to="/videos/:videoId">VideoPlayerPage</Link>,
+                }
+            ]
+        },
+        {
             key: '/watermark',
             icon: <HomeOutlined />,
             label: <Link to="/watermark">Watermark</Link>,
