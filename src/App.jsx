@@ -126,6 +126,10 @@ import HomePage from './pages/Video/HomePage';
 import VideoUploadPage from './pages/Video/VideoUploadPage';
 import VideoGalleryPage from './pages/Video/VideoGalleryPage';
 import VideoPlayerPage from './pages/Video/VideoPlayerPage';
+import MailDashboard from './pages/UserRecommandation/MailDashboard';
+import EmailConfig from './pages/UserRecommandation/EmailConfig';
+import EmailTemplates from './pages/UserRecommandation/EmailTemplates';
+import EmailLogs from './pages/UserRecommandation/EmailLogs';
 
 function App() {
   const dispatch = useDispatch();
@@ -304,6 +308,13 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
 
             <Route path="/testing-dash" element={<AdminEmailDashboard />} />
+
+            {/* User Recommdation Email */}
+            <Route path="/email-dashboard" element={<MailDashboard />} />
+            <Route path="/email-config" element={<EmailConfig />} />
+            <Route path="/email-templates" element={<EmailTemplates />} />
+            <Route path="/email-logs" element={<EmailLogs />} />
+            {/* <Route path="*" element={<NotFound />} /> */}
 
             {/* Notification */}
             <Route path="/notification" element={<NotificationDashboard />} />

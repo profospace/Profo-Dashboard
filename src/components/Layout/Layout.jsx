@@ -504,6 +504,29 @@ const PropertyManagerLayout = ({ children }) => {
             ]
         },
         {
+            key: 'user-recommendation',
+            icon: <AppstoreOutlined />,
+            label: 'User Recommendation',
+            children: [
+                {
+                    key: '/email-dashboard',
+                    label: <Link to="/email-dashboard">Mail Dashboard</Link>,
+                },
+                {
+                    key: '/email-config',
+                    label: <Link to="/email-config">Email Configuration</Link>,
+                },
+                {
+                    key: '/email-templates',
+                    label: <Link to="/email-templates">Email Templates</Link>,
+                },
+                {
+                    key: '/email-logs',
+                    label: <Link to="/email-logs">Email Logs</Link>,
+                }
+            ]
+        },
+        {
             key: 'streaming',
             icon: <AppstoreOutlined />,
             label: 'Streaming',
