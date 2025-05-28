@@ -130,6 +130,9 @@ import MailDashboard from './pages/UserRecommandation/MailDashboard';
 import EmailConfig from './pages/UserRecommandation/EmailConfig';
 import EmailTemplates from './pages/UserRecommandation/EmailTemplates';
 import EmailLogs from './pages/UserRecommandation/EmailLogs';
+import Entry from './pages/Whatsapp/Entry';
+import WhatsAppDashboard from './pages/New Whatsapp/WhatsAppDashboard';
+import WhatsAppDashboardNew from './pages/New Whatsapp/WhatsAppDashboardNew';
 
 function App() {
   const dispatch = useDispatch();
@@ -316,6 +319,9 @@ function App() {
             <Route path="/email-logs" element={<EmailLogs />} />
             {/* <Route path="*" element={<NotFound />} /> */}
 
+            
+
+
             {/* Notification */}
             <Route path="/notification" element={<NotificationDashboard />} />
             <Route path="/notification-stats" element={<NotificationStats />} />
@@ -432,6 +438,12 @@ function App() {
 
             <Route path='*' element={<Error />} />
           </Route>
+          {/* Temporary entry point to enter in Whatsapp dashboard*/}
+          <Route path="/entry-point-whatsapp" element={<Entry />} />
+
+          {/* New WhatsApp */}
+          <Route path="/whatsapp-dashboard" element={<WhatsAppDashboard />} />
+          <Route path="/whatsapp-dashboard-new" element={<WhatsAppDashboardNew />} />
         </Routes>
       </Suspense>
 
