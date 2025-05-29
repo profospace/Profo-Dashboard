@@ -14,6 +14,7 @@ const WHATSAPP_API_URL = `https://graph.facebook.com/${WHATSAPP_API_VERSION}`;
 
 // Backend API Configuration
 // const WS_URL = import.meta.env.REACT_APP_WS_URL || 'ws://localhost:3100';
+
 const WS_URL = import.meta.env.REACT_APP_WS_URL || 'wss://whatsapp-webhook-w7a3.onrender.com';
 const API_URL = 'https://whatsapp-webhook-w7a3.onrender.com';
 
