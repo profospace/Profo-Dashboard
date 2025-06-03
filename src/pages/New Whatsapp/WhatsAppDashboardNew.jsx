@@ -15,8 +15,9 @@ const WHATSAPP_API_URL = `https://graph.facebook.com/${WHATSAPP_API_VERSION}`;
 // Backend API Configuration
 // const WS_URL = import.meta.env.REACT_APP_WS_URL || 'ws://localhost:3100';
 
-const WS_URL = import.meta.env.REACT_APP_WS_URL || 'wss://whatsapp-webhook-w7a3.onrender.com';
-const API_URL = 'https://whatsapp-webhook-w7a3.onrender.com';
+const WS_URL = import.meta.env.REACT_APP_WS_URL || 'wss://localhost:3100/webhook';
+// const API_URL = 'https://whatsapp-webhook-w7a3.onrender.com'; 
+const API_URL = 'http://localhost:3100'; 
 
 const WhatsAppDashboardNew = () => {
     // State management
@@ -258,6 +259,7 @@ const WhatsAppDashboardNew = () => {
             });
 
             const data = await response.json();
+            console.log("data", data)
 
             if (!response.ok) {
                 throw new Error(data.error?.message || 'API request failed');
@@ -441,6 +443,7 @@ const WhatsAppDashboardNew = () => {
     };
 
     const updateConversationMessages = (phoneNumber, newMessage) => {
+        console.log("updateConversationMessages", phoneNumber, newMessage)
         setMessages(prev => ({
             ...prev,
             [phoneNumber]: [...(prev[phoneNumber] || []), newMessage]
@@ -517,6 +520,7 @@ const WhatsAppDashboardNew = () => {
     }, []);
 
     const handleIncomingWhatsAppMessage = async (data) => {
+        console.log("Incoming message data", data)
         const { from, message, messageId, timestamp } = data;
 
         const newMessage = {

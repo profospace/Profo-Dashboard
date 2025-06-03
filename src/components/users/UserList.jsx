@@ -9,6 +9,7 @@ import { ConfirmationModal } from '../common/Modal';
 import { userService } from '../../api/apiService';
 import axios from 'axios';
 import { base_url } from '../../../utils/base_url';
+import { getAuthConfig } from '../../../utils/authConfig';
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
@@ -92,7 +93,7 @@ const UserList = () => {
             userName,
         });
 
-        const response = await axios.delete(`${base_url}/api/delete/user/${userId}`)
+        const response = await axios.delete(`${base_url}/api/delete/user/${userId}` , getAuthConfig())
         
             console.log(response)
     };
