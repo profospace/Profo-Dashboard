@@ -132,8 +132,8 @@ import EmailTemplates from './pages/UserRecommandation/EmailTemplates';
 import EmailLogs from './pages/UserRecommandation/EmailLogs';
 
 function App() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate()
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate()
 
   // const CheckAuth = () => {
   //   const token = localStorage.getItem("authToken");
