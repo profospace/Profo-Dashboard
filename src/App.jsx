@@ -130,8 +130,12 @@ import MailDashboard from './pages/UserRecommandation/MailDashboard';
 import EmailConfig from './pages/UserRecommandation/EmailConfig';
 import EmailTemplates from './pages/UserRecommandation/EmailTemplates';
 import EmailLogs from './pages/UserRecommandation/EmailLogs';
+import ContactDashboard from './pages/UserBuilderContactDashboard/ContactDashboard';
+import FunnelAnalyticsDashboard from './pages/UserBuilderContactDashboard/FunnelAnalyticsDashboard';
 
 function App() {
+  const date = new Date('2025-06-06T12:01:00.000Z')
+  console.log("checkDate", date.toLocaleString())
   // const dispatch = useDispatch();
   // const navigate = useNavigate()
 
@@ -374,6 +378,10 @@ function App() {
 
             {/* callback */}
             <Route path="/callbacks" element={<Callbacks />} />
+
+            {/* User - Bulider Contact Interaction */}
+            <Route path="/contact-interaction" element={<ContactDashboard />} />
+            <Route path="/funnel-analytics" element={<FunnelAnalyticsDashboard />} />
 
             {/* ads managementr */}
             {/* <Route path="/ads" element={<AdList />} />

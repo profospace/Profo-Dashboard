@@ -555,6 +555,22 @@ const PropertyManagerLayout = ({ children }) => {
             label: <Link to="/watermark">Watermark</Link>,
         },
         {
+            key: 'Interactions-Builder',
+            icon: <AppstoreOutlined />,
+            label: 'Interactions-Builder',
+            children: [
+                {
+                    key: '/contact-interaction',
+                    label: <Link to="/contact-interaction">Contact Dashboard</Link>,
+                },
+                {
+                    key: '/funnel-analytics',
+                    label: <Link to="/funnel-analytics">Funnel Analytics</Link>,
+                },
+                
+            ]
+        },
+        {
             key: 'db-sync-manager',
             icon: <TeamOutlined />,
             label: 'DB Sync Manager',

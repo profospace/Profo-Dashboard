@@ -264,9 +264,9 @@ const ScheduleForm = ({ onClose, onSave, templates }) => {
             // const data = await response.json();
 
             if (response.success) {
-                onSave(data.schedule);
+                onSave(response.schedule);
             } else {
-                setError(data.message || 'Failed to create schedule');
+                setError(response.message || 'Failed to create schedule');
             }
         } catch (err) {
             setError('Error connecting to server');
