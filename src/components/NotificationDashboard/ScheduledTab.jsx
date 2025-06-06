@@ -239,6 +239,19 @@ const ScheduledTab = () => {
     const [error, setError] = useState(null);
     const [showAddSchedule, setShowAddSchedule] = useState(false);
 
+    // console.log("scheduledNotifications", scheduledNotifications)
+    
+
+    //Adding Console for testing timestamp
+    useEffect(
+        ()=>{
+            scheduledNotifications?.forEach((schedule, index) =>{
+                const date = new Date(schedule?.nextRun)
+                console.log(`${index + 1} Schedule Name:  ${schedule?.name} having Time  ${date.toLocaleString()}`)
+            })
+        }, [scheduledNotifications]
+    )
+
     useEffect(() => {
         fetchScheduledNotifications();
         fetchTemplates();
