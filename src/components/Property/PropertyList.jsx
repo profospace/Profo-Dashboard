@@ -267,6 +267,15 @@ function PropertyCard({ property, onEdit, onDelete, onUpdateStatus, onViewDetail
 
     }
 
+    const handleUploadNewVideoNavigation = (id)=>{
+        const uploadInfo = {
+            entityId : id,
+            entityType: 'Property'
+        }
+        navigate(`/upload`, { state: uploadInfo })
+
+    }
+
     return (
         <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300 h-full flex flex-col">
             {/* Property Image */}
@@ -387,6 +396,9 @@ function PropertyCard({ property, onEdit, onDelete, onUpdateStatus, onViewDetail
                     <div>
                         <Button onClick={() => handleAddPropertyViewer(property?.post_id)}>Add Property Viewer</Button>
                         <Button onClick={() => handleViewPropertyViewer(property.post_id)}>View Property Viewer</Button>
+                    </div>
+                    <div>
+                        <Button onClick={()=>handleUploadNewVideoNavigation(property?._id)} >Upload New Video</Button>
                     </div>
                     {
                         property?.videos?.length > 0 && <VideoCard playlist={property?.videos} />

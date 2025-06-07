@@ -917,9 +917,9 @@
 // export default VideoPlayerPage;
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { ArrowLeft, Play, Pause, Volume2, VolumeX, Maximize, Download, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Play, Pause, Volume2, VolumeX, Maximize, Download, RefreshCw, Trash2 } from 'lucide-react';
 import { base_url } from '../../../utils/base_url';
 
 const VideoPlayerPage = () => {
@@ -942,6 +942,9 @@ const VideoPlayerPage = () => {
     const videoRef = useRef(null);
     const playerRef = useRef(null);
     const controlsTimeoutRef = useRef(null);
+
+
+    const navigate = useNavigate();
 
     // Fetch video data
     useEffect(() => {
@@ -1192,6 +1195,21 @@ const VideoPlayerPage = () => {
         );
     }
 
+
+    const handleDeleteVideo = async (videoId) => {
+        if (!confirm('Are you sure you want to delete this video?')) {
+            return;
+        }
+
+        try {
+            await axios.delete(`${base_url}/api/videos/${videoId}`);
+            navigate(-1); 
+        } catch (err) {
+            console.error('Error deleting video:', err);
+            alert('Failed to delete video');
+        }
+    };
+
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="mb-6">
@@ -1348,18 +1366,28 @@ const VideoPlayerPage = () => {
             <div className="mt-6">
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">{video.title}</h1>
 
-                <div className="flex items-center text-sm text-gray-600 mb-4">
-                    <span>
-                        {video.entityType}{video.entityName ? `: ${video.entityName}` : ''}
-                    </span>
-                    <span className="mx-2">•</span>
-                    <span>{new Date(video.createdAt).toLocaleDateString()}</span>
-                    {video.views > 0 && (
-                        <>
-                            <span className="mx-2">•</span>
-                            <span>{video.views} views</span>
-                        </>
-                    )}
+                <div className='flex justify-between items-center'>
+                    <div className="flex items-center text-sm text-gray-600 mb-4">
+                        <span>
+                            {video.entityType}{video.entityName ? `: ${video.entityName}` : ''}
+                        </span>
+                        <span className="mx-2">•</span>
+                        <span>{new Date(video.createdAt).toLocaleDateString()}</span>
+                        {video.views > 0 && (
+                            <>
+                                <span className="mx-2">•</span>
+                                <span>{video.views} views</span>
+                            </>
+                        )}
+                    </div>
+
+                    <button
+                        onClick={() => handleDeleteVideo(video._id)}
+                        className="text-red-600 hover:text-red-800 transition duration-150 mr-12"
+                        title="Delete video"
+                    >
+                        <Trash2 className="h-8 w-8" />
+                    </button>
                 </div>
 
                 <div className="bg-gray-50 p-4 rounded-lg">

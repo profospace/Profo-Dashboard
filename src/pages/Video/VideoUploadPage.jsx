@@ -331,7 +331,7 @@
 // export default VideoUploadPage;
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
 import { Upload, X, Check, AlertCircle } from 'lucide-react';
@@ -339,12 +339,15 @@ import { base_url } from '../../../utils/base_url';
 
 const VideoUploadPage = () => {
     const navigate = useNavigate();
+    const { state } = useLocation();
+
+    console.log("State Data" , state)
 
     // Form states
     const [title, setTitle] = useState('Dummy title');
     const [description, setDescription] = useState('Dummy Desp');
-    const [entityType, setEntityType] = useState('Project');
-    const [entityId, setEntityId] = useState('');
+    const [entityType, setEntityType] = useState(state?.entityType || 'Project');
+    const [entityId, setEntityId] = useState(state?.entityId || '');
     const [videoFile, setVideoFile] = useState(null);
     const [thumbnailFile, setThumbnailFile] = useState(null);
     const [thumbnailPreview, setThumbnailPreview] = useState('');
@@ -452,8 +455,8 @@ const VideoUploadPage = () => {
         const formData = new FormData();
         formData.append('title', title);
         formData.append('description', description);
-        formData.append('entityType', entityType);
-        formData.append('entityId', entityId);
+        formData.append('entityType', state?.entityType || entityType);
+        formData.append('entityId', state?.entityId || entityId);
         formData.append('video', videoFile);
 
         if (thumbnailFile) {
@@ -619,14 +622,14 @@ const VideoUploadPage = () => {
                             </label>
                             <select
                                 id="entityId"
-                                value={entityId}
+                                value={state?.entityId || entityId}
                                 onChange={(e) => setEntityId(e.target.value)}
                                 className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
                                 required
                             >
                                 <option value="">Select {entityType}</option>
                                 {entityOptions.map(option => (
-                                    <option key={option.id} value={option.id}>
+                                    <option key={option.id} value={state?.entityId || option.id}>
                                         {option.name}
                                     </option>
                                 ))}
