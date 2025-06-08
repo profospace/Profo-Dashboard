@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDownIcon, ChevronUpIcon, EyeIcon, PencilIcon, SearchIcon, TrashIcon } from 'lucide-react';
 import { Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import VideoCard from '../Video/VideoCard';
 
 
@@ -25,6 +25,13 @@ export default function PropertyList({
     const [sortOrder, setSortOrder] = useState({ field: null, direction: 'asc' });
     const [visiblePropertyCount, setVisiblePropertyCount] = useState(9);
 
+    // const location = useLocation();
+
+    // useEffect(() => {
+    //     if (location.state?.success) {
+    //         alert(location.state.success); // Or use a toast notification
+    //     }
+    // }, [location.state]);
     const toggleSort = (field) => {
         setSortOrder(prevSort => ({
             field: field,
@@ -92,6 +99,8 @@ export default function PropertyList({
             <ChevronUpIcon className="h-4 w-4 ml-1" /> :
             <ChevronDownIcon className="h-4 w-4 ml-1" />;
     };
+
+   
 
     return (
         <div className="p-4">

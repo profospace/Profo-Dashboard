@@ -1203,7 +1203,10 @@ const VideoPlayerPage = () => {
 
         try {
             await axios.delete(`${base_url}/api/videos/${videoId}`);
-            navigate(-1); 
+            navigate(-1, {
+                state: { success: "Item deleted successfully!" },
+            });
+
         } catch (err) {
             console.error('Error deleting video:', err);
             alert('Failed to delete video');
