@@ -8,6 +8,7 @@ import Button from '../common/Button';
 import Spinner from '../common/Spinner';
 import { ConfirmationModal } from '../common/Modal';
 import UserNotifications from './UserNotifications';
+import UserLocationHistory from './UserLocationHistory';
 
 const UserProfile = () => {
     const { userId } = useParams();
@@ -151,6 +152,12 @@ const UserProfile = () => {
                         onClick={() => setActiveTab('activity')}
                     >
                         Activity Log
+                    </Button>
+                    <Button
+                        variant={activeTab === 'location' ? 'primary' : 'secondary'}
+                        onClick={() => setActiveTab('location')}
+                    >
+                        Location Logs
                     </Button>
                     <Button
                         variant="danger"
@@ -340,6 +347,10 @@ const UserProfile = () => {
                     <UserNotifications notifications={user?.notifications}
                         notificationTopics={user?.notificationTopics}
                         notificationTokens={user?.notificationTokens} />
+                )}
+
+                {activeTab === 'location' && (
+                    <UserLocationHistory userId={userId} />
                 )}
 
 

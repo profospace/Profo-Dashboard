@@ -132,6 +132,7 @@ import EmailTemplates from './pages/UserRecommandation/EmailTemplates';
 import EmailLogs from './pages/UserRecommandation/EmailLogs';
 import ContactDashboard from './pages/UserBuilderContactDashboard/ContactDashboard';
 import FunnelAnalyticsDashboard from './pages/UserBuilderContactDashboard/FunnelAnalyticsDashboard';
+import OverlappingCardsPreview from './pages/DynamicView/OverlappingCardsPreview';
 
 function App() {
   const date = new Date('2025-06-06T12:01:00.000Z')
@@ -437,6 +438,9 @@ function App() {
             <Route path="/projects/:projectId/disconnect-properties" element={<DisconnectProjectPropertiesPage />} />
 
             {/* <Route path="/testing" element={<AndroidFeedPreview />} /> */}
+
+            <Route path="/cards-preview-generator-json" element={<OverlappingCardsPreview />} />
+
 
             <Route path='*' element={<Error />} />
           </Route>
