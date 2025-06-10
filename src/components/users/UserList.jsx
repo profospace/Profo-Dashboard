@@ -9,6 +9,7 @@ import { ConfirmationModal } from '../common/Modal';
 import { userService } from '../../api/apiService';
 import axios from 'axios';
 import { base_url } from '../../../utils/base_url';
+import { getAuthConfig } from '../../../utils/authConfig';
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
@@ -129,6 +130,26 @@ const UserList = () => {
         }
     };
 
+
+    const [trackedUsers , setTrackedUsers] = useState([])
+    const getAllTrackedUsers = async()=>{
+        const response = await axios.get(`${base_url}/api/admin/tracking/current` , getAuthConfig())
+
+        console.log(response?.data?.data?.trackedUsers)
+
+        if (response?.status === 200){
+            setTrackedUsers(response?.data?.data?.trackedUsers)
+        }
+    }
+
+
+    useEffect(
+        ()=>{
+            getAllTrackedUsers()
+        },[]
+    )
+
+
     return (
         <div>
             <div className="mb-6">
@@ -192,6 +213,7 @@ const UserList = () => {
                             key={user.id}
                             user={user}
                             onDeleteUser={handleDeleteUser}
+                            trackedUsers={trackedUsers}
                         />
                     ))}
 
