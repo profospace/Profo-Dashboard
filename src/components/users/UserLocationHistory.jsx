@@ -45,7 +45,7 @@ const UserLocationHistory = ({ userId }) => {
                 params: filters,
             });
 
-            console.log("response", response)
+            console.log("response hostory of uer", response)
 
             if (response.data.success) {
                 setLocationHistory(response.data.data.locationHistory || []);
