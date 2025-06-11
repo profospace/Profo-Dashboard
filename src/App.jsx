@@ -442,10 +442,10 @@ function App() {
 
             <Route path="/cards-preview-generator-json" element={<OverlappingCardsPreview />} />
 
-            <Route path="/new-ads" element={<AdsEntry />} />
 
             <Route path='*' element={<Error />} />
           </Route>
+            <Route path="/new-ads" element={<AdsEntry />} />
         </Routes>
       </Suspense>
 
