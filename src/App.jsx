@@ -79,9 +79,6 @@ const ColorGradientPage = lazy(() => import('./pages/ColorApiForm/ColorGradientP
 const Callbacks = lazy(() => import('./pages/Callback/Callbacks'));
 
 // List Option
-const ListOptionDashboard = lazy(() => import('./pages/ListOption/ListOptionDashboard'));
-const UnifiedListOption = lazy(() => import('./components/ListOptions/UnifiedListOption'));
-const HomeScreen = lazy(() => import('./pages/ListOption/HomeScreen'));
 const ListOptionsSequence = lazy(() => import('./pages/ListOption/ListOptionsSequence'));
 
 // Upload Entity Images
@@ -138,112 +135,6 @@ import AdsEntry from './pages/AdsNew/AdsEntry';
 function App() {
   const date = new Date('2025-06-06T12:01:00.000Z')
   console.log("checkDate", date.toLocaleString())
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate()
-
-  // const CheckAuth = () => {
-  //   const token = localStorage.getItem("authToken");
-
-  //   if (token) {
-  //     const decoded = jwtDecode(token); // doesn't verify, just decodes
-  //     const currentTime = Date.now() / 1000;
-
-  //     if (decoded?.exp && decoded.exp < currentTime) {
-  //       localStorage.removeItem("authToken");
-  //       navigate("/");
-  //     } else {
-  //       // console.log("User authenticated", decoded);
-  //       // Optionally dispatch to redux: dispatch(setUser(decoded));
-  //     }
-  //   } else {
-  //     navigate("/");
-  //   }
-  // };
-
-  // useEffect(
-  //   () => {
-  //     CheckAuth()
-  //   }, []
-  // )
-
-
-  // const [deviceToken, setDeviceToken] = useState(null);
-  // const [notification, setNotification] = useState(null);
-
-  // useEffect(() => {
-  //   // Register service worker first to ensure it's available
-  //   const registerServiceWorker = async () => {
-  //     if ('serviceWorker' in navigator) {
-  //       try {
-  //         console.log('Registering service worker...');
-  //         const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
-  //           scope: '/'
-  //         });
-  //         console.log('Service worker registered successfully:', registration);
-  //         return true;
-  //       } catch (error) {
-  //         console.error('Service worker registration failed:', error);
-  //         return false;
-  //       }
-  //     } else {
-  //       console.warn('Service workers not supported in this browser');
-  //       return false;
-  //     }
-  //   };
-
-  //   // Request notification permission and get device token when component mounts
-  //   const initializeNotifications = async () => {
-  //     try {
-  //       // First ensure service worker is registered
-  //       const swRegistered = await registerServiceWorker();
-
-  //       if (!swRegistered) {
-  //         console.warn('Skipping FCM token retrieval due to service worker registration failure');
-  //         return;
-  //       }
-
-  //       // Wait a moment for service worker to initialize
-  //       setTimeout(async () => {
-  //         const token = await getDeviceToken();
-  //         if (token) {
-  //           console.log('Successfully retrieved FCM token');
-  //           setDeviceToken(token);
-
-  //           // You might want to send this token to your backend
-  //           // Example: await sendTokenToBackend(token);
-  //         } else {
-  //           console.warn('FCM token retrieval failed or was denied');
-  //         }
-  //       }, 1000);
-  //     } catch (error) {
-  //       console.error('Error initializing notifications:', error);
-  //     }
-  //   };
-
-  //   initializeNotifications();
-
-  //   // Set up foreground message listener
-  //   let unsubscribe = () => { };
-  //   try {
-  //     unsubscribe = onMessage(messaging, (payload) => {
-  //       console.log('Foreground message received:', payload);
-  //       setNotification({
-  //         title: payload.notification?.title || 'New notification',
-  //         body: payload.notification?.body || '',
-  //         timestamp: new Date().toLocaleTimeString()
-  //       });
-  //     });
-  //   } catch (error) {
-  //     console.error('Error setting up message listener:', error);
-  //   }
-
-  //   // Clean up listener on component unmount
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, []);
-
-  // console.log("deviceToken", deviceToken)
 
   const [deviceToken, setDeviceToken] = useState(null);
   const [notification, setNotification] = useState(null);
@@ -358,11 +249,6 @@ function App() {
             <Route path="/upload" element={<EntityImageUpload />} />
 
             {/* list options */}
-            <Route path="/home" element={<HomeScreen />} />
-            <Route path="/list-options-dashboard" element={<ListOptionDashboard />} />
-            <Route path="/unified-list-options" element={<UnifiedListOption />} />
-
-              // working listoption
             <Route path="/list-option" element={<ListOptions />} />
             <Route path="/new-list-option" element={<NewListOption />} />
             <Route path="/list-options/sequence" element={<ListOptionsSequence />} />
@@ -445,7 +331,7 @@ function App() {
 
             <Route path='*' element={<Error />} />
           </Route>
-            <Route path="/new-ads" element={<AdsEntry />} />
+          <Route path="/new-ads" element={<AdsEntry />} />
         </Routes>
       </Suspense>
 
