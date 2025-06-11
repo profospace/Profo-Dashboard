@@ -1,303 +1,3 @@
-
-// import React, { useState, useEffect } from 'react';
-// import { RefreshCw, Edit, Trash, Save, X, ArrowUp, ArrowDown } from 'lucide-react';
-// import { base_url } from "../../../utils/base_url";
-
-// const ListOptionsSequence = () => {
-//     const [selectedLists, setSelectedLists] = useState([]);
-//     const [loading, setLoading] = useState(false);
-//     const [isEditing, setIsEditing] = useState(false);
-//     const [error, setError] = useState(null);
-//     const [notification, setNotification] = useState({ show: false, message: '', type: '' });
-
-//     // Load available lists on component mount
-//     useEffect(() => {
-//         loadAvailableLists();
-//     }, []);
-
-//     const loadAvailableLists = async () => {
-//         try {
-//             setLoading(true);
-//             setError(null);
-//             const response = await fetch(`${base_url}/api/list-options`);
-
-//             if (!response.ok) {
-//                 const errorData = await response.json().catch(() => ({}));
-//                 throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
-//             }
-
-//             const lists = await response.json();
-//             console.log('Loaded lists:', lists);
-
-//             // Sort lists by their current sequence (if available)
-//             const sortedLists = lists.sort((a, b) => (a.sequence || 0) - (b.sequence || 0));
-//             setSelectedLists(sortedLists);
-//         } catch (error) {
-//             console.error('Error loading available lists:', error);
-//             setError(error.message);
-//             showNotification(`Failed to load lists: ${error.message}`, 'error');
-//         } finally {
-//             setLoading(false);
-//         }
-//     };
-
-//     const showNotification = (message, type = 'info') => {
-//         setNotification({ show: true, message, type });
-//         setTimeout(() => {
-//             setNotification({ ...notification, show: false });
-//         }, 3000);
-//     };
-
-//     // Move list up in the sequence
-//     const moveListUp = (index) => {
-//         if (index === 0) return;
-
-//         const newLists = [...selectedLists];
-//         const temp = newLists[index];
-//         newLists[index] = newLists[index - 1];
-//         newLists[index - 1] = temp;
-//         setSelectedLists(newLists);
-//     };
-
-//     // Move list down in the sequence
-//     const moveListDown = (index) => {
-//         if (index === selectedLists.length - 1) return;
-
-//         const newLists = [...selectedLists];
-//         const temp = newLists[index];
-//         newLists[index] = newLists[index + 1];
-//         newLists[index + 1] = temp;
-//         setSelectedLists(newLists);
-//     };
-
-//     // Save the new sequence
-//     const saveSequence = async () => {
-//         try {
-//             setLoading(true);
-//             setError(null);
-
-//             // Debug: Log the lists we're about to update
-//             console.log('Lists to update sequence:', selectedLists);
-
-//             // Prepare sequence updates with validation
-//             const sequenceUpdates = selectedLists.map((list, index) => {
-//                 if (!list._id) {
-//                     throw new Error(`Missing _id for list at index ${index} (${list.listName || 'unknown'})`);
-//                 }
-
-//                 // Ensure the id is correctly formatted (it should be a string)
-//                 const id = list._id.toString();
-//                 console.log(`List ${index + 1}: ${list.listName} (ID: ${id})`);
-
-//                 return {
-//                     id: id,
-//                     sequence: index
-//                 };
-//             });
-
-//             console.log('Submitting sequence updates:', sequenceUpdates);
-
-//             const response = await fetch(`${base_url}/api/list-options/update-sequence`, {
-//                 method: 'PUT',
-//                 headers: {
-//                     'Content-Type': 'application/json'
-//                 },
-//                 body: JSON.stringify({ sequenceUpdates })
-//             });
-
-//             // Log the raw response
-//             console.log('Response status:', response.status);
-
-//             // Handle error responses
-//             if (!response.ok) {
-//                 const errorData = await response.json().catch(() => ({}));
-//                 throw new Error(errorData.message || `Server error: ${response.status}`);
-//             }
-
-//             const result = await response.json();
-//             console.log('Sequence update result:', result);
-
-//             showNotification(
-//                 `List sequence updated successfully. Modified ${result.modifiedCount} items.`,
-//                 'success'
-//             );
-//             setIsEditing(false);
-
-//             // Refresh the list to show updated sequence values
-//             await loadAvailableLists();
-//         } catch (error) {
-//             console.error('Error updating list sequence:', error);
-//             setError(error.message);
-//             showNotification(`Failed to update list sequence: ${error.message}`, 'error');
-//         } finally {
-//             setLoading(false);
-//         }
-//     };
-
-//     return (
-//         <div className="">
-//             <h1 className="text-2xl font-bold mb-6 text-gray-800">List Options Sequence Management</h1>
-
-//             {/* Error Display */}
-//             {error && (
-//                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
-//                     <p className="font-medium">Error:</p>
-//                     <p>{error}</p>
-//                 </div>
-//             )}
-
-//             {/* Lists Sequence Section */}
-//             <div className="bg-gray-50 p-4 rounded-lg mb-6">
-//                 <div className="flex justify-between items-center mb-4">
-//                     <h2 className="text-lg font-semibold text-gray-700">
-//                         List Order {isEditing ? '(Editing)' : ''}
-//                     </h2>
-
-//                     <div className="flex gap-2">
-//                         {!isEditing ? (
-//                             <>
-//                                 <button
-//                                     onClick={() => setIsEditing(true)}
-//                                     className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
-//                                     disabled={loading || selectedLists.length === 0}
-//                                 >
-//                                     <Edit className="w-5 h-5" />
-//                                     Edit Sequence
-//                                 </button>
-//                                 <button
-//                                     onClick={loadAvailableLists}
-//                                     className="flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md"
-//                                     disabled={loading}
-//                                 >
-//                                     <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
-//                                     Refresh
-//                                 </button>
-//                             </>
-//                         ) : (
-//                             <>
-//                                 <button
-//                                     onClick={saveSequence}
-//                                     className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md"
-//                                     disabled={loading}
-//                                 >
-//                                     {loading ? (
-//                                         <RefreshCw className="w-5 h-5 animate-spin" />
-//                                     ) : (
-//                                         <Save className="w-5 h-5" />
-//                                     )}
-//                                     {loading ? 'Saving...' : 'Save Sequence'}
-//                                 </button>
-//                                 <button
-//                                     onClick={() => {
-//                                         loadAvailableLists();
-//                                         setIsEditing(false);
-//                                     }}
-//                                     className="flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md"
-//                                     disabled={loading}
-//                                 >
-//                                     <X className="w-5 h-5" />
-//                                     Cancel
-//                                 </button>
-//                             </>
-//                         )}
-//                     </div>
-//                 </div>
-
-//                 {loading && !isEditing ? (
-//                     <div className="flex justify-center py-12">
-//                         <RefreshCw className="w-8 h-8 animate-spin text-blue-500" />
-//                     </div>
-//                 ) : selectedLists.length > 0 ? (
-//                     <div className="space-y-4">
-//                         {selectedLists.map((list, index) => (
-//                             <div
-//                                 key={list._id || index}
-//                                 className="bg-white p-4 rounded-md border border-gray-200 shadow-sm flex items-center justify-between"
-//                             >
-//                                 <div className="flex-grow">
-//                                     <div className="flex items-center gap-2">
-//                                         <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded-md text-xs">
-//                                             {index + 1}
-//                                         </span>
-//                                         <h3 className="font-medium text-gray-800">{list.listName}</h3>
-//                                         <span className="text-xs text-gray-500">
-//                                             (ID: {list._id ? list._id.toString().substring(0, 8) + '...' : 'missing'})
-//                                         </span>
-//                                     </div>
-//                                     <p className="text-sm text-gray-600 mt-1">{list.title || 'No title'}</p>
-//                                     <div className="mt-2 flex flex-wrap gap-2">
-//                                         {list.city && (
-//                                             <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-//                                                 City: {list.city}
-//                                             </span>
-//                                         )}
-//                                         <span className="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">
-//                                             Sequence: {list.sequence !== undefined ? list.sequence : 'not set'}
-//                                         </span>
-//                                         <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
-//                                             Options: {list.options ? list.options.length : 0}
-//                                         </span>
-//                                     </div>
-//                                 </div>
-
-//                                 {isEditing && (
-//                                     <div className="flex items-center gap-2">
-//                                         <button
-//                                             onClick={() => moveListUp(index)}
-//                                             disabled={index === 0}
-//                                             className={`p-2 rounded-md ${index === 0
-//                                                 ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-//                                                 : 'bg-blue-50 text-blue-600 hover:bg-blue-100'
-//                                                 }`}
-//                                             title="Move Up"
-//                                         >
-//                                             <ArrowUp className="w-5 h-5" />
-//                                         </button>
-//                                         <button
-//                                             onClick={() => moveListDown(index)}
-//                                             disabled={index === selectedLists.length - 1}
-//                                             className={`p-2 rounded-md ${index === selectedLists.length - 1
-//                                                 ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-//                                                 : 'bg-blue-50 text-blue-600 hover:bg-blue-100'
-//                                                 }`}
-//                                             title="Move Down"
-//                                         >
-//                                             <ArrowDown className="w-5 h-5" />
-//                                         </button>
-//                                     </div>
-//                                 )}
-//                             </div>
-//                         ))}
-//                     </div>
-//                 ) : (
-//                     <div className="bg-white p-8 rounded-md border border-gray-200 text-center text-gray-500">
-//                         {error ? 'Error loading lists. Please try refreshing.' : 'No lists found. Please create some lists first.'}
-//                     </div>
-//                 )}
-//             </div>
-
-//             {/* Notification Toast */}
-//             {notification.show && (
-//                 <div className={`fixed bottom-4 right-4 px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 ${notification.type === 'success'
-//                         ? 'bg-green-500 text-white'
-//                         : notification.type === 'error'
-//                             ? 'bg-red-500 text-white'
-//                             : 'bg-blue-500 text-white'
-//                     }`}>
-//                     <span>{notification.message}</span>
-//                     <button onClick={() => setNotification({ ...notification, show: false })} className="text-white">
-//                         <X className="w-4 h-4" />
-//                     </button>
-//                 </div>
-//             )}
-//         </div>
-//     );
-// };
-
-// export default ListOptionsSequence;
-
-
-
 import React, { useState, useEffect } from 'react';
 import {
     RefreshCw,
@@ -316,6 +16,7 @@ import {
     XCircle
 } from 'lucide-react';
 import { base_url } from "../../../utils/base_url";
+import VisibilityToggle from '../../components/ListOptions/VisibilityToggle';
 
 const ListOptionsSequence = () => {
     const [selectedLists, setSelectedLists] = useState([]);
@@ -328,6 +29,7 @@ const ListOptionsSequence = () => {
     const [sortMethod, setSortMethod] = useState('sequence'); // sequence, name, city, options
     const [sortDirection, setSortDirection] = useState('asc'); // asc, desc
 
+    
     // Load available lists on component mount
     useEffect(() => {
         loadAvailableLists();
@@ -765,7 +467,11 @@ const ListOptionsSequence = () => {
                                                 <span className="font-medium">Options:</span> {list.options ? list.options.length : 0}
                                             </span>
                                         </div>
+
                                     </div>
+
+                                    {/* Visibility toggle button */}
+                                    <div><VisibilityToggle listId={list?._id} currentVisibility={list?.visibility === false ? false : true}/></div>
 
                                     {isEditing && (
                                         <div className="flex items-center gap-1 md:gap-2">
@@ -826,10 +532,10 @@ const ListOptionsSequence = () => {
             {notification.show && (
                 <div
                     className={`fixed bottom-4 right-4 flex items-center gap-3 rounded-lg px-4 py-3 shadow-lg transform transition-all duration-300 ease-out ${notification.type === 'success'
-                            ? 'bg-green-600 text-white'
-                            : notification.type === 'error'
-                                ? 'bg-red-600 text-white'
-                                : 'bg-blue-600 text-white'
+                        ? 'bg-green-600 text-white'
+                        : notification.type === 'error'
+                            ? 'bg-red-600 text-white'
+                            : 'bg-blue-600 text-white'
                         }`}
                 >
                     {notification.type === 'success' ? (

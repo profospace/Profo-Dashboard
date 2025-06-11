@@ -364,13 +364,13 @@ function App() {
 
               // working listoption
             <Route path="/list-option" element={<ListOptions />} />
+            <Route path="/new-list-option" element={<NewListOption />} />
             <Route path="/list-options/sequence" element={<ListOptionsSequence />} />
 
             {/* Report */}
             <Route path="/reports" element={<ReportPage />} />
 
             <Route path="/aws-image-gallery" element={<AwsS3ImageGallery />} />
-            <Route path="/new-list-option" element={<NewListOption />} />
             <Route path="/deeplink-generator" element={<DeeplinkGenerator />} />
 
             <Route path="/cities" element={<CitiesManagementPage />} />

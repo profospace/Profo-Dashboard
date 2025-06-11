@@ -326,6 +326,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Play, Trash2, Info, Filter, RefreshCw } from 'lucide-react';
 import { base_url } from '../../../utils/base_url';
+import CopyButton from '../../components/Video/CopyButton';
 
 const VideoGalleryPage = () => {
     const [videos, setVideos] = useState([]);
@@ -633,6 +634,9 @@ const VideoGalleryPage = () => {
                                         <Trash2 className="h-4 w-4" />
                                     </button>
                                 </div>
+                            <div>
+                                    <CopyButton text={video?.videoUrl}/>
+                            </div>
                             </div>
                         </div>
                     ))}
