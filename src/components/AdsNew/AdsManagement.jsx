@@ -25,18 +25,22 @@
 //                 url += `&isActive=${filterStatus === 'active'}`;
 //             }
 //             if (filterType !== 'all') {
-//                 url += `&adType=${filterType}`;
+//                 url += `&type=${filterType}`;
 //             }
 
 //             const response = await fetch(url, getAuthConfig());
 //             const data = await response.json();
 
 //             if (data.success) {
-//                 setAds(data.ads);
-//                 setTotalPages(data.totalPages);
+//                 setAds(data.ads || []);
+//                 setTotalPages(data.totalPages || 1);
+//             } else {
+//                 console.error('Failed to fetch ads:', data.message);
+//                 setAds([]);
 //             }
 //         } catch (error) {
 //             console.error('Error fetching ads:', error);
+//             setAds([]);
 //         } finally {
 //             setLoading(false);
 //         }
@@ -78,7 +82,7 @@
 
 //     const filteredAds = ads.filter(ad =>
 //         ad.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-//         ad.description?.toLowerCase().includes(searchTerm.toLowerCase())
+//         (ad.description && ad.description.toLowerCase().includes(searchTerm.toLowerCase()))
 //     );
 
 //     const AdTypesBadge = ({ type }) => {
@@ -92,7 +96,7 @@
 
 //         return (
 //             <span className={`px-2 py-1 text-xs font-medium rounded-full ${colors[type] || 'bg-gray-100 text-gray-800'}`}>
-//                 {type}
+//                 {type || 'Unknown'}
 //             </span>
 //         );
 //     };
@@ -144,7 +148,10 @@
 //                 </div>
 //                 <select
 //                     value={filterStatus}
-//                     onChange={(e) => setFilterStatus(e.target.value)}
+//                     onChange={(e) => {
+//                         setFilterStatus(e.target.value);
+//                         setCurrentPage(1); // Reset to first page when filter changes
+//                     }}
 //                     className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 //                 >
 //                     <option value="all">All Status</option>
@@ -153,7 +160,10 @@
 //                 </select>
 //                 <select
 //                     value={filterType}
-//                     onChange={(e) => setFilterType(e.target.value)}
+//                     onChange={(e) => {
+//                         setFilterType(e.target.value);
+//                         setCurrentPage(1); // Reset to first page when filter changes
+//                     }}
 //                     className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 //                 >
 //                     <option value="all">All Types</option>
@@ -189,12 +199,12 @@
 //                                         </div>
 //                                     </td>
 //                                     <td className="px-6 py-4">
-//                                         <AdTypesBadge type={ad.type?.type} />
+//                                         <AdTypesBadge type={ad.type} />
 //                                     </td>
 //                                     <td className="px-6 py-4">
 //                                         <span className={`px-2 py-1 text-xs font-medium rounded-full ${ad.isActive
-//                                                 ? 'bg-green-100 text-green-800'
-//                                                 : 'bg-red-100 text-red-800'
+//                                             ? 'bg-green-100 text-green-800'
+//                                             : 'bg-red-100 text-red-800'
 //                                             }`}>
 //                                             {ad.isActive ? 'Active' : 'Inactive'}
 //                                         </span>
@@ -221,8 +231,8 @@
 //                                             <button
 //                                                 onClick={() => handleToggleStatus(ad.adId)}
 //                                                 className={`p-2 rounded-lg transition-colors ${ad.isActive
-//                                                         ? 'text-orange-600 hover:bg-orange-50'
-//                                                         : 'text-green-600 hover:bg-green-50'
+//                                                     ? 'text-orange-600 hover:bg-orange-50'
+//                                                     : 'text-green-600 hover:bg-green-50'
 //                                                     }`}
 //                                                 title={ad.isActive ? 'Deactivate' : 'Activate'}
 //                                             >
@@ -253,12 +263,24 @@
 //                     </table>
 //                 </div>
 
-//                 {filteredAds.length === 0 && (
+//                 {filteredAds.length === 0 && !loading && (
 //                     <div className="text-center py-12">
 //                         <div className="text-gray-400 mb-4">
 //                             <Filter size={48} className="mx-auto" />
 //                         </div>
-//                         <p className="text-gray-500">No ads found matching your criteria</p>
+//                         <p className="text-gray-500">
+//                             {searchTerm || filterStatus !== 'all' || filterType !== 'all'
+//                                 ? 'No ads found matching your criteria'
+//                                 : 'No ads created yet'}
+//                         </p>
+//                         {!searchTerm && filterStatus === 'all' && filterType === 'all' && (
+//                             <button
+//                                 onClick={onCreateNew}
+//                                 className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+//                             >
+//                                 Create Your First Ad
+//                             </button>
+//                         )}
 //                     </div>
 //                 )}
 //             </div>
@@ -298,7 +320,10 @@
 //                         </p>
 //                         <div className="flex justify-end space-x-4">
 //                             <button
-//                                 onClick={() => setShowDeleteModal(false)}
+//                                 onClick={() => {
+//                                     setShowDeleteModal(false);
+//                                     setAdToDelete(null);
+//                                 }}
 //                                 className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50"
 //                             >
 //                                 Cancel
@@ -320,9 +345,9 @@
 // export default AdsManagement;
 
 import React, { useState, useEffect } from 'react';
-import { Plus, Search, Filter, Eye, MousePointer, Edit, Trash2, Power, PowerOff } from 'lucide-react';
+import { Plus, Search, Filter, Eye, MousePointer, Edit, Trash2, Power, PowerOff, BarChart3, Users } from 'lucide-react';
 
-const AdsManagement = ({ base_url, getAuthConfig, onEditAd, onCreateNew }) => {
+const AdsManagement = ({ base_url, getAuthConfig, onEditAd, onCreateNew, onViewInteractions }) => {
     const [ads, setAds] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -332,6 +357,7 @@ const AdsManagement = ({ base_url, getAuthConfig, onEditAd, onCreateNew }) => {
     const [totalPages, setTotalPages] = useState(1);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [adToDelete, setAdToDelete] = useState(null);
+
 
     useEffect(() => {
         fetchAds();
@@ -549,6 +575,13 @@ const AdsManagement = ({ base_url, getAuthConfig, onEditAd, onCreateNew }) => {
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center space-x-2">
+                                            <button
+                                                onClick={() => onViewInteractions?.(ad.adId)}
+                                                className="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+                                                title="View Interactions"
+                                            >
+                                                <BarChart3 size={16} />
+                                            </button>
                                             <button
                                                 onClick={() => handleToggleStatus(ad.adId)}
                                                 className={`p-2 rounded-lg transition-colors ${ad.isActive

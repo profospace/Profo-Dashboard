@@ -4,6 +4,7 @@
 // import AdsManagement from '../../components/AdsNew/AdsManagement';
 // import CreateEditAd from '../../components/AdsNew/CreateEditAd';
 // import Analytics from '../../components/AdsNew/Analytics';
+// import VisualAnalytics from '../../components/AdsNew/VisualAnalytics';
 // import Settings from '../../components/AdsNew/Settings';
 // import { base_url } from '../../../utils/base_url';
 // import { getAuthConfig } from '../../../utils/authConfig';
@@ -18,6 +19,7 @@
 //         { id: 'dashboard', name: 'Dashboard', icon: '📊' },
 //         { id: 'ads', name: 'Ads Management', icon: '📢' },
 //         { id: 'analytics', name: 'Analytics', icon: '📈' },
+//         { id: 'visual-analytics', name: 'Visual Analytics', icon: '📊' },
 //         { id: 'settings', name: 'Settings', icon: '⚙️' },
 //     ];
 
@@ -61,6 +63,8 @@
 //                 );
 //             case 'analytics':
 //                 return <Analytics base_url={base_url} getAuthConfig={getAuthConfig} />;
+//             case 'visual-analytics':
+//                 return <VisualAnalytics base_url={base_url} getAuthConfig={getAuthConfig} />;
 //             case 'settings':
 //                 return <Settings base_url={base_url} getAuthConfig={getAuthConfig} />;
 //             default:
@@ -145,18 +149,22 @@ import CreateEditAd from '../../components/AdsNew/CreateEditAd';
 import Analytics from '../../components/AdsNew/Analytics';
 import VisualAnalytics from '../../components/AdsNew/VisualAnalytics';
 import Settings from '../../components/AdsNew/Settings';
+import Interactions from '../../components/AdsNew/Interactions';
+import Overview from '../../components/AdsNew/Overview';
 import { base_url } from '../../../utils/base_url';
 import { getAuthConfig } from '../../../utils/authConfig';
-
 
 function AdsEntry() {
     const [activeTab, setActiveTab] = useState('dashboard');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [editingAd, setEditingAd] = useState(null);
+    const [selectedAdId, setSelectedAdId] = useState(null);
+
 
     const navigation = [
         { id: 'dashboard', name: 'Dashboard', icon: '📊' },
         { id: 'ads', name: 'Ads Management', icon: '📢' },
+        { id: 'overview', name: 'Overview', icon: '👁️' },
         { id: 'analytics', name: 'Analytics', icon: '📈' },
         { id: 'visual-analytics', name: 'Visual Analytics', icon: '📊' },
         { id: 'settings', name: 'Settings', icon: '⚙️' },
@@ -172,8 +180,18 @@ function AdsEntry() {
         setActiveTab('create-edit');
     };
 
+    const handleViewInteractions = (adId) => {
+        setSelectedAdId(adId);
+        setActiveTab('interactions');
+    };
+
     const handleSaveComplete = () => {
         setEditingAd(null);
+        setActiveTab('ads');
+    };
+
+    const handleBackToAds = () => {
+        setSelectedAdId(null);
         setActiveTab('ads');
     };
 
@@ -188,6 +206,7 @@ function AdsEntry() {
                         getAuthConfig={getAuthConfig}
                         onEditAd={handleEditAd}
                         onCreateNew={handleCreateNew}
+                        onViewInteractions={handleViewInteractions}
                     />
                 );
             case 'create-edit':
@@ -200,6 +219,17 @@ function AdsEntry() {
                         onCancel={() => setActiveTab('ads')}
                     />
                 );
+            case 'interactions':
+                return (
+                    <Interactions
+                        base_url={base_url}
+                        getAuthConfig={getAuthConfig}
+                        adId={selectedAdId}
+                        onBack={handleBackToAds}
+                    />
+                );
+            case 'overview':
+                return <Overview base_url={base_url} getAuthConfig={getAuthConfig} />;
             case 'analytics':
                 return <Analytics base_url={base_url} getAuthConfig={getAuthConfig} />;
             case 'visual-analytics':
@@ -253,8 +283,8 @@ function AdsEntry() {
                                                 setIsMobileMenuOpen(false);
                                             }}
                                             className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${activeTab === item.id
-                                                    ? 'bg-blue-50 text-blue-600 border border-blue-200'
-                                                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                                ? 'bg-blue-50 text-blue-600 border border-blue-200'
+                                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                                                 }`}
                                         >
                                             <span className="mr-3 text-lg">{item.icon}</span>
