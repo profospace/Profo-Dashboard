@@ -93,7 +93,7 @@ const UserList = () => {
             userName,
         });
 
-        const response = await axios.delete(`${base_url}/api/delete/user/${userId}`)
+        const response = await axios.delete(`${base_url}/api/delete/user/${userId}` , getAuthConfig())
         
             console.log(response)
     };
