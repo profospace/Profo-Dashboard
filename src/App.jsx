@@ -131,6 +131,8 @@ import ContactDashboard from './pages/UserBuilderContactDashboard/ContactDashboa
 import FunnelAnalyticsDashboard from './pages/UserBuilderContactDashboard/FunnelAnalyticsDashboard';
 import OverlappingCardsPreview from './pages/DynamicView/OverlappingCardsPreview';
 import AdsEntry from './pages/AdsNew/AdsEntry';
+import BottomNavIconsDashboard from './pages/BottomNav/BottomNavIconsDashboard';
+import BottomNavManager from './components/BottomNav/BottomNavManager';
 
 function App() {
   const date = new Date('2025-06-06T12:01:00.000Z')
@@ -332,6 +334,8 @@ function App() {
             <Route path='*' element={<Error />} />
           </Route>
           <Route path="/new-ads" element={<AdsEntry />} />
+          {/* <Route path="/bottom-nav" element={<BottomNavIconsDashboard />} /> */}
+          <Route path="/bottom-nav" element={<BottomNavManager />} />
         </Routes>
       </Suspense>
 

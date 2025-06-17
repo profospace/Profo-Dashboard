@@ -20,6 +20,16 @@ export const getAuthConfig = () => {
     };
 };
 
+export const getAuthConfigFormData = () => {
+    const token = localStorage.getItem('authToken');
+    return {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+        },
+    };
+};
+
 /**
  * Creates axios instance with authentication headers
  * @returns {AxiosInstance} Configured axios instance
