@@ -43,6 +43,7 @@ const UserHistory = ({ history }) => {
 
     // Render property card (common for all entity types)
     const renderPropertyCard = (item) => {
+        console.log("item" , item)
         if (!item || !item.propertyId) return null;
 
         const entity = item.propertyId;
@@ -53,6 +54,7 @@ const UserHistory = ({ history }) => {
 
         switch (entityType) {
             case 'property':
+            case 'PROPERTY':
                 title = entity.post_title || 'Unnamed Property';
                 address = entity.address || (entity.city && entity.locality ? `${entity.locality}, ${entity.city}` : 'No address');
                 imageUrl = entity.post_images && entity.post_images.length > 0
@@ -66,6 +68,7 @@ const UserHistory = ({ history }) => {
                 break;
 
             case 'project':
+            case 'PROJECT':
                 title = entity.name || 'Unnamed Project';
                 address = entity.location?.address || (entity.location?.city ? `${entity.location.city}, ${entity.location.state}` : 'No address');
                 imageUrl = entity.galleryNow && entity.galleryNow.length > 0
@@ -81,6 +84,7 @@ const UserHistory = ({ history }) => {
                 break;
 
             case 'building':
+            case 'BUILDING':
                 title = entity.name || 'Unnamed Building';
                 address = entity.location?.address || 'No address';
                 imageUrl = entity.galleryList && entity.galleryList.length > 0
