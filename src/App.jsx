@@ -133,6 +133,9 @@ import OverlappingCardsPreview from './pages/DynamicView/OverlappingCardsPreview
 import AdsEntry from './pages/AdsNew/AdsEntry';
 import BottomNavIconsDashboard from './pages/BottomNav/BottomNavIconsDashboard';
 import BottomNavManager from './components/BottomNav/BottomNavManager';
+import ClientManagementDashboard from './pages/ClientManagement/ClientManagementDashboard';
+import ApiLoadTester from './pages/ApiLoadTester/ApiLoadTester';
+import AndroidPageDashboard from './pages/AndroidPageDashboard/AndroidPageDashboard';
 
 function App() {
   const date = new Date('2025-06-06T12:01:00.000Z')
@@ -336,6 +339,9 @@ function App() {
           <Route path="/new-ads" element={<AdsEntry />} />
           {/* <Route path="/bottom-nav" element={<BottomNavIconsDashboard />} /> */}
           <Route path="/bottom-nav" element={<BottomNavManager />} />
+          <Route path="/client-management" element={<ClientManagementDashboard/>} />
+          <Route path="/api-load-tester" element={<ApiLoadTester/>} />
+          <Route path="/android-page-dashboard" element={<AndroidPageDashboard/>} />
         </Routes>
       </Suspense>
 
