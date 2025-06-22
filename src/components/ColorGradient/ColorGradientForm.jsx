@@ -31,6 +31,11 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
         list_price_size: 14,
         markerColor: "#e1faeb",
         constantData: {
+            filterUnselectedColor: "",
+            filterSelectedColor: "",
+            fabColor: "",
+            loaderIcon: "",
+            headerText: "",
             progressGif: "",
             listEndImage: "",
             listAds: "",
@@ -370,7 +375,7 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
 
     // Accordion Section component
     const AccordionSection = ({ id, title, children }) => (
-        <div className="mb-4 border rounded-lg overflow-hidden bg-white shadow-sm">
+        <div className="mb-4 border rounded-lg overflow-scroll bg-white shadow-sm">
             <button
                 className="w-full px-4 py-3 flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors"
                 onClick={() => setActiveSection(activeSection === id ? null : id)}
@@ -572,6 +577,56 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
 
                 {/* more info */}
                 <AccordionSection id="more" title="More">
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Filter UnselectedColor:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.filterUnselectedColor || ''}
+                            onChange={(e) => handleConstantDataChange('filterUnselectedColor', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Filter UnselectedColor"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Filter SelectedColor:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.filterSelectedColor || ''}
+                            onChange={(e) => handleConstantDataChange('filterSelectedColor', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Filter SelectedColor"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Fab Color:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.fabColor || ''}
+                            onChange={(e) => handleConstantDataChange('fabColor', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter fabColor"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Loader Icon:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.loaderIcon || ''}
+                            onChange={(e) => handleConstantDataChange('loaderIcon', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter loaderIcon"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Header Text:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.headerText || ''}
+                            onChange={(e) => handleConstantDataChange('headerText', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Header Text"
+                        />
+                    </div>
                     <div className="mt-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">User Profile Header:</label>
                         <input

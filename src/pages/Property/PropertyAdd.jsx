@@ -229,7 +229,7 @@ const PropertyAdd = ({ user }) => {
     };
 
     // Available options for select fields
-    const propertyTypes = ['Apartment', 'House', 'Shops', 'Warehouses', 'Halls', 'Land'];
+    const propertyTypes = ['Apartment', 'House', 'Villa', 'Office', 'Shop', 'Warehouse', 'Factory', 'Plot', 'Room'];
     const propertyCategories = ['Residential', 'Commercial', 'Industrial', 'Agricultural'];
     const furnishingOptions = ['Unfurnished', 'Semi-Furnished', 'Fully-Furnished', 'Modular-Kitchen', 'Wardrobes-Included', 'Air-Conditioners-Included', 'Premium-Furnishings'];
     const directionOptions = ['North', 'South', 'East', 'West', 'North-East', 'North-West', 'South-East', 'South-West'];
