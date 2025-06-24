@@ -481,6 +481,36 @@ const PropertyManagerLayout = ({ children }) => {
             label: <Link to="/notification">Notification</Link>,
         },
         {
+            key: '/new-ads',
+            icon: <HomeOutlined />,
+            label: <Link to="/new-ads">New Ads Location</Link>,
+        },
+        
+        {
+            key: '/api-load-tester',
+            icon: <HomeOutlined />,
+            label: <Link to="/api-load-tester">API Load Tester</Link>,
+        },
+        {
+            key: 'android-ui',
+            icon: <AppstoreOutlined />,
+            label: 'Android UI',
+            children: [
+                {
+                    key: '/android-page-dashboard',
+                    label: <Link to="/android-page-dashboard">Android Bottom Sheet</Link>,
+                },
+                {
+                    key: '/bottom-nav',
+                    label: <Link to="/bottom-nav">Android Bottom Nav</Link>,
+                },
+                {
+                    key: '/cards-preview-generator-json',
+                    label: <Link to="/cards-preview-generator-json">Card Preview</Link>,
+                },
+            ]
+        },
+        {
             key: 'property',
             icon: <AppstoreOutlined />,
             label: 'Properties',

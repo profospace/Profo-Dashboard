@@ -32,9 +32,6 @@ const EditProjectPage = lazy(() => import('./pages/Project/EditProjectPage'));
 const ProjectDetailPage = lazy(() => import('./pages/Project/ProjectDetailPage'));
 const ProjectDraftsPage = lazy(() => import('./pages/Project/ProjectDraftPage'));
 const CitiesManagementPage = lazy(() => import('./pages/City/CitiesManagementPage'));
-const AdsPage = lazy(() => import('./pages/Ads Management/AdsPage'));
-const AdCreatePage = lazy(() => import('./pages/Ads Management/AdCreatePage'));
-const AdEditPage = lazy(() => import('./pages/Ads Management/AdEditPage'));
 const BuildersListPage = lazy(() => import('./pages/Builder Management/BuilderListPage'));
 const BuilderUploadPage = lazy(() => import('./pages/Builder Management/BuilderUploadPage'));
 const BuilderDetailPage = lazy(() => import('./pages/Builder Management/BuilderDetailPage'));
@@ -131,9 +128,7 @@ import ContactDashboard from './pages/UserBuilderContactDashboard/ContactDashboa
 import FunnelAnalyticsDashboard from './pages/UserBuilderContactDashboard/FunnelAnalyticsDashboard';
 import OverlappingCardsPreview from './pages/DynamicView/OverlappingCardsPreview';
 import AdsEntry from './pages/AdsNew/AdsEntry';
-import BottomNavIconsDashboard from './pages/BottomNav/BottomNavIconsDashboard';
 import BottomNavManager from './components/BottomNav/BottomNavManager';
-import ClientManagementDashboard from './pages/ClientManagement/ClientManagementDashboard';
 import ApiLoadTester from './pages/ApiLoadTester/ApiLoadTester';
 import AndroidPageDashboard from './pages/AndroidPageDashboard/AndroidPageDashboard';
 
@@ -277,9 +272,6 @@ function App() {
             <Route path="/funnel-analytics" element={<FunnelAnalyticsDashboard />} />
 
             {/* ads managementr */}
-            {/* <Route path="/ads" element={<AdList />} />
-              <Route path="/post-new-ad" element={<AdCreatePage />} />
-              <Route path="/edit-ad/:id" element={<AdEditPage />} /> */}
             <Route path="/ads" element={<AdList />} />
             <Route path="/ads/post-new-ad" element={<AdForm />} />
             <Route path="/ads/:id" element={<AdDetail />} />
@@ -332,16 +324,14 @@ function App() {
             {/* <Route path="/testing" element={<AndroidFeedPreview />} /> */}
 
             <Route path="/cards-preview-generator-json" element={<OverlappingCardsPreview />} />
+          <Route path="/new-ads" element={<AdsEntry />} />
+          <Route path="/android-page-dashboard" element={<AndroidPageDashboard/>} />
+          <Route path="/bottom-nav" element={<BottomNavManager />} />
+          <Route path="/api-load-tester" element={<ApiLoadTester/>} />
 
 
             <Route path='*' element={<Error />} />
           </Route>
-          <Route path="/new-ads" element={<AdsEntry />} />
-          {/* <Route path="/bottom-nav" element={<BottomNavIconsDashboard />} /> */}
-          <Route path="/bottom-nav" element={<BottomNavManager />} />
-          <Route path="/client-management" element={<ClientManagementDashboard/>} />
-          <Route path="/api-load-tester" element={<ApiLoadTester/>} />
-          <Route path="/android-page-dashboard" element={<AndroidPageDashboard/>} />
         </Routes>
       </Suspense>
 
