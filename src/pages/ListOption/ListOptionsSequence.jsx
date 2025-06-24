@@ -256,6 +256,24 @@ const ListOptionsSequence = () => {
         );
     });
 
+    const getListCount = (list) => {
+        if (!list || !list.listType) return 0;
+
+        switch (list.listType) {
+            case 'options':
+                return list.options?.length || 0;
+            case 'properties':
+                return list.listOfProperties?.length || 0;
+            case 'projects':
+                return list.listOfProjects?.length || 0;
+            case 'buildings':
+                return list.listOfBuildings?.length || 0;
+            default:
+                return 0;
+        }
+    };
+      
+
     return (
         <div className="mx-auto ">
             <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 rounded-xl shadow-lg mb-8">
@@ -463,12 +481,38 @@ const ListOptionsSequence = () => {
                                             <span className="inline-flex items-center bg-purple-100 text-purple-800 text-xs px-2.5 py-1 rounded-full">
                                                 <span className="font-medium">Sequence:</span> {list.sequence !== undefined ? list.sequence : 'not set'}
                                             </span>
-                                            <span className="inline-flex items-center bg-green-100 text-green-800 text-xs px-2.5 py-1 rounded-full">
+                                            {/* <span className="inline-flex items-center bg-green-100 text-green-800 text-xs px-2.5 py-1 rounded-full">
                                                 <span className="font-medium">Options:</span> {list.options ? list.options.length : 0}
+                                            </span> */}
+                                            <span className="inline-flex items-center bg-green-100 text-green-800 text-xs px-2.5 py-1 rounded-full">
+                                                <span className="font-medium">Category Type: </span> {list.categoryType}
                                             </span>
                                         </div>
 
                                     </div>
+
+                                    {/* <img src={list?.headerImage || 'no-image'} className='w-auto max-w-80 h-20 object-contain' /> */}
+
+                                    {list?.headerImage ? (
+                                        <img
+                                            src={list.headerImage}
+                                            alt="Header"
+                                            onError={() => setImageError(true)}
+                                            className="w-auto max-w-80 h-20 object-contain border-gray border-2"
+                                        />
+                                    ) : (
+                                        <div className="w-auto max-w-80 h-20 flex items-center justify-center bg-gray-100 text-gray-500 text-sm border rounded">
+                                            No Image
+                                        </div>
+                                    )}
+
+                                    
+
+                                    <span className="inline-flex items-center bg-green-100 text-green-800 text-xs px-2.5 py-1 rounded-full">
+                                        <span className="font-medium">{list?.listType}:</span> {getListCount(list)}
+                                    </span>
+
+                                    {/* <div>{list?.listType}</div> */}
 
                                     {/* Visibility toggle button */}
                                     <div><VisibilityToggle listId={list?._id} currentVisibility={list?.visibility === false ? false : true}/></div>

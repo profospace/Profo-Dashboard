@@ -628,6 +628,16 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                         />
                     </div>
                     <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Image Above BottomSheet Link:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.imageAboveBottomSheet || ''}
+                            onChange={(e) => handleConstantDataChange('imageAboveBottomSheet', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter imageAboveBottomSheet Text"
+                        />
+                    </div>
+                    <div className="mt-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">User Profile Header:</label>
                         <input
                             type="text"
