@@ -324,7 +324,6 @@ function App() {
             {/* <Route path="/testing" element={<AndroidFeedPreview />} /> */}
 
             <Route path="/cards-preview-generator-json" element={<OverlappingCardsPreview />} />
-          <Route path="/new-ads" element={<AdsEntry />} />
           <Route path="/android-page-dashboard" element={<AndroidPageDashboard/>} />
           <Route path="/bottom-nav" element={<BottomNavManager />} />
           <Route path="/api-load-tester" element={<ApiLoadTester/>} />
@@ -332,6 +331,7 @@ function App() {
 
             <Route path='*' element={<Error />} />
           </Route>
+          <Route path="/new-ads" element={<AdsEntry />} />
         </Routes>
       </Suspense>
 
