@@ -578,6 +578,26 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                 {/* more info */}
                 <AccordionSection id="more" title="More">
                     <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Prod BaseUrl:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.prodBaseUrl || ''}
+                            onChange={(e) => handleConstantDataChange('prodBaseUrl', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter prod Base Url"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">IOS App Version:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.iosAppVersion || ''}
+                            onChange={(e) => handleConstantDataChange('iosAppVersion', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Ios App Version"
+                        />
+                    </div>
+                    <div className="mt-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Filter UnselectedColor:</label>
                         <input
                             type="text"
