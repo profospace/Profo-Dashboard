@@ -36,12 +36,15 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
             fabColor: "",
             loaderIcon: "",
             headerText: "",
+            iosAppStoreLink:"",
             progressGif: "",
             listEndImage: "",
             listAds: "",
             searchAds: "",
             maxListAds: "",
             autoPlayAds: false,
+            iosUpdateType : false,
+            androidUpdateType : false,
             headerBackgroundImage: "",
             iosAppVersion:"",
             isPropertyUpload: false,
@@ -579,6 +582,16 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                 {/* more info */}
                 <AccordionSection id="more" title="More">
                     <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Ios App Store Link:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.iosAppStoreLink || ''}
+                            onChange={(e) => handleConstantDataChange('iosAppStoreLink', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter IOS App Store Link"
+                        />
+                    </div>
+                    <div className="mt-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Prod BaseUrl:</label>
                         <input
                             type="text"
@@ -1068,6 +1081,30 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                     <div className="my-6 space-y-4">
                         <h3 className="text-md font-semibold text-gray-700">Features</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4">
+                            <div className="flex items-center">
+                                <label className="inline-flex relative items-center cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        className="sr-only peer"
+                                        checked={formData.constantData.iosUpdateType}
+                                        onChange={() => handleToggleChange('iosUpdateType')}
+                                    />
+                                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                    <span className="ml-3 text-sm font-medium text-gray-700">IOS Update Type</span>
+                                </label>
+                            </div>
+                            <div className="flex items-center">
+                                <label className="inline-flex relative items-center cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        className="sr-only peer"
+                                        checked={formData.constantData.androidUpdateType}
+                                        onChange={() => handleToggleChange('androidUpdateType')}
+                                    />
+                                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                    <span className="ml-3 text-sm font-medium text-gray-700">Android Update Type</span>
+                                </label>
+                            </div>
                             <div className="flex items-center">
                                 <label className="inline-flex relative items-center cursor-pointer">
                                     <input
