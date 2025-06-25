@@ -43,6 +43,7 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
             maxListAds: "",
             autoPlayAds: false,
             headerBackgroundImage: "",
+            iosAppVersion:"",
             isPropertyUpload: false,
             homeUrls: [],
             isStrokeFilter: false,
