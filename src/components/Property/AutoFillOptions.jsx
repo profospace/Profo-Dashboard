@@ -379,7 +379,7 @@ const AutofillOptions = ({ onSelect }) => {
                 floorNumber: '8',
                 totalFloors: '15',
                 facingDirection: 'North-East',
-                purpose: 'sale',
+                purpose: 'buy',
                 configuration: '3BHK',
 
                 // Location Details
@@ -589,7 +589,7 @@ const AutofillOptions = ({ onSelect }) => {
                 floorNumber: '0',
                 totalFloors: '4',
                 facingDirection: 'East',
-                purpose: 'sale',
+                purpose: 'buy',
 
                 // Location Details
                 address: '78 Market Complex, Commercial Avenue, Sector 14',
@@ -693,7 +693,7 @@ const AutofillOptions = ({ onSelect }) => {
                 floorNumber: '0',
                 totalFloors: '3',
                 facingDirection: 'North',
-                purpose: 'sale',
+                purpose: 'rent',
                 configuration: '4BHK',
 
                 // Location Details

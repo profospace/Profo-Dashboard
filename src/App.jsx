@@ -103,9 +103,9 @@ const SignupForm = lazy(() => import("./pages/Authentication/Signup/Signup"));
 const Error = lazy(() => import('./pages/PageNotfound/Error'));
 import ProtectedRoutes from './routing/ProtectedRoutes';
 // import { jwtDecode } from "jwt-decode";
-import AdminSyncDashboard from './pages/AdminDBSync/AdminSyncDashboard';
-import WatermarkManager from './pages/Watermark/WatermarkManager';
-import NotificationDashboard from './pages/Notification/NotificationDashboard';
+const AdminSyncDashboard = lazy(() => import('./pages/AdminDBSync/AdminSyncDashboard'));
+const WatermarkManager = lazy(() => import('./pages/Watermark/WatermarkManager'));
+const NotificationDashboard = lazy(() => import('./pages/Notification/NotificationDashboard'));
 
 // import { getDeviceToken } from './services/notification';
 // import { onMessage } from 'firebase/messaging';
@@ -114,23 +114,26 @@ import { getDeviceToken } from './services/notification';
 import NotificationToast from './components/NotificationDashboard/NotificationToast';
 import { onMessage } from 'firebase/messaging';
 import { messaging } from './services/firebaseInitialize';
-import NotificationStats from './pages/Notification/NotificationStats';
-import AdminDBSyncHistory from './pages/AdminDBSync/AdminDBSyncHistory';
-import HomePage from './pages/Video/HomePage';
-import VideoUploadPage from './pages/Video/VideoUploadPage';
-import VideoGalleryPage from './pages/Video/VideoGalleryPage';
-import VideoPlayerPage from './pages/Video/VideoPlayerPage';
-import MailDashboard from './pages/UserRecommandation/MailDashboard';
-import EmailConfig from './pages/UserRecommandation/EmailConfig';
-import EmailTemplates from './pages/UserRecommandation/EmailTemplates';
-import EmailLogs from './pages/UserRecommandation/EmailLogs';
-import ContactDashboard from './pages/UserBuilderContactDashboard/ContactDashboard';
-import FunnelAnalyticsDashboard from './pages/UserBuilderContactDashboard/FunnelAnalyticsDashboard';
-import OverlappingCardsPreview from './pages/DynamicView/OverlappingCardsPreview';
-import AdsEntry from './pages/AdsNew/AdsEntry';
-import BottomNavManager from './components/BottomNav/BottomNavManager';
-import ApiLoadTester from './pages/ApiLoadTester/ApiLoadTester';
-import AndroidPageDashboard from './pages/AndroidPageDashboard/AndroidPageDashboard';
+
+const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
+const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
+const HomePage = lazy(() => import('./pages/Video/HomePage'));
+const VideoUploadPage = lazy(() => import('./pages/Video/VideoUploadPage'));
+const VideoGalleryPage = lazy(() => import('./pages/Video/VideoGalleryPage'));
+const VideoPlayerPage = lazy(() => import('./pages/Video/VideoPlayerPage'));
+const MailDashboard = lazy(() => import('./pages/UserRecommandation/MailDashboard'));
+const EmailConfig = lazy(() => import('./pages/UserRecommandation/EmailConfig'));
+const EmailTemplates = lazy(() => import('./pages/UserRecommandation/EmailTemplates'));
+const EmailLogs = lazy(() => import('./pages/UserRecommandation/EmailLogs'));
+const ContactDashboard = lazy(() => import('./pages/UserBuilderContactDashboard/ContactDashboard'));
+const FunnelAnalyticsDashboard = lazy(() => import('./pages/UserBuilderContactDashboard/FunnelAnalyticsDashboard'));
+const OverlappingCardsPreview = lazy(() => import('./pages/DynamicView/OverlappingCardsPreview'));
+const AdsEntry = lazy(() => import('./pages/AdsNew/AdsEntry'));
+const BottomNavManager = lazy(() => import('./components/BottomNav/BottomNavManager'));
+const ApiLoadTester = lazy(() => import('./pages/ApiLoadTester/ApiLoadTester'));
+const AndroidPageDashboard = lazy(() => import('./pages/AndroidPageDashboard/AndroidPageDashboard'));
+
+
 
 function App() {
   const date = new Date('2025-06-06T12:01:00.000Z')

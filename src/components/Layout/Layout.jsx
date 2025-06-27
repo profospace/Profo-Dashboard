@@ -455,6 +455,25 @@ const PropertyManagerLayout = ({ children }) => {
             icon: <HomeOutlined />,
             label: <Link to="/dashboard">Dashboard</Link>,
         },
+        {
+            key: 'list',
+            icon: <FileTextOutlined />,
+            label: 'List',
+            children: [
+                {
+                    key: '/list-option',
+                    label: <Link to="/list-option">List Option</Link>,
+                },
+                {
+                    key: '/new-list-option',
+                    label: <Link to="/new-list-option">New List Option</Link>,
+                },
+                {
+                    key: '/list-options/sequence',
+                    label: <Link to="/list-options/sequence">Manage List Sequence</Link>,
+                },
+            ],
+        },
         // {
         //     key: '/properties',
         //     icon: <AppstoreOutlined />,
@@ -725,25 +744,7 @@ const PropertyManagerLayout = ({ children }) => {
         }
 
         ,
-        {
-            key: 'resources',
-            icon: <FileTextOutlined />,
-            label: 'List',
-            children: [
-                {
-                    key: '/list-option',
-                    label: <Link to="/list-option">List Option</Link>,
-                },
-                {
-                    key: '/new-list-option',
-                    label: <Link to="/new-list-option">New List Option</Link>,
-                },
-                {
-                    key: '/list-options/sequence',
-                    label: <Link to="/list-options/sequence">Manage List Sequence</Link>,
-                },
-            ],
-        },
+        
         {
             key: '/deeplink-generator',
             icon: <BuildOutlined />,

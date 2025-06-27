@@ -36,17 +36,19 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
             fabColor: "",
             loaderIcon: "",
             headerText: "",
-            iosAppStoreLink:"",
+            iosAppStoreLink: "",
+            filterSelectedTextColor : "",
+            filterUnSelectedTextColor : "",
             progressGif: "",
             listEndImage: "",
             listAds: "",
             searchAds: "",
             maxListAds: "",
             autoPlayAds: false,
-            iosUpdateType : false,
-            androidUpdateType : false,
+            iosUpdateType: false,
+            androidUpdateType: false,
             headerBackgroundImage: "",
-            iosAppVersion:"",
+            iosAppVersion: "",
             isPropertyUpload: false,
             homeUrls: [],
             isStrokeFilter: false,
@@ -93,7 +95,7 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
             bottomImage: ""
         },
 
-       
+
     });
 
     // Active section state for accordion
@@ -582,6 +584,26 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                 {/* more info */}
                 <AccordionSection id="more" title="More">
                     <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Filter Selected Text Color:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.filterSelectedTextColor || ''}
+                            onChange={(e) => handleConstantDataChange('filterSelectedTextColor', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter filterSelectedTextColor"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Filter UnSelected Text Color:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.filterUnSelectedTextColor || ''}
+                            onChange={(e) => handleConstantDataChange('filterUnSelectedTextColor', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter filterUnSelectedTextColor"
+                        />
+                    </div>
+                    <div className="mt-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Ios App Store Link:</label>
                         <input
                             type="text"
@@ -609,6 +631,26 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                             onChange={(e) => handleConstantDataChange('iosAppVersion', e.target.value)}
                             className="w-full p-2 border border-gray-300 rounded-md text-sm"
                             placeholder="Enter Ios App Version"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Card Top Color Text:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.cardTopColorText || ''}
+                            onChange={(e) => handleConstantDataChange('cardTopColorText', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Card Top Color Text"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Card Top Color:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.cardTopColor || ''}
+                            onChange={(e) => handleConstantDataChange('cardTopColor', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter card Top Color"
                         />
                     </div>
                     <div className="mt-2">
@@ -801,7 +843,7 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                             placeholder="Enter Support Page Link"
                         />
                     </div>
-                    
+
                 </AccordionSection>
 
                 {/* page Link */}
@@ -836,7 +878,7 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                             placeholder="Enter Page Deeplink"
                         />
                     </div>
-                   
+
 
                 </AccordionSection>
 
@@ -990,7 +1032,7 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                             <span className="ml-3 text-sm font-medium text-gray-700">Shadow On Images</span>
                         </label>
                     </div>
-                    
+
                 </AccordionSection>
 
                 <AccordionSection id="search" title="Search Filter">
