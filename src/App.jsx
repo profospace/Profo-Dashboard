@@ -114,6 +114,7 @@ import { getDeviceToken } from './services/notification';
 import NotificationToast from './components/NotificationDashboard/NotificationToast';
 import { onMessage } from 'firebase/messaging';
 import { messaging } from './services/firebaseInitialize';
+import Requirement from './pages/UserRequirement/Requirement';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -330,6 +331,7 @@ function App() {
           <Route path="/android-page-dashboard" element={<AndroidPageDashboard/>} />
           <Route path="/bottom-nav" element={<BottomNavManager />} />
           <Route path="/api-load-tester" element={<ApiLoadTester/>} />
+          <Route path="/user-requirements" element={<Requirement/>} />
 
 
             <Route path='*' element={<Error />} />
