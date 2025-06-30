@@ -5,6 +5,8 @@ import { toast } from 'react-hot-toast';
 import { base_url } from "../../../utils/base_url";
 import PropertyList from '../../components/Property/PropertyList';
 import PropertyDetails from '../../components/Property/PropertyDetails';
+import { getAuthConfig } from '../../../utils/authConfig';
+import axios from 'axios';
 
 export default function PropertyManagement() {
     const navigate = useNavigate();
@@ -117,21 +119,46 @@ export default function PropertyManagement() {
         }
     };
 
+    // const updatePropertyStatus = async (propertyId, status) => {
+    //     try {
+    //         const response = await fetch(`${base_url}/api/property/update-status/${propertyId}`, {
+    //             method: 'PUT',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ status })
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error(`HTTP error! Status: ${response.status}`);
+    //         }
+
+    //         const result = await response.json();
+    //         toast.success('Property status updated');
+
+    //         // Update the property in the local state
+    //         setProperties(prevProperties =>
+    //             prevProperties.map(prop =>
+    //                 prop._id === propertyId ? { ...prop, status } : prop
+    //             )
+    //         );
+
+    //         return result;
+    //     } catch (error) {
+    //         console.error('Error updating property status:', error);
+    //         toast.error('Failed to update property status');
+    //         throw error;
+    //     }
+    // };
+
     const updatePropertyStatus = async (propertyId, status) => {
         try {
-            const response = await fetch(`${base_url}/api/property/update-status/${propertyId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ status })
-            });
+            const response = await axios.put(
+                `${base_url}/api/property/update-status/${propertyId}`,
+                { status }, // Request body
+                getAuthConfig()
+            );
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const result = await response.json();
             toast.success('Property status updated');
 
             // Update the property in the local state
@@ -141,14 +168,16 @@ export default function PropertyManagement() {
                 )
             );
 
-            return result;
+            return response.data;
         } catch (error) {
             console.error('Error updating property status:', error);
-            toast.error('Failed to update property status');
+            toast.error(
+                error.response?.data?.message || 'Failed to update property status'
+            );
             throw error;
         }
     };
-
+    
     const handleEditProperty = (property) => {
         navigate(`/property-edit/${property.post_id}`, { state: { property } });
     };
