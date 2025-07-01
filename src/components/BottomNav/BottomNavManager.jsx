@@ -683,7 +683,6 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Settings, Eye, EyeOff, Upload, Trash2, Save, RefreshCw } from 'lucide-react';
 import IconCard from "./IconCard"
 import IconEditor from './IconEditor';
-import PreviewModal from './PreviewModal';
 import { base_url } from '../../../utils/base_url';
 import { getAuthConfig } from '../../../utils/authConfig';
 import axios from 'axios';
