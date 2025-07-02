@@ -49,6 +49,7 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
             androidUpdateType: false,
             headerBackgroundImage: "",
             iosAppVersion: "",
+            profoConnect:"",
             isPropertyUpload: false,
             homeUrls: [],
             isStrokeFilter: false,
@@ -631,6 +632,16 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                             onChange={(e) => handleConstantDataChange('iosAppVersion', e.target.value)}
                             className="w-full p-2 border border-gray-300 rounded-md text-sm"
                             placeholder="Enter Ios App Version"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Profo Connect:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.profoConnect || ''}
+                            onChange={(e) => handleConstantDataChange('profoConnect', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Profo Connect Contact"
                         />
                     </div>
                     <div className="mt-2">
