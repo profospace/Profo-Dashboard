@@ -136,25 +136,25 @@ const CitiesManagementPage = () => {
         );
     }
 
-    if (error) {
-        return (
-            <div className="flex flex-col items-center justify-center min-h-[70vh]">
-                <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-md max-w-md w-full">
-                    <div className="flex items-center">
-                        <AlertCircle className="h-6 w-6 mr-2" />
-                        <p className="font-medium">Error Loading Data</p>
-                    </div>
-                    <p className="mt-2 text-sm">{error}</p>
-                    <button
-                        onClick={() => setRefreshTrigger(prev => prev + 1)}
-                        className="mt-3 text-sm font-medium text-white bg-red-600 hover:bg-red-700 py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all"
-                    >
-                        Try Again
-                    </button>
-                </div>
-            </div>
-        );
-    }
+    // if (error) {
+    //     return (
+    //         <div className="flex flex-col items-center justify-center min-h-[70vh]">
+    //             <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-md max-w-md w-full">
+    //                 <div className="flex items-center">
+    //                     <AlertCircle className="h-6 w-6 mr-2" />
+    //                     <p className="font-medium">Error Loading Data</p>
+    //                 </div>
+    //                 <p className="mt-2 text-sm">{error}</p>
+    //                 <button
+    //                     onClick={() => setRefreshTrigger(prev => prev + 1)}
+    //                     className="mt-3 text-sm font-medium text-white bg-red-600 hover:bg-red-700 py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all"
+    //                 >
+    //                     Try Again
+    //                 </button>
+    //             </div>
+    //         </div>
+    //     );
+    // }
 
     return (
         <div className="mx-auto ">
