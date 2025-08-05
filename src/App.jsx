@@ -115,6 +115,7 @@ import NotificationToast from './components/NotificationDashboard/NotificationTo
 import { onMessage } from 'firebase/messaging';
 import { messaging } from './services/firebaseInitialize';
 import Requirement from './pages/UserRequirement/Requirement';
+import BenchmarkDashboard from './pages/BenchmarkDashboard/BenchmarkDashboard';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -332,6 +333,8 @@ function App() {
           <Route path="/bottom-nav" element={<BottomNavManager />} />
           <Route path="/api-load-tester" element={<ApiLoadTester/>} />
           <Route path="/user-requirements" element={<Requirement/>} />
+            <Route path="/benchmark" element={<BenchmarkDashboard />} />
+
 
 
             <Route path='*' element={<Error />} />
