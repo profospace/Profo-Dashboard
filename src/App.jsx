@@ -116,6 +116,7 @@ import { onMessage } from 'firebase/messaging';
 import { messaging } from './services/firebaseInitialize';
 import Requirement from './pages/UserRequirement/Requirement';
 import BenchmarkDashboard from './pages/BenchmarkDashboard/BenchmarkDashboard';
+import RazorpayDashboard from './pages/RazorpayDashboard/RazorpayDashboard';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -334,6 +335,7 @@ function App() {
           <Route path="/api-load-tester" element={<ApiLoadTester/>} />
           <Route path="/user-requirements" element={<Requirement/>} />
             <Route path="/benchmark" element={<BenchmarkDashboard />} />
+            <Route path="/razorpay" element={<RazorpayDashboard />} />
 
 
 
