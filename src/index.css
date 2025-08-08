@@ -30,3 +30,15 @@
 .animate-slideIn {
     animation: slideIn 0.4s ease-out;
 }
+
+/* styles.css or global.css */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}

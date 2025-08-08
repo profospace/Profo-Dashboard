@@ -117,6 +117,7 @@ import { messaging } from './services/firebaseInitialize';
 import Requirement from './pages/UserRequirement/Requirement';
 import BenchmarkDashboard from './pages/BenchmarkDashboard/BenchmarkDashboard';
 import RazorpayDashboard from './pages/RazorpayDashboard/RazorpayDashboard';
+import PreviewAds from './pages/AdsNew/PreviewAds';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -327,7 +328,7 @@ function App() {
             <Route path="/projects/:projectId/connect-properties" element={<ConnectProjectPropertiesPage />} />
             <Route path="/projects/:projectId/disconnect-properties" element={<DisconnectProjectPropertiesPage />} />
 
-            {/* <Route path="/testing" element={<AndroidFeedPreview />} /> */}
+            <Route path="/testing" element={<AndroidFeedPreview />} />
 
             <Route path="/cards-preview-generator-json" element={<OverlappingCardsPreview />} />
           <Route path="/android-page-dashboard" element={<AndroidPageDashboard/>} />
@@ -342,6 +343,7 @@ function App() {
             <Route path='*' element={<Error />} />
           </Route>
           <Route path="/new-ads" element={<AdsEntry />} />
+          <Route path="/preview-ads" element={<PreviewAds />} />
         </Routes>
       </Suspense>
 
