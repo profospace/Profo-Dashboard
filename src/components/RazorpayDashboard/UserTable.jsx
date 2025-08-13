@@ -1,6 +1,5 @@
 import React, { useState , useEffect } from 'react';
 import { Search, Filter, Download, MoreHorizontal, Eye, Edit, Trash2 } from 'lucide-react';
-import UserDetailsModal from './UserDetailsModal';
 
 const UserTable = ({ adminAPI }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,8 +9,6 @@ const UserTable = ({ adminAPI }) => {
   const [loading, setLoading] = useState(true);
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const [selectedUserId, setSelectedUserId] = useState(null);
-  const [showUserModal, setShowUserModal] = useState(false);
   const usersPerPage = 10;
 
   useEffect(() => {
@@ -74,19 +71,8 @@ const UserTable = ({ adminAPI }) => {
     return badges[type] || badges.EMAIL;
   };
 
-  const handleViewUser = (userId) => {
-    setSelectedUserId(userId);
-    setShowUserModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowUserModal(false);
-    setSelectedUserId(null);
-  };
-
   return (
-    <>
-      <div className="space-y-6">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -243,10 +229,7 @@ const UserTable = ({ adminAPI }) => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex items-center space-x-2">
-                      <button 
-                        onClick={() => handleViewUser(user.id)}
-                        className="text-blue-600 hover:text-blue-700 p-1"
-                      >
+                      <button className="text-blue-600 hover:text-blue-700 p-1">
                         <Eye className="w-4 h-4" />
                       </button>
                       <button className="text-gray-600 hover:text-gray-700 p-1">
@@ -340,15 +323,6 @@ const UserTable = ({ adminAPI }) => {
         )}
       </div>
     </div>
-
-      {/* User Details Modal */}
-      <UserDetailsModal
-        isOpen={showUserModal}
-        onClose={handleCloseModal}
-        userId={selectedUserId}
-        adminAPI={adminAPI}
-      />
-    </>
   );
 };
 

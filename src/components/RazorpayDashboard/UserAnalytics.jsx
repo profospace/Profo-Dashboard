@@ -110,6 +110,7 @@ const UserAnalytics = ({ data }) => {
           <div className="bg-blue-50 rounded-lg p-3 mb-2 flex items-center justify-center">
             <Users className="w-5 h-5 text-blue-600" />
           </div>
+          <p className="text-2xl font-bold text-gray-900">{data.userEngagement}%</p>
           <p className="text-2xl font-bold text-gray-900">{data.userEngagement || 0}%</p>
           <p className="text-gray-600 text-sm">Engagement</p>
         </div>
