@@ -118,6 +118,7 @@ import Requirement from './pages/UserRequirement/Requirement';
 import BenchmarkDashboard from './pages/BenchmarkDashboard/BenchmarkDashboard';
 import RazorpayDashboard from './pages/RazorpayDashboard/RazorpayDashboard';
 import PreviewAds from './pages/AdsNew/PreviewAds';
+import PlanManagement from './pages/PlanManagement/PlanManagement';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -331,12 +332,12 @@ function App() {
             <Route path="/testing" element={<AndroidFeedPreview />} />
 
             <Route path="/cards-preview-generator-json" element={<OverlappingCardsPreview />} />
-          <Route path="/android-page-dashboard" element={<AndroidPageDashboard/>} />
-          <Route path="/bottom-nav" element={<BottomNavManager />} />
-          <Route path="/api-load-tester" element={<ApiLoadTester/>} />
-          <Route path="/user-requirements" element={<Requirement/>} />
+            <Route path="/android-page-dashboard" element={<AndroidPageDashboard />} />
+            <Route path="/bottom-nav" element={<BottomNavManager />} />
+            <Route path="/api-load-tester" element={<ApiLoadTester />} />
+            <Route path="/user-requirements" element={<Requirement />} />
             <Route path="/benchmark" element={<BenchmarkDashboard />} />
-            <Route path="/razorpay" element={<RazorpayDashboard />} />
+            <Route path="/plan-management" element={<PlanManagement />} />
 
 
 
@@ -344,6 +345,7 @@ function App() {
           </Route>
           <Route path="/new-ads" element={<AdsEntry />} />
           <Route path="/preview-ads" element={<PreviewAds />} />
+            <Route path="/razorpay" element={<RazorpayDashboard />} />
         </Routes>
       </Suspense>
 

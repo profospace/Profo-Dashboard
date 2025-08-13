@@ -43,7 +43,7 @@ const UserHistory = ({ history }) => {
 
     // Render property card (common for all entity types)
     const renderPropertyCard = (item) => {
-        console.log("item" , item)
+        // console.log("item" , item)
         if (!item || !item.propertyId) return null;
 
         const entity = item.propertyId;
@@ -174,6 +174,148 @@ const UserHistory = ({ history }) => {
         );
     };
 
+
+    const renderContactCard = (item) => {
+        console.log("contact info", item);
+
+        if (!item || !item.entityId) return null;
+
+        const entity = item.entityId;
+        const entityType = item.entityType || 'property';
+
+        // Determine what data to display based on entity type
+        let title, address, imageUrl, details = [];
+
+        switch (entityType) {
+            case 'property':
+            case 'PROPERTY':
+                title = entity.post_title || 'Unnamed Property';
+                address = entity.address || (entity.city && entity.locality ? `${entity.locality}, ${entity.city}` : 'No address');
+                imageUrl = entity.post_images && entity.post_images.length > 0
+                    ? entity.post_images[0].url
+                    : (entity.galleryList && entity.galleryList.length > 0 ? entity.galleryList[0] : null);
+
+                if (entity.price) details.push(`Price: ₹${(entity.price / 100000).toFixed(1)} Lakhs`);
+                if (entity.area) details.push(`Area: ${entity.area}`);
+                if (entity.bedrooms) details.push(`${entity.bedrooms} BHK`);
+                if (entity.bathrooms) details.push(`${entity.bathrooms} Bath`);
+                break;
+
+            case 'project':
+            case 'PROJECT':
+                title = entity.name || 'Unnamed Project';
+                address = entity.location?.address || (entity.location?.city ? `${entity.location.city}, ${entity.location.state}` : 'No address');
+                imageUrl = entity.galleryNow && entity.galleryNow.length > 0
+                    ? entity.galleryNow[0]
+                    : null;
+
+                if (entity.type) details.push(`Type: ${entity.type}`);
+                if (entity.status) details.push(`Status: ${entity.status}`);
+                if (entity.overview?.totalUnits) details.push(`Units: ${entity.overview.totalUnits}`);
+                if (entity.overview?.priceRange?.min && entity.overview?.priceRange?.max) {
+                    details.push(`Price: ₹${entity.overview.priceRange.min / 1000000}-${entity.overview.priceRange.max / 1000000} Lakhs`);
+                }
+                break;
+
+            case 'building':
+            case 'BUILDING':
+                title = entity.name || 'Unnamed Building';
+                address = entity.location?.address || 'No address';
+                imageUrl = entity.galleryList && entity.galleryList.length > 0
+                    ? entity.galleryList[0]
+                    : null;
+
+                if (entity.type) details.push(`Type: ${entity.type}`);
+                if (entity.totalProperties) details.push(`Total Properties: ${entity.totalProperties}`);
+                break;
+
+            default:
+                title = 'Unknown Item';
+                address = 'No address';
+        }
+
+        return (
+            <div className="bg-white p-4 rounded-lg border shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer" onClick={() => {
+                setSelectedItem({ ...item, title, address, imageUrl, details, entityType });
+                setModalOpen(true);
+            }}>
+                <div className="flex flex-col md:flex-row gap-4">
+                    {/* Image */}
+                    <div className="w-full md:w-32 h-32 bg-gray-200 rounded-md overflow-hidden flex-shrink-0">
+                        {imageUrl ? (
+                            <img
+                                src={imageUrl}
+                                alt={title}
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                                }}
+                            />
+                        ) : (
+                            <div className="w-full h-full flex items-center justify-center text-gray-500">
+                                No Image
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1">
+                        <div className="flex items-start justify-between">
+                            <div>
+                                <h3 className="text-lg font-medium text-gray-900 truncate">{title}</h3>
+                                <p className="text-sm text-gray-600 mb-2">{address}</p>
+                            </div>
+                            <div className="flex flex-col items-end gap-1">
+                                <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full capitalize">
+                                    {entityType}
+                                </span>
+                                <span className={`px-2 py-1 text-xs font-medium rounded-full capitalize ${item.inquiryStatus === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
+                                        item.inquiryStatus === 'RESPONDED' ? 'bg-green-100 text-green-800' :
+                                            item.inquiryStatus === 'CLOSED' ? 'bg-gray-100 text-gray-800' :
+                                                'bg-red-100 text-red-800'
+                                    }`}>
+                                    {item.inquiryStatus || 'Unknown'}
+                                </span>
+                            </div>
+                        </div>
+
+                        {details.length > 0 && (
+                            <div className="flex flex-wrap gap-2 mt-2">
+                                {details.map((detail, index) => (
+                                    <span key={index} className="px-2 py-1 text-xs bg-gray-100 text-gray-800 rounded-md">
+                                        {detail}
+                                    </span>
+                                ))}
+                            </div>
+                        )}
+
+                        {/* Contact timestamps and status */}
+                        <div className="mt-3 flex flex-col gap-1 text-sm text-gray-500">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center">
+                                    <svg className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 2.26a2 2 0 001.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                    <span>First contacted: {formatDate(item.firstContactedAt)}</span>
+                                </div>
+                            </div>
+
+                            {item.lastContactedAt !== item.firstContactedAt && (
+                                <div className="flex items-center">
+                                    <svg className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span>Last contacted: {formatDate(item.lastContactedAt)}</span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     // Prepare data for each tab
     const viewedProperties = history.viewedProperties || [];
     const likedProperties = history.likedProperties || [];
@@ -250,7 +392,7 @@ const UserHistory = ({ history }) => {
                     contactedProperties.length > 0 ? (
                         contactedProperties.map((item) => (
                             <div key={item._id}>
-                                {renderPropertyCard(item)}
+                                {renderContactCard(item)}
                             </div>
                         ))
                     ) : (
