@@ -871,9 +871,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Eye, Save, Download, Upload, Edit3, Server, Smartphone } from 'lucide-react';
+import { base_url } from '../../../utils/base_url';
 
 // Mock API service (replace with actual API calls)
-const API_BASE_URL = 'http://localhost:5029/api';
+const API_BASE_URL = `${base_url}/api`;
 
 const apiService = {
     // Pages API
