@@ -119,6 +119,7 @@ import BenchmarkDashboard from './pages/BenchmarkDashboard/BenchmarkDashboard';
 import RazorpayDashboard from './pages/RazorpayDashboard/RazorpayDashboard';
 import PreviewAds from './pages/AdsNew/PreviewAds';
 import PlanManagement from './pages/PlanManagement/PlanManagement';
+import Apihit from './pages/Apihit';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -346,6 +347,7 @@ function App() {
           <Route path="/new-ads" element={<AdsEntry />} />
           <Route path="/preview-ads" element={<PreviewAds />} />
             <Route path="/razorpay" element={<RazorpayDashboard />} />
+            <Route path="/api-hit" element={<Apihit />} />
         </Routes>
       </Suspense>
 
