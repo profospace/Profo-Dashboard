@@ -120,6 +120,7 @@ import RazorpayDashboard from './pages/RazorpayDashboard/RazorpayDashboard';
 import PreviewAds from './pages/AdsNew/PreviewAds';
 import PlanManagement from './pages/PlanManagement/PlanManagement';
 import Apihit from './pages/Apihit';
+import DynamicPageDashboard from './pages/AndroidPageDashboard/DynamicPageDashboard';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -334,6 +335,7 @@ function App() {
 
             <Route path="/cards-preview-generator-json" element={<OverlappingCardsPreview />} />
             <Route path="/android-page-dashboard" element={<AndroidPageDashboard />} />
+            <Route path="/dynamic-page-dashboard" element={<DynamicPageDashboard />} />
             <Route path="/bottom-nav" element={<BottomNavManager />} />
             <Route path="/api-load-tester" element={<ApiLoadTester />} />
             <Route path="/user-requirements" element={<Requirement />} />
@@ -342,12 +344,13 @@ function App() {
 
 
 
+
             <Route path='*' element={<Error />} />
           </Route>
           <Route path="/new-ads" element={<AdsEntry />} />
           <Route path="/preview-ads" element={<PreviewAds />} />
             <Route path="/razorpay" element={<RazorpayDashboard />} />
-            <Route path="/api-hit" element={<Apihit />} />
+            <Route path="/api-hit" element={<Apihit />} /> 
         </Routes>
       </Suspense>
 

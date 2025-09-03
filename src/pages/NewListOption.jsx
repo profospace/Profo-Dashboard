@@ -10,6 +10,7 @@ const NewListOption = () => {
     const [headerImage, setHeaderImage] = useState('');
     const [optionType, setOptionType] = useState('carousal');
     const [sectionType, setSectionType] = useState('banner');
+    const [listPurpose , setListPurpose] = useState('feed')
     const [cityName, setCityName] = useState('');
     const [options, setOptions] = useState([{ imageLink: '', textView: '', link: '' }]);
     const [cities, setCities] = useState([]);
@@ -189,6 +190,7 @@ const NewListOption = () => {
                 headerImage,
                 categoryType: optionType,
                 sectionType,
+                listPurpose,
                 backgroundColor,
                 city: cityName,
                 listType: listType,
@@ -224,6 +226,7 @@ const NewListOption = () => {
             setHeaderImage('');
             setOptionType('carousal');
             setSectionType('banner');
+            setListPurpose('feed')
             setCityName('');
             setOptions([{ imageLink: '', textView: '', link: '' }]);
             setBackgroundColor('');
@@ -425,6 +428,23 @@ const NewListOption = () => {
                                 <option value="userprofile">User Profile</option>
                                 <option value="list">List</option>
                                 <option value="call">Call</option>
+                            </select>
+                        </div>
+                        {/* listPurpose */}
+                        <div>
+                            <label htmlFor="listPurpose" className="block text-sm font-medium text-gray-700 mb-1">
+                                List Purpose
+                            </label>
+                            <select
+                                id="listPurpose"
+                                value={listPurpose}
+                                onChange={(e) => setListPurpose(e.target.value)}
+                                className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            >
+                                <option value="pages">pages</option>
+                                <option value="feed">feed</option>
+                                <option value="pagefeed">pagefeed</option>
+                                
                             </select>
                         </div>
 
