@@ -123,7 +123,7 @@ const DynamicPageDashboard = () => {
     setLoading(true);
 
     try {
-      const url = editingPage ? `${base_url}/api/pages/dynamic/${editingPage._id}` : `${base_url}/api/pages/dynamic/pages`;
+      const url = editingPage ? `${base_url}/api/pages/dynamic/pages/${editingPage._id}` : `${base_url}/api/pages/dynamic/pages`;
       const method = editingPage ? 'PUT' : 'POST';
       
       const response = await fetch(url, {

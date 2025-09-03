@@ -32,6 +32,7 @@ const ListOptions = () => {
         options: [],
         categoryType: 'carousal',
         sectionType: 'banner',
+        listPurpose: '',
         city: '',
         listType: 'options',
         listOfProperties: [],
@@ -193,6 +194,7 @@ const ListOptions = () => {
                 options: data.options || [],
                 categoryType: data.categoryType || 'carousal',
                 sectionType: data.sectionType || 'banner',
+                listPurpose: data.listPurpose || 'feed',
                 city: data.city || '',
                 listType: data.listType || 'options',
                 listOfProperties: data.listOfProperties || [],
@@ -407,7 +409,8 @@ const ListOptions = () => {
                 body: JSON.stringify({
                     categoryType: listDetails.categoryType,
                     sectionType: listDetails.sectionType,
-                    city: listDetails.city
+                    city: listDetails.city,
+                    listPurpose: listDetails.listPurpose  
                 })
             });
 
@@ -507,6 +510,7 @@ const ListOptions = () => {
                     headerImage: listDetails.headerImage,
                     categoryType: listDetails.categoryType,
                     sectionType: listDetails.sectionType,
+                     listPurpose: listDetails.listPurpose, 
                     backgroundColor,
                     city: listDetails.city,
                     listType: newListType,
@@ -1004,6 +1008,23 @@ const ListOptions = () => {
                                         <option value="userprofile">User Profile</option>
                                         <option value="list">List</option>
                                         <option value="call">Call</option>
+                                    </select>
+                                </div>
+                                {/* List Purpose */}
+                                <div>
+                                    <label htmlFor="listPurpose" className="block text-sm font-semibold text-gray-700 mb-2">
+                                        List Purpose
+                                    </label>
+                                    <select
+                                        id="listPurpose"
+                                        name="listPurpose"
+                                        value={listDetails.listPurpose}
+                                        onChange={handleListDetailsChange}
+                                        className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                                    >
+                                <option value="feed">feed</option>
+                                         <option value="pages">pages</option>
+                                <option value="pagefeed">pagefeed</option>
                                     </select>
                                 </div>
 
