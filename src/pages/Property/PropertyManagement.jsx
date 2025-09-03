@@ -41,7 +41,7 @@ export default function PropertyManagement() {
     const fetchProperties = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`${base_url}/api/properties/all`);
+            const response = await fetch(`${base_url}/api/properties/all` , getAuthConfig());
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
