@@ -120,6 +120,7 @@ import RazorpayDashboard from './pages/RazorpayDashboard/RazorpayDashboard';
 import PreviewAds from './pages/AdsNew/PreviewAds';
 import PlanManagement from './pages/PlanManagement/PlanManagement';
 import Apihit from './pages/Apihit';
+import PlotViewer from './pages/PlotViewer/App';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -348,6 +349,7 @@ function App() {
           <Route path="/preview-ads" element={<PreviewAds />} />
             <Route path="/razorpay" element={<RazorpayDashboard />} />
             <Route path="/api-hit" element={<Apihit />} />
+            {/* <Route path="/plot/viewer" element={<PlotViewer />} /> */}
         </Routes>
       </Suspense>
 
