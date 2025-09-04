@@ -22,6 +22,7 @@ const NewListOption = () => {
     const [backgroundColor, setBackgroundColor] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
+    const [maxItemsPerRow, setMaxItemsPerRow] = useState(1);
 
     // New states for entity selection
     const [listType, setListType] = useState('options');
@@ -194,6 +195,7 @@ const NewListOption = () => {
                 backgroundColor,
                 city: cityName,
                 listType: listType,
+                ...(optionType === 'grid_view' && { maxItemsPerRow: maxItemsPerRow }),
             };
 
             // Add the appropriate data based on list type
@@ -232,6 +234,8 @@ const NewListOption = () => {
             setBackgroundColor('');
             setListType('options');
             setSelectedEntities([]);
+            setMaxItemsPerRow(1);
+
 
         } catch (error) {
             console.error('Error creating list option:', error);
@@ -411,6 +415,32 @@ const NewListOption = () => {
                                 <option value="vertical_list">Vertical List</option>
                             </select>
                         </div>
+
+                        {/* // Add this right after the optionType select div closes */}
+                        {optionType === 'grid_view' && (
+                            <div>
+                                <label htmlFor="maxItemsPerRow" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Max Items Per Row
+                                </label>
+                                <select
+                                    id="maxItemsPerRow"
+                                    value={maxItemsPerRow}
+                                    onChange={(e) => setMaxItemsPerRow(parseInt(e.target.value))}
+                                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                >
+                                    <option value={1}>1 Item per Row</option>
+                                    <option value={2}>2 Items per Row</option>
+                                    <option value={3}>3 Items per Row</option>
+                                    <option value={4}>4 Items per Row</option>
+                                    <option value={5}>5 Items per Row</option>
+                                    <option value={6}>1 Item per Row</option>
+                                    <option value={7}>2 Items per Row</option>
+                                    <option value={8}>3 Items per Row</option>
+                                    <option value={9}>4 Items per Row</option>
+                                    <option value={10}>5 Items per Row</option>
+                                </select>
+                            </div>
+                        )}
 
                         <div>
                             <label htmlFor="sectionType" className="block text-sm font-medium text-gray-700 mb-1">
