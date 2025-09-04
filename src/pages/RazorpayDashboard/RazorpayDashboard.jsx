@@ -450,6 +450,216 @@
 
 // export default RazorpayDashboard;
 
+// import React, { useState, useEffect } from 'react';
+// import AdminAPI from './adminApi';
+// import {
+//     Users,
+//     CreditCard,
+//     TrendingUp,
+//     DollarSign,
+//     Activity,
+//     ChevronDown,
+//     Calendar,
+//     Bell,
+//     Search,
+//     Filter
+// } from 'lucide-react';
+// import StatsCards from '../../components/RazorpayDashboard/StatsCards';
+// import TransactionChart from '../../components/RazorpayDashboard/TransactionChart';
+// import UserAnalytics from '../../components/RazorpayDashboard/UserAnalytics';
+// import PlanAnalytics from '../../components/RazorpayDashboard/PlanAnalytics';
+// import RecentActivity from '../../components/RazorpayDashboard/RecentActivity';
+// import UserTable from '../../components/RazorpayDashboard/UserTable';
+// import Suggestions from '../../components/RazorpayDashboard/Suggestions';
+
+// const RazorpayDashboard = () => {
+//     const [dateRange, setDateRange] = useState('7d');
+//     const [activeTab, setActiveTab] = useState('overview');
+//     const [dashboardData, setDashboardData] = useState(null);
+//     const [loading, setLoading] = useState(true);
+
+//     const dateRanges = [
+//         { value: '24h', label: 'Last 24 Hours' },
+//         { value: '7d', label: 'Last 7 Days' },
+//         { value: '30d', label: 'Last 30 Days' },
+//         { value: '90d', label: 'Last 90 Days' }
+//     ];
+
+//     const tabs = [
+//         { id: 'overview', label: 'Overview', icon: Activity },
+//         { id: 'users', label: 'Users', icon: Users },
+//         { id: 'transactions', label: 'Transactions', icon: CreditCard },
+//         { id: 'plans', label: 'Plans', icon: TrendingUp }
+//     ];
+
+//     useEffect(() => {
+//         fetchDashboardData();
+//     }, [dateRange]);
+
+//     const fetchDashboardData = async () => {
+//         setLoading(true);
+//         try {
+//             // Fetch all dashboard data from APIs
+//             const [stats, transactions, users, plans, recentActivity, suggestions] = await Promise.all([
+//                 AdminAPI.getDashboardStats(dateRange),
+//                 AdminAPI.getTransactionAnalytics(dateRange),
+//                 AdminAPI.getUserAnalytics(dateRange),
+//                 AdminAPI.getPlanAnalytics(dateRange),
+//                 AdminAPI.getRecentActivity(10),
+//                 AdminAPI.getSuggestions()
+//             ]);
+
+//             setDashboardData({
+//                 stats,
+//                 transactions,
+//                 users,
+//                 plans,
+//                 recentActivity,
+//                 suggestions
+//             });
+//         } catch (error) {
+//             console.error('Error fetching dashboard data:', error);
+//             // Set empty data on error to prevent crashes
+//             setDashboardData({
+//                 stats: {
+//                     totalUsers: 0,
+//                     totalUsersGrowth: 0,
+//                     activeUsers: 0,
+//                     activeUsersGrowth: 0,
+//                     totalRevenue: 0,
+//                     revenueGrowth: 0,
+//                     plansPurchased: 0,
+//                     plansPurchasedGrowth: 0,
+//                     walletBalance: 0,
+//                     walletBalanceGrowth: 0,
+//                     propertyInteractions: 0,
+//                     propertyInteractionsGrowth: 0
+//                 },
+//                 transactions: { labels: [], datasets: [] },
+//                 users: { newUsers: [], activeUsers: [], userEngagement: 0, avgSessionTime: '0m' },
+//                 plans: { planDistribution: [], revenue: {} },
+//                 recentActivity: [],
+//                 suggestions: []
+//             });
+//         } finally {
+//             setLoading(false);
+//         }
+//     };
+
+//     if (loading) {
+//         return (
+//             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+//                 <div className="flex items-center space-x-4">
+//                     <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+//                     <span className="text-gray-600 font-medium">Loading dashboard...</span>
+//                 </div>
+//             </div>
+//         );
+//     }
+
+//     return (
+//         <div className="min-h-screen bg-gray-50">
+//             {/* Header */}
+//             <header className="bg-white shadow-sm border-b border-gray-200">
+//                 <div className="px-6 py-4">
+//                     <div className="flex items-center justify-between">
+//                         <div>
+//                             <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+//                             <p className="text-gray-600 mt-1">Monitor your platform's performance and user activity</p>
+//                         </div>
+
+//                         <div className="flex items-center space-x-4">
+//                             {/* Date Range Selector */}
+//                             <div className="relative">
+//                                 <select
+//                                     value={dateRange}
+//                                     onChange={(e) => setDateRange(e.target.value)}
+//                                     className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+//                                 >
+//                                     {dateRanges.map(range => (
+//                                         <option key={range.value} value={range.value}>
+//                                             {range.label}
+//                                         </option>
+//                                     ))}
+//                                 </select>
+//                                 <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+//                             </div>
+
+//                             <button className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+//                                 <Bell className="w-5 h-5" />
+//                                 <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+//                             </button>
+//                         </div>
+//                     </div>
+
+//                     {/* Navigation Tabs */}
+//                     <div className="mt-6 border-b border-gray-200">
+//                         <nav className="flex space-x-8">
+//                             {tabs.map(tab => {
+//                                 const Icon = tab.icon;
+//                                 return (
+//                                     <button
+//                                         key={tab.id}
+//                                         onClick={() => setActiveTab(tab.id)}
+//                                         className={`flex items-center space-x-2 py-2 px-1 border-b-2 font-medium text-sm transition-colors ${activeTab === tab.id
+//                                                 ? 'border-blue-500 text-blue-600'
+//                                                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+//                                             }`}
+//                                     >
+//                                         <Icon className="w-4 h-4" />
+//                                         <span>{tab.label}</span>
+//                                     </button>
+//                                 );
+//                             })}
+//                         </nav>
+//                     </div>
+//                 </div>
+//             </header>
+
+//             {/* Main Content */}
+//             <main className="p-6">
+//                 {activeTab === 'overview' && (
+//                     <div className="space-y-6">
+//                         <StatsCards stats={dashboardData.stats} />
+
+//                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+//                             <TransactionChart data={dashboardData.transactions} />
+//                             <UserAnalytics data={dashboardData.users} />
+//                         </div>
+
+//                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+//                             <PlanAnalytics data={dashboardData.plans} />
+//                             <RecentActivity activities={dashboardData.recentActivity} />
+//                         </div>
+
+//                         <Suggestions suggestions={dashboardData.suggestions} />
+//                     </div>
+//                 )}
+
+//                 {activeTab === 'users' && (
+//                     <UserTable adminAPI={AdminAPI} />
+//                 )}
+
+//                 {activeTab === 'transactions' && (
+//                     <div className="space-y-6">
+//                         <TransactionChart data={dashboardData.transactions} fullWidth />
+//                         <RecentActivity activities={dashboardData.recentActivity} showAll />
+//                     </div>
+//                 )}
+
+//                 {activeTab === 'plans' && (
+//                     <div className="space-y-6">
+//                         <PlanAnalytics data={dashboardData.plans} detailed />
+//                     </div>
+//                 )}
+//             </main>
+//         </div>
+//     );
+// };
+
+// export default RazorpayDashboard;
+
+
 import React, { useState, useEffect } from 'react';
 import AdminAPI from './adminApi';
 import {
@@ -459,10 +669,12 @@ import {
     DollarSign,
     Activity,
     ChevronDown,
-    Calendar,
     Bell,
-    Search,
-    Filter
+    UserCheck,
+    PieChart,
+    BarChart3,
+    Target,
+    Wallet
 } from 'lucide-react';
 import StatsCards from '../../components/RazorpayDashboard/StatsCards';
 import TransactionChart from '../../components/RazorpayDashboard/TransactionChart';
@@ -471,12 +683,20 @@ import PlanAnalytics from '../../components/RazorpayDashboard/PlanAnalytics';
 import RecentActivity from '../../components/RazorpayDashboard/RecentActivity';
 import UserTable from '../../components/RazorpayDashboard/UserTable';
 import Suggestions from '../../components/RazorpayDashboard/Suggestions';
+import UserDetails from '../../components/RazorpayDashboard/UserDetails';
+import PlanDetails from '../../components/RazorpayDashboard/PlanDetails';
+import RevenueAnalytics from '../../components/RazorpayDashboard/RevenueAnalytics';
+import UserActivity from '../../components/RazorpayDashboard/UserActivity';
+import WalletAnalytics from '../../components/RazorpayDashboard/WalletAnalytics';
+import AdminUsersPage from './AdminUsersPage';
 
 const RazorpayDashboard = () => {
     const [dateRange, setDateRange] = useState('7d');
     const [activeTab, setActiveTab] = useState('overview');
     const [dashboardData, setDashboardData] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    console.log("dashboardData", dashboardData)
 
     const dateRanges = [
         { value: '24h', label: 'Last 24 Hours' },
@@ -488,8 +708,14 @@ const RazorpayDashboard = () => {
     const tabs = [
         { id: 'overview', label: 'Overview', icon: Activity },
         { id: 'users', label: 'Users', icon: Users },
+        { id: 'user-details', label: 'User Details', icon: UserCheck },
         { id: 'transactions', label: 'Transactions', icon: CreditCard },
-        { id: 'plans', label: 'Plans', icon: TrendingUp }
+        { id: 'plans', label: 'Plans', icon: TrendingUp },
+        { id: 'plan-details', label: 'Plan Details', icon: Target },
+        { id: 'revenue', label: 'Revenue', icon: DollarSign },
+        { id: 'activity', label: 'Activity', icon: BarChart3 },
+        { id: 'wallet', label: 'Wallet Analytics', icon: Wallet },
+        { id: 'wallet-detail', label: 'Wallet Detail', icon: Wallet },
     ];
 
     useEffect(() => {
@@ -499,7 +725,6 @@ const RazorpayDashboard = () => {
     const fetchDashboardData = async () => {
         setLoading(true);
         try {
-            // Fetch all dashboard data from APIs
             const [stats, transactions, users, plans, recentActivity, suggestions] = await Promise.all([
                 AdminAPI.getDashboardStats(dateRange),
                 AdminAPI.getTransactionAnalytics(dateRange),
@@ -519,7 +744,6 @@ const RazorpayDashboard = () => {
             });
         } catch (error) {
             console.error('Error fetching dashboard data:', error);
-            // Set empty data on error to prevent crashes
             setDashboardData({
                 stats: {
                     totalUsers: 0,
@@ -533,7 +757,9 @@ const RazorpayDashboard = () => {
                     walletBalance: 0,
                     walletBalanceGrowth: 0,
                     propertyInteractions: 0,
-                    propertyInteractionsGrowth: 0
+                    propertyInteractionsGrowth: 0,
+                    totalPaidUsers: 0,
+                    paidUsersGrowth: 0
                 },
                 transactions: { labels: [], datasets: [] },
                 users: { newUsers: [], activeUsers: [], userEngagement: 0, avgSessionTime: '0m' },
@@ -569,7 +795,6 @@ const RazorpayDashboard = () => {
                         </div>
 
                         <div className="flex items-center space-x-4">
-                            {/* Date Range Selector */}
                             <div className="relative">
                                 <select
                                     value={dateRange}
@@ -594,16 +819,16 @@ const RazorpayDashboard = () => {
 
                     {/* Navigation Tabs */}
                     <div className="mt-6 border-b border-gray-200">
-                        <nav className="flex space-x-8">
+                        <nav className="flex space-x-6 overflow-x-auto">
                             {tabs.map(tab => {
                                 const Icon = tab.icon;
                                 return (
                                     <button
                                         key={tab.id}
                                         onClick={() => setActiveTab(tab.id)}
-                                        className={`flex items-center space-x-2 py-2 px-1 border-b-2 font-medium text-sm transition-colors ${activeTab === tab.id
-                                                ? 'border-blue-500 text-blue-600'
-                                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                        className={`flex items-center space-x-2 py-2 px-1 border-b-2 font-medium text-sm transition-colors whitespace-nowrap ${activeTab === tab.id
+                                            ? 'border-blue-500 text-blue-600'
+                                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                                             }`}
                                     >
                                         <Icon className="w-4 h-4" />
@@ -624,7 +849,7 @@ const RazorpayDashboard = () => {
 
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <TransactionChart data={dashboardData.transactions} />
-                            <UserAnalytics data={dashboardData.users} />
+                            <UserAnalytics data={dashboardData?.users} />
                         </div>
 
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -640,6 +865,10 @@ const RazorpayDashboard = () => {
                     <UserTable adminAPI={AdminAPI} />
                 )}
 
+                {activeTab === 'user-details' && (
+                    <UserDetails adminAPI={AdminAPI} />
+                )}
+
                 {activeTab === 'transactions' && (
                     <div className="space-y-6">
                         <TransactionChart data={dashboardData.transactions} fullWidth />
@@ -651,6 +880,25 @@ const RazorpayDashboard = () => {
                     <div className="space-y-6">
                         <PlanAnalytics data={dashboardData.plans} detailed />
                     </div>
+                )}
+
+                {activeTab === 'plan-details' && (
+                    <PlanDetails adminAPI={AdminAPI} />
+                )}
+
+                {activeTab === 'revenue' && (
+                    <RevenueAnalytics adminAPI={AdminAPI} dateRange={dateRange} />
+                )}
+
+                {activeTab === 'activity' && (
+                    <UserActivity adminAPI={AdminAPI} dateRange={dateRange} />
+                )}
+
+                {activeTab === 'wallet' && (
+                    <WalletAnalytics adminAPI={AdminAPI} dateRange={dateRange} />
+                )}
+                {activeTab === 'wallet-detail' && (
+                    <AdminUsersPage />
                 )}
             </main>
         </div>
