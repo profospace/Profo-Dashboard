@@ -349,7 +349,7 @@ function App() {
           <Route path="/preview-ads" element={<PreviewAds />} />
             <Route path="/razorpay" element={<RazorpayDashboard />} />
             <Route path="/api-hit" element={<Apihit />} />
-            {/* <Route path="/plot/viewer" element={<PlotViewer />} /> */}
+            <Route path="/plot/viewer" element={<PlotViewer />} />
         </Routes>
       </Suspense>
 
