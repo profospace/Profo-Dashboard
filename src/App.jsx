@@ -121,6 +121,7 @@ import PreviewAds from './pages/AdsNew/PreviewAds';
 import PlanManagement from './pages/PlanManagement/PlanManagement';
 import Apihit from './pages/Apihit';
 import DynamicPageDashboard from './pages/AndroidPageDashboard/DynamicPageDashboard';
+import GoogleMaps3D from './pages/ViewThreeD/GoogleMaps3D';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -332,6 +333,7 @@ function App() {
             <Route path="/projects/:projectId/disconnect-properties" element={<DisconnectProjectPropertiesPage />} />
 
             <Route path="/testing" element={<AndroidFeedPreview />} />
+            <Route path="/checktesting" element={<GoogleMaps3D />} />
 
             <Route path="/cards-preview-generator-json" element={<OverlappingCardsPreview />} />
             <Route path="/android-page-dashboard" element={<AndroidPageDashboard />} />
