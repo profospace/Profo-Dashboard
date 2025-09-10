@@ -403,8 +403,8 @@ function PropertyCard({ property, onEdit, onDelete, onUpdateStatus, onViewDetail
                         </button>
                     </div>
                     <div>
-                        <Button onClick={() => handleAddPropertyViewer(property?.post_id)}>Add Property Viewer</Button>
-                        <Button onClick={() => handleViewPropertyViewer(property.post_id)}>View Property Viewer</Button>
+                        <Button onClick={() => handleAddPropertyViewer(property?._id)}>Add Property Viewer</Button>
+                        <Button onClick={() => handleViewPropertyViewer(property._id)}>View Property Viewer</Button>
                     </div>
                     <div>
                         <Button onClick={()=>handleUploadNewVideoNavigation(property?._id)} >Upload New Video</Button>

@@ -367,7 +367,7 @@ const ProjectsListPage = () => {
                                         </button>
                                     </div>
                                     <div>
-                                        <Button onClick={() => handleAddProjectViewer(project?.projectId)}>Add Project Viewer</Button>
+                                        <Button onClick={() => handleAddProjectViewer(project?._id)}>Add Project Viewer</Button>
                                         <Button onClick={() => handleViewProjectViewer(project?.projectId)}>View Project Viewer</Button>
                                     </div>
                                 </div>
