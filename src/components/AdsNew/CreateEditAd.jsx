@@ -6,6 +6,8 @@ const CreateEditAd = ({ base_url, getAuthConfig, editingAd, onSaveComplete, onCa
     const [formData, setFormData] = useState({
         name: '',
         description: '',
+        bgcolor:'',
+        bgImage:'',
         header: '',
         pagelink: '',
         videoUrl: '',
@@ -284,6 +286,25 @@ const CreateEditAd = ({ base_url, getAuthConfig, editingAd, onSaveComplete, onCa
                     value={formData.description}
                     onChange={(e) => updateFormData('description', e.target.value)}
                     rows={3}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+            </div>
+
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Bgcolor</label>
+                <input
+                    type="text"
+                    value={formData.bgcolor}
+                    onChange={(e) => updateFormData('bgcolor', e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">BgImage</label>
+                <input
+                    type="text"
+                    value={formData.bgImage}
+                    onChange={(e) => updateFormData('bgImage', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
             </div>

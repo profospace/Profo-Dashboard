@@ -121,6 +121,7 @@ import PreviewAds from './pages/AdsNew/PreviewAds';
 import PlanManagement from './pages/PlanManagement/PlanManagement';
 import Apihit from './pages/Apihit';
 import DynamicPageDashboard from './pages/AndroidPageDashboard/DynamicPageDashboard';
+import BookingsPage from './pages/AdminBookingDashboard/BookingsPage';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -349,8 +350,9 @@ function App() {
           </Route>
           <Route path="/new-ads" element={<AdsEntry />} />
           <Route path="/preview-ads" element={<PreviewAds />} />
-            <Route path="/razorpay" element={<RazorpayDashboard />} />
-            <Route path="/api-hit" element={<Apihit />} /> 
+          <Route path="/razorpay" element={<RazorpayDashboard />} />
+          <Route path="/bookings" element={<BookingsPage />} />
+          <Route path="/api-hit" element={<Apihit />} />
         </Routes>
       </Suspense>
 
