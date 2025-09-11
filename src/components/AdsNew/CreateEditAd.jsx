@@ -8,6 +8,7 @@ const CreateEditAd = ({ base_url, getAuthConfig, editingAd, onSaveComplete, onCa
         description: '',
         bgcolor:'',
         bgImage:'',
+        textColor: '',
         header: '',
         pagelink: '',
         videoUrl: '',
@@ -305,6 +306,15 @@ const CreateEditAd = ({ base_url, getAuthConfig, editingAd, onSaveComplete, onCa
                     type="text"
                     value={formData.bgImage}
                     onChange={(e) => updateFormData('bgImage', e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">TextColor</label>
+                <input
+                    type="text"
+                    value={formData.textColor}
+                    onChange={(e) => updateFormData('textColor', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
             </div>
