@@ -880,6 +880,22 @@ const PlanModal = ({ show, onClose, title, onSubmit, formData, handleInputChange
                             />
                         </div>
 
+                        {/* City Name */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                City Name *
+                            </label>
+                            <input
+                                type="text"
+                                name="city"
+                                value={formData.city}
+                                onChange={handleInputChange}
+                                required
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Enter city name"
+                            />
+                        </div>
+
                         {/* Plan Type */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -1184,6 +1200,7 @@ const PlanManagement = () => {
         planType: 'contact',
         recommended: false,
         isActive: true,
+        city : '',
         features: [''],
         metadata: {
             contactsIncluded: 0,
@@ -1503,6 +1520,8 @@ const PlanManagement = () => {
                                                 </h3>
                                                 <span className="text-sm text-gray-500 capitalize">{plan.planType}</span>
                                             </div>
+
+                                            <div>{plan?.city}</div>
                                         </div>
 
                                         <div className="flex items-center gap-2">

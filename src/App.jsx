@@ -123,6 +123,7 @@ import Apihit from './pages/Apihit';
 import DynamicPageDashboard from './pages/AndroidPageDashboard/DynamicPageDashboard';
 import BookingsPage from './pages/AdminBookingDashboard/BookingsPage';
 import WaitlistDashboard from './pages/WaitlistDashboard';
+import EnhancedUserAnalytics from './pages/BenchmarkDashboard/EnhancedUserAnalytics';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -342,6 +343,7 @@ function App() {
             <Route path="/api-load-tester" element={<ApiLoadTester />} />
             <Route path="/user-requirements" element={<Requirement />} />
             <Route path="/benchmark" element={<BenchmarkDashboard />} />
+            <Route path="/en/benchmark" element={<EnhancedUserAnalytics />} />
             <Route path="/plan-management" element={<PlanManagement />} />
             <Route path="/waitlist-management" element={<WaitlistDashboard />} />
 
