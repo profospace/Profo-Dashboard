@@ -530,6 +530,35 @@ const PropertyManagerLayout = ({ children }) => {
             ]
         },
         {
+            key: 'salesman',
+            icon: <AppstoreOutlined />,
+            label: 'Salesman',
+            children: [
+                {
+                    key: '/salesman/auth',
+                    label: <Link to="/salesman/auth">Salesman's Auth</Link>,
+                },
+                
+            ]
+        },
+        {
+            key: 'benchmark',
+            icon: <AppstoreOutlined />,
+            label: 'Benchmark',
+            children: [
+                {
+                    key: '/benchmark',
+                    label: <Link to="/benchmark">Benchmark</Link>,
+                },
+                {
+                    key: '/em/benchmark',
+                    label: <Link to="/en/benchmark">En Benchmark</Link>,
+                },
+                
+               
+            ]
+        },
+        {
             key: 'property',
             icon: <AppstoreOutlined />,
             label: 'Properties',

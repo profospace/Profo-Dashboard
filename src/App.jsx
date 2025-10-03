@@ -124,6 +124,7 @@ import DynamicPageDashboard from './pages/AndroidPageDashboard/DynamicPageDashbo
 import BookingsPage from './pages/AdminBookingDashboard/BookingsPage';
 import WaitlistDashboard from './pages/WaitlistDashboard';
 import EnhancedUserAnalytics from './pages/BenchmarkDashboard/EnhancedUserAnalytics';
+import AdminSalesmanPage from './pages/Salesman/AdminSalesmanPage';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -347,6 +348,7 @@ function App() {
             <Route path="/plan-management" element={<PlanManagement />} />
             <Route path="/waitlist-management" element={<WaitlistDashboard />} />
 
+            <Route path="/salesman/auth" element={<AdminSalesmanPage />} />
 
 
 
