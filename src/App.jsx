@@ -125,6 +125,7 @@ import BookingsPage from './pages/AdminBookingDashboard/BookingsPage';
 import WaitlistDashboard from './pages/WaitlistDashboard';
 import EnhancedUserAnalytics from './pages/BenchmarkDashboard/EnhancedUserAnalytics';
 import AdminSalesmanPage from './pages/Salesman/AdminSalesmanPage';
+import CitySearchDashboard from './pages/CitySearchDashboard';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -349,6 +350,7 @@ function App() {
             <Route path="/waitlist-management" element={<WaitlistDashboard />} />
 
             <Route path="/salesman/auth" element={<AdminSalesmanPage />} />
+            <Route path="/search/results" element={<CitySearchDashboard />} />
 
 
 
