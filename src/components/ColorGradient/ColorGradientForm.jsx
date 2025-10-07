@@ -30,7 +30,13 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
         },
         list_price_size: 14,
         markerColor: "#e1faeb",
+        markerColorGradient : "",
         constantData: {
+            markerTextColor: "",
+            colorApiVersion: "",
+            semanticVersion: "",
+            buildingMarkerImageDefault: "",
+            
             filterUnselectedColor: "",
             filterSelectedColor: "",
             fabColor: "",
@@ -93,7 +99,7 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
             maxListAds: "",
 
             userprofileHeader: "",
-            bottomImage: ""
+            bottomImage: "",
         },
 
 
@@ -582,8 +588,85 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                     </div>
                 </AccordionSection>
 
+                {/* Some More fields */}
+                <AccordionSection id="color" title="Color">
+                    <ColorInput
+                        section="markerColorGradient"
+                        field="startColor"
+                        label="Marker Start Color"
+                        value={formData.markerColorGradient.startColor}
+                        onChange={handleColorChange}
+                    />
+                    <ColorInput
+                        section="markerColorGradient"
+                        field="endColor"
+                        label="Marker End Color"
+                        value={formData.markerColorGradient.endColor}
+                        onChange={handleColorChange}
+                    />
+                    {/* <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Header Background Image:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.headerBackgroundImage || ''}
+                            onChange={(e) => handleConstantDataChange('headerBackgroundImage', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter image URL"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Header Height:</label>
+                        <input
+                            type="number"
+                            value={formData.constantData.headerHeight || 0}
+                            onChange={(e) => handleConstantDataChange('headerHeight', parseInt(e.target.value) || 0)}
+                            className="w-20 p-2 border border-gray-300 rounded-md text-sm"
+                        />
+                    </div> */}
+                </AccordionSection>
+
                 {/* more info */}
                 <AccordionSection id="more" title="More">
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Marker Text Color:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.markerTextColor || ''}
+                            onChange={(e) => handleConstantDataChange('markerTextColor', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter markerTextColor"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Color Api Version:</label>
+                        <input
+                            type="number"
+                            value={formData.constantData.colorApiVersion || ''}
+                            onChange={(e) => handleConstantDataChange('colorApiVersion', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter Color Api Version"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Semantic Versioning Version:</label>
+                        <input
+                            type="number"
+                            value={formData.constantData.semanticVersion || ''}
+                            onChange={(e) => handleConstantDataChange('semanticVersion', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter SemanticVersioning"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Building Marker Image Default:</label>
+                        <input
+                            type="text"
+                            value={formData.constantData.buildingMarkerImageDefault || ''}
+                            onChange={(e) => handleConstantDataChange('buildingMarkerImageDefault', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Enter building MarkerImage Default"
+                        />
+                    </div>
                     <div className="mt-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Filter Selected Text Color:</label>
                         <input

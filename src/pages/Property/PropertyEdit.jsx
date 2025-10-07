@@ -141,6 +141,7 @@ const PropertyEdit = ({ user }) => {
                 priceUnit: '',
                 areaUnit: ''
             },
+            buildingMarkerImage: property.buildingMarkerImage || ""
         };
     };
 
@@ -612,6 +613,7 @@ const PropertyEdit = ({ user }) => {
                 keepPostImages: formData.keepPostImages || [],
                 keepFloorPlanImages: formData.keepFloorPlanImages || [],
                 keepGalleryImages: formData.keepGalleryImages || [],
+                buildingMarkerImage: formData.buildingMarkerImage || ''
             };
 
             // Add user information
@@ -1139,6 +1141,21 @@ const PropertyEdit = ({ user }) => {
                                         required
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                         placeholder="e.g. 3BHK Apartment in Civil Lines"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="buildingMarkerImage" className="block text-sm font-medium text-gray-700 mb-1">
+                                        Building Marker Image
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="buildingMarkerImage"
+                                        name="buildingMarkerImage"
+                                        value={formData.buildingMarkerImage || ''}
+                                        onChange={handleChange}
+                                        required
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="e.g. https://placeholder/image.png"
                                     />
                                 </div>
 

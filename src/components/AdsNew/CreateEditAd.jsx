@@ -352,6 +352,7 @@ const CreateEditAd = ({ base_url, getAuthConfig, editingAd, onSaveComplete, onCa
                     <option value="INTERSTITIAL">Interstitial</option>
                     <option value="NATIVE">Native</option>
                     <option value="VIDEO">Video</option>
+                    <option value="SPLASH">Splash</option>
                 </select>
             </div>
 
