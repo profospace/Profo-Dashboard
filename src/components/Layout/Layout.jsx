@@ -283,7 +283,7 @@
 //                 },
 //             ],
 //         },
-        
+
 
 //         {
 //             key: 'project',
@@ -349,7 +349,7 @@
 //                     defaultSelectedKeys={[location.pathname]}
 //                     items={items}
 //                 />
-                
+
 //             </Sider>
 //             <Layout>
 //                 <Header style={{ padding: 0, background: colorBgContainer }}>
@@ -504,7 +504,7 @@ const PropertyManagerLayout = ({ children }) => {
             icon: <HomeOutlined />,
             label: <Link to="/new-ads">New Ads Location</Link>,
         },
-        
+
         {
             key: '/api-load-tester',
             icon: <HomeOutlined />,
@@ -538,7 +538,7 @@ const PropertyManagerLayout = ({ children }) => {
                     key: '/salesman/auth',
                     label: <Link to="/salesman/auth">Salesman's Auth</Link>,
                 },
-                
+
             ]
         },
         {
@@ -554,8 +554,8 @@ const PropertyManagerLayout = ({ children }) => {
                     key: '/em/benchmark',
                     label: <Link to="/en/benchmark">En Benchmark</Link>,
                 },
-                
-               
+
+
             ]
         },
         {
@@ -645,7 +645,7 @@ const PropertyManagerLayout = ({ children }) => {
                     key: '/funnel-analytics',
                     label: <Link to="/funnel-analytics">Funnel Analytics</Link>,
                 },
-                
+
             ]
         },
         {
@@ -681,6 +681,10 @@ const PropertyManagerLayout = ({ children }) => {
                 {
                     key: '/users',
                     label: <Link to="/users">Users</Link>,
+                },
+                {
+                    key: '/users/plans/management',
+                    label: <Link to="/users/plans/management">User Plans Management</Link>,
                 },
                 // {
                 //     key: '/users',
@@ -773,7 +777,7 @@ const PropertyManagerLayout = ({ children }) => {
         }
 
         ,
-        
+
         {
             key: '/deeplink-generator',
             icon: <BuildOutlined />,

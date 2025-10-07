@@ -126,6 +126,7 @@ import WaitlistDashboard from './pages/WaitlistDashboard';
 import EnhancedUserAnalytics from './pages/BenchmarkDashboard/EnhancedUserAnalytics';
 import AdminSalesmanPage from './pages/Salesman/AdminSalesmanPage';
 import CitySearchDashboard from './pages/CitySearchDashboard';
+import UserPlans from './pages/User/UserPlans';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -249,6 +250,7 @@ function App() {
             {/* users */}
             <Route path="/users" element={<UsersPage />} />
             <Route path="/users/:userId" element={<UserProfilePage />} />
+            <Route path="/users/plans/management" element={<UserPlans />} />
 
             {/* Leads Management */}
             <Route path="/leads" element={<LeadsManagementPage />} />
