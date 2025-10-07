@@ -127,6 +127,7 @@ import EnhancedUserAnalytics from './pages/BenchmarkDashboard/EnhancedUserAnalyt
 import AdminSalesmanPage from './pages/Salesman/AdminSalesmanPage';
 import CitySearchDashboard from './pages/CitySearchDashboard';
 import UserPlans from './pages/User/UserPlans';
+import OfferManagementPage from './pages/PlanManagement/OfferManagementPage';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -349,6 +350,7 @@ function App() {
             <Route path="/benchmark" element={<BenchmarkDashboard />} />
             <Route path="/en/benchmark" element={<EnhancedUserAnalytics />} />
             <Route path="/plan-management" element={<PlanManagement />} />
+            <Route path="/offer-management" element={<OfferManagementPage />} />
             <Route path="/waitlist-management" element={<WaitlistDashboard />} />
 
             <Route path="/salesman/auth" element={<AdminSalesmanPage />} />
