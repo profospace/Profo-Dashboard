@@ -128,6 +128,8 @@ import AdminSalesmanPage from './pages/Salesman/AdminSalesmanPage';
 import CitySearchDashboard from './pages/CitySearchDashboard';
 import UserPlans from './pages/User/UserPlans';
 import OfferManagementPage from './pages/PlanManagement/OfferManagementPage';
+import WhatsappScanner from './components/Whatsapp/WhatsappScanner';
+import PotholeDashboard from './pages/PotholeDashboard';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -350,12 +352,14 @@ function App() {
             <Route path="/benchmark" element={<BenchmarkDashboard />} />
             <Route path="/en/benchmark" element={<EnhancedUserAnalytics />} />
             <Route path="/plan-management" element={<PlanManagement />} />
-            <Route path="/offer-management" element={<OfferManagementPage />} />
+            <Route path="/offer-management" element={<OfferManagementPage />} /> {/* offer plan management *new */}
             <Route path="/waitlist-management" element={<WaitlistDashboard />} />
 
             <Route path="/salesman/auth" element={<AdminSalesmanPage />} />
             <Route path="/search/results" element={<CitySearchDashboard />} />
 
+            <Route path="/whatsapp/client" element={<WhatsappScanner />} />
+            <Route path="/pit" element={<PotholeDashboard />} />
 
 
             <Route path='*' element={<Error />} />
