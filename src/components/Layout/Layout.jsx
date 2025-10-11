@@ -393,7 +393,7 @@
 /********************************    Scrollbar    ********************* */
 import React, { useState } from 'react';
 import { Layout, Menu, theme, Breadcrumb } from 'antd';
-import { useLocation, Link, Outlet } from 'react-router-dom';
+import { useLocation, Link, Outlet, useNavigate } from 'react-router-dom';
 import {
     HomeOutlined,
     BuildOutlined,
@@ -405,6 +405,7 @@ import {
     UserOutlined
 } from '@ant-design/icons';
 import { BsBuildingsFill } from "react-icons/bs";
+import { Button } from '@mui/material';
 
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -435,6 +436,7 @@ document.head.appendChild(globalStyle);
 const PropertyManagerLayout = ({ children }) => {
     const [collapsed, setCollapsed] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate()
     const { token: { colorBgContainer, borderRadiusLG } } = theme.useToken();
 
     // Convert current path to breadcrumb items
@@ -447,6 +449,18 @@ const PropertyManagerLayout = ({ children }) => {
             return { title: <Link to={url}>{title}</Link> };
         })
     ];
+
+    const handleLogout = () => {
+        const isAuth = localStorage.getItem("authToken") ? true :  false
+
+        if(isAuth){
+            localStorage.removeItem("authToken")
+            localStorage.removeItem("adminUser")
+            navigate('/')
+        }
+       
+        
+    }
 
     // Navigation items with icons
     const items = [
@@ -892,13 +906,15 @@ const PropertyManagerLayout = ({ children }) => {
             </Sider>
             <Layout>
                 <Header style={{ padding: 0, background: colorBgContainer }}>
-                    <div style={{ display: 'flex', alignItems: 'center', height: '100%', paddingLeft: 16 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%', paddingLeft: 16 }}>
                         {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                             className: 'trigger',
                             onClick: () => setCollapsed(!collapsed),
                             style: { fontSize: 18 }
                         })}
+                        <Button onClick={() => handleLogout()}>Logout</Button>
                     </div>
+
                 </Header>
                 <Content style={{ margin: '24px 16px', padding: 24, minHeight: 280, background: colorBgContainer }}>
                     <Breadcrumb items={breadcrumbItems} style={{ marginBottom: 16 }} />
