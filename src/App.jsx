@@ -130,6 +130,8 @@ import UserPlans from './pages/User/UserPlans';
 import OfferManagementPage from './pages/PlanManagement/OfferManagementPage';
 import WhatsappScanner from './components/Whatsapp/WhatsappScanner';
 import PotholeDashboard from './pages/PotholeDashboard';
+import ForgotPassword from './pages/Authentication/ForgotPassword';
+import ResetPassword from './pages/Authentication/ResetPassword';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -219,6 +221,9 @@ function App() {
           <Route path='/signup' element={<SignupForm />} />
           <Route path='/login' element={<LoginForm />} />
           <Route path="/api/admin/verify-email/:token" element={<VerifyEmail />} />
+
+          <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/reset-password/:token' element={<ResetPassword />} />
 
           <Route path='/' element={<ProtectedRoutes><PropertyManagerLayout /></ProtectedRoutes>}>
             <Route path="/dashboard" element={<Dashboard />} />

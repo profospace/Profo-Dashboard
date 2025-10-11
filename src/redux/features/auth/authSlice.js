@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // Get user from localStorage
 const user = localStorage.getItem('adminUser') && JSON.parse(localStorage.getItem('adminUser')) ;
-const token = localStorage.getItem('authToken');
+const token = localStorage.getItem('authToken')  && localStorage.getItem('authToken');
 
 const initialState = {
   user: user,
