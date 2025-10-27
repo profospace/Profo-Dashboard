@@ -707,6 +707,25 @@ const PropertyManagerLayout = ({ children }) => {
             ],
         },
         {
+            key: 'Management',
+            icon: <TeamOutlined />,
+            label: 'Management',
+            children: [
+                {
+                    key: '/plan-management',
+                    label: <Link to="/plan-management">Plans</Link>,
+                },
+                // {
+                //     key: '/users/plans/management',
+                //     label: <Link to="/users/plans/management">User Plans Management</Link>,
+                // },
+                // {
+                //     key: '/users',
+                //     label: <Link to="/users">User Management</Link>,
+                // },
+            ],
+        },
+        {
             key: 'viewer-management',
             icon: <TeamOutlined />,
             label: 'Viewer Management',
