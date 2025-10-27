@@ -536,6 +536,9 @@ const UserPlans = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
+    const [showWalletModal, setShowWalletModal] = useState(false);
+    const [walletAmount, setWalletAmount] = useState(0);
+
     // Pagination state
     const [pagination, setPagination] = useState({
         page: 1,
@@ -678,10 +681,67 @@ const UserPlans = () => {
 
             if (response.data.success) {
                 setSelectedUser(response.data.user);
+                setWalletAmount(response.data.user.profile?.wallet?.balance || 0);
             }
         } catch (err) {
             console.error('Error fetching user details:', err);
             setError('Failed to fetch user details');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+    // Update wallet balance
+    const updateWalletBalance = async () => {
+        if (!selectedUser) return;
+
+        setLoading(true);
+        try {
+            const response = await axios.patch(
+                `${base_url}/api/admin/plans/users/${selectedUser._id}/wallet/update`,
+                { balance: parseFloat(walletAmount) },
+                getAuthConfig()
+            );
+
+            if (response.data.success) {
+                setSuccess('Wallet balance updated successfully');
+                setShowWalletModal(false);
+                getUserDetails(selectedUser._id);
+            } else {
+                setError(response.data.message || 'Failed to update wallet balance');
+            }
+        } catch (err) {
+            console.error('Error updating wallet:', err);
+            setError(err.response?.data?.message || 'Failed to update wallet balance');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Reset wallet balance to zero
+    const resetWalletBalance = async () => {
+        if (!selectedUser) return;
+        if (!confirm('Are you sure you want to reset this user\'s wallet balance to ₹0?')) return;
+
+        setLoading(true);
+        try {
+            const response = await axios.patch(
+                `${base_url}/api/admin/plans/users/${selectedUser._id}/wallet/reset`,
+                {},
+                getAuthConfig()
+            );
+
+            if (response.data.success) {
+                setSuccess('Wallet balance reset to ₹0 successfully');
+                getUserDetails(selectedUser._id);
+                setWalletAmount(0);
+            } else {
+                setError(response.data.message || 'Failed to reset wallet balance');
+            }
+        } catch (err) {
+            console.error('Error resetting wallet:', err);
+            setError(err.response?.data?.message || 'Failed to reset wallet balance');
         } finally {
             setLoading(false);
         }
@@ -881,8 +941,8 @@ const UserPlans = () => {
                                                 key={type}
                                                 onClick={() => toggleFilter('loginType', type)}
                                                 className={`px-3 py-1 text-xs rounded-full transition-colors ${filters.loginType.includes(type)
-                                                        ? 'bg-blue-500 text-white'
-                                                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                                    ? 'bg-blue-500 text-white'
+                                                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                                     }`}
                                             >
                                                 {type}
@@ -944,8 +1004,8 @@ const UserPlans = () => {
                                         key={user._id}
                                         onClick={() => getUserDetails(user._id)}
                                         className={`p-3 rounded-lg cursor-pointer transition-colors ${selectedUser?._id === user._id
-                                                ? 'bg-blue-50 border-2 border-blue-500'
-                                                : 'bg-gray-50 hover:bg-gray-100 border-2 border-transparent'
+                                            ? 'bg-blue-50 border-2 border-blue-500'
+                                            : 'bg-gray-50 hover:bg-gray-100 border-2 border-transparent'
                                             }`}
                                     >
                                         <div className="flex items-start gap-2">
@@ -1024,6 +1084,36 @@ const UserPlans = () => {
                                     </button>
                                 </div>
 
+
+                                {/* Wallet Balance Section */}
+                                <div className="mb-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <DollarSign size={24} className="text-green-600" />
+                                            <div>
+                                                <p className="text-sm text-gray-600">Wallet Balance</p>
+                                                <p className="text-2xl font-bold text-gray-900">
+                                                    ₹{selectedUser.profile?.wallet?.balance?.toFixed(2) || '0.00'}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={() => setShowWalletModal(true)}
+                                                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                                            >
+                                                Edit Balance
+                                            </button>
+                                            <button
+                                                onClick={() => resetWalletBalance()}
+                                                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
+                                            >
+                                                Reset to ₹0
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 {/* Active Plans */}
                                 <div className="space-y-4">
                                     <h3 className="text-lg font-semibold">Purchased Plans</h3>
@@ -1089,8 +1179,8 @@ const UserPlans = () => {
                                                         <button
                                                             onClick={() => togglePlanStatus(plan._id, plan.isActive)}
                                                             className={`p-2 rounded-lg transition-colors ${plan.isActive
-                                                                    ? 'bg-yellow-500 hover:bg-yellow-600 text-white'
-                                                                    : 'bg-green-500 hover:bg-green-600 text-white'
+                                                                ? 'bg-yellow-500 hover:bg-yellow-600 text-white'
+                                                                : 'bg-green-500 hover:bg-green-600 text-white'
                                                                 }`}
                                                             title={plan.isActive ? 'Deactivate' : 'Activate'}
                                                         >
@@ -1261,6 +1351,61 @@ const UserPlans = () => {
                                     className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {loading ? 'Attaching...' : 'Attach Plan'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Wallet Edit Modal */}
+                {showWalletModal && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                        <div className="bg-white rounded-lg max-w-md w-full p-6">
+                            <h3 className="text-xl font-semibold mb-4">Update Wallet Balance</h3>
+
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    Current Balance
+                                </label>
+                                <p className="text-2xl font-bold text-gray-900 mb-4">
+                                    ₹{selectedUser?.profile?.wallet?.balance?.toFixed(2) || '0.00'}
+                                </p>
+                            </div>
+
+                            <div className="mb-6">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    New Balance (₹)
+                                </label>
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    min="0"
+                                    value={walletAmount}
+                                    onChange={(e) => setWalletAmount(e.target.value)}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter new balance"
+                                />
+                                <p className="text-xs text-gray-500 mt-1">
+                                    Enter the new wallet balance amount
+                                </p>
+                            </div>
+
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() => {
+                                        setShowWalletModal(false);
+                                        setWalletAmount(selectedUser?.profile?.wallet?.balance || 0);
+                                    }}
+                                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={updateWalletBalance}
+                                    disabled={loading}
+                                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {loading ? 'Updating...' : 'Update Balance'}
                                 </button>
                             </div>
                         </div>
