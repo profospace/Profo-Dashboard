@@ -1790,6 +1790,22 @@ const PlanModal = ({ show, onClose, title, onSubmit, formData, handleInputChange
                                 ))}
                             </select>
                         </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Property Contact Amount (₹)
+                            </label>
+                            <input
+                                type="number"
+                                name="propertyContactAmount"
+                                value={formData.propertyContactAmount}
+                                onChange={handleInputChange}
+                                min="0"
+                                step="0.01"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="0.00"
+                            />
+                        </div>
                     </div>
 
                     <div>
@@ -2086,6 +2102,7 @@ const PlanManagement = () => {
         isActive: true,
         city: '',
         freeCredits: 0,
+        propertyContactAmount: 0,
         features: [''],
         metadata: {
             contactsIncluded: 0,
@@ -2162,6 +2179,7 @@ const PlanManagement = () => {
             isActive: true,
             city: '',
             freeCredits: 0,
+            propertyContactAmount: 0,
             features: [''],
             metadata: {
                 contactsIncluded: 0,
@@ -2225,7 +2243,8 @@ const PlanManagement = () => {
                 originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : null,
                 discount: formData.discount ? parseFloat(formData.discount) : null,
                 validityMinutes: parseInt(formData.validityMinutes),
-                freeCredits: parseInt(formData.freeCredits)
+                freeCredits: parseInt(formData.freeCredits),
+                propertyContactAmount: formData.propertyContactAmount ? parseFloat(formData.propertyContactAmount) : 0
             };
 
             if (editingPlan) {
@@ -2270,6 +2289,7 @@ const PlanManagement = () => {
             isActive: plan.isActive,
             city: plan.city || '',
             freeCredits: plan.freeCredits || 0,
+            propertyContactAmount: plan.propertyContactAmount || 0,
             features: plan.features.length > 0 ? plan.features : [''],
             metadata: plan.metadata || {
                 contactsIncluded: 0,
