@@ -45,8 +45,8 @@ const BottomNavDashboardNew = () => {
       const data = await response.json();
 
       if (data.success) {
-        setNavItems(data.data.bottomNavigation.items);
-        setStyling(data.data.bottomNavigation.styling);
+        setNavItems(data?.bottomNavigation?.items);
+        setStyling(data?.bottomNavigation?.styling);
         setConfigExists(true);
         showNotification('Configuration loaded successfully');
       } else {

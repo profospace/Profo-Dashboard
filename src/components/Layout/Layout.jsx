@@ -538,6 +538,10 @@ const PropertyManagerLayout = ({ children }) => {
                     label: <Link to="/bottom-nav">Android Bottom Nav</Link>,
                 },
                 {
+                    key: '/bottom-nav/new',
+                    label: <Link to="/bottom-nav/new">Android Bottom Nav New</Link>,
+                },
+                {
                     key: '/cards-preview-generator-json',
                     label: <Link to="/cards-preview-generator-json">Card Preview</Link>,
                 },
