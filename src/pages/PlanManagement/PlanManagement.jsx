@@ -1913,18 +1913,30 @@ const PlanModal = ({ show, onClose, title, onSubmit, formData, handleInputChange
                             <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Color Theme
                             </label>
-                            <select
-                                name="color"
-                                value={formData.color}
-                                onChange={handleInputChange}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            >
-                                {colorOptions.map(color => (
-                                    <option key={color} value={color}>
-                                        {color.replace('bg-', '').replace('-500', '')}
-                                    </option>
-                                ))}
-                            </select>
+                            <div className="flex items-center gap-3">
+                                <input
+                                    type="color"
+                                    value={formData.color.startsWith('#') ? formData.color : '#3B82F6'}
+                                    onChange={(e) => {
+                                        handleInputChange({
+                                            target: {
+                                                name: 'color',
+                                                value: e.target.value,
+                                                type: 'text'
+                                            }
+                                        });
+                                    }}
+                                    className="w-16 h-10 border border-gray-300 rounded-lg cursor-pointer"
+                                />
+                                <input
+                                    type="text"
+                                    name="color"
+                                    value={formData.color}
+                                    onChange={handleInputChange}
+                                    placeholder="#5DD082"
+                                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                />
+                            </div>
                         </div>
 
                         <div>
@@ -2096,7 +2108,7 @@ const PlanManagement = () => {
         originalPrice: '',
         discount: '',
         validityMinutes: 43200,
-        color: 'bg-blue-500',
+        color: '#3B82F6',
         planType: 'contact',
         recommended: false,
         isActive: true,
@@ -2433,7 +2445,10 @@ const PlanManagement = () => {
                                 <div className="p-6 border-b">
                                     <div className="flex items-start justify-between mb-3">
                                         <div className="flex items-center gap-3">
-                                            <div className={`w-4 h-4 rounded-full ${plan.color}`}></div>
+                                            <div
+                                                className="w-4 h-4 rounded-full"
+                                                style={{ backgroundColor: plan.color.startsWith('#') ? plan.color : '#3B82F6' }}
+                                            ></div>
                                             <div>
                                                 <h3 className="font-semibold text-gray-900 flex items-center gap-2">
                                                     {plan.name}
