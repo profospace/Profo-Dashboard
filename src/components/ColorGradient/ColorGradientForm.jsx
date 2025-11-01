@@ -36,6 +36,20 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
             colorApiVersion: "",
             semanticVersion: "",
             buildingMarkerImageDefault: "",
+
+            fillColorSelected: "",
+            fillColorDefault: "",
+            strokeColor: "",
+            strokeColorUnselected: "",
+            textColorSelected: "",
+            textColorDefault: "",
+            strokeWidth: 0,
+            cornerRadius: 0,
+            elevation: 0,
+            iconTintColor: "",
+            fontSizeSp: 0,
+            fontWeight: 0,
+
             
             filterUnselectedColor: "",
             filterSelectedColor: "",
@@ -587,6 +601,107 @@ const ColorGradientForm = ({ onSubmitSuccess }) => {
                         />
                     </div>
                 </AccordionSection>
+
+                {/* Filter Section variables*/}
+                <AccordionSection id="filter" title="Filter UI Section  variables">
+                    <ColorInput
+                        section="constantData"
+                        field="fillColorSelected"
+                        label="Fill Color Selected"
+                        value={formData.constantData.fillColorSelected}
+                        onChange={handleColorChange}
+                    />
+                    <ColorInput
+                        section="constantData"
+                        field="fillColorDefault"
+                        label="Fill Color Default"
+                        value={formData.constantData.fillColorDefault}
+                        onChange={handleColorChange}
+                    />
+                    <ColorInput
+                        section="constantData"
+                        field="strokeColor"
+                        label="Stroke Color "
+                        value={formData.constantData.strokeColor}
+                        onChange={handleColorChange}
+                    />
+                    <ColorInput
+                        section="constantData"
+                        field="strokeColorUnselected"
+                        label="Stroke Unselected Color "
+                        value={formData.constantData.strokeColorUnselected}
+                        onChange={handleColorChange}
+                    />
+                    <ColorInput
+                        section="constantData"
+                        field="textColorSelected"
+                        label="Text Selected Color "
+                        value={formData.constantData.textColorSelected}
+                        onChange={handleColorChange}
+                    />
+                    <ColorInput
+                        section="constantData"
+                        field="textColorDefault"
+                        label="Text Color Default"
+                        value={formData.constantData.textColorDefault}
+                        onChange={handleColorChange}
+                    />
+                    <ColorInput
+                        section="constantData"
+                        field="iconTintColor"
+                        label="Icon Tint Color"
+                        value={formData.constantData.iconTintColor}
+                        onChange={handleColorChange}
+                    />
+                   
+
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Stroke Width:</label>
+                        <input
+                            type="number"
+                            value={formData.constantData.strokeWidth || 0}
+                            onChange={(e) => handleConstantDataChange('strokeWidth', parseInt(e.target.value) || 0)}
+                            className="w-20 p-2 border border-gray-300 rounded-md text-sm"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Corner Radius:</label>
+                        <input
+                            type="number"
+                            value={formData.constantData.cornerRadius || 0}
+                            onChange={(e) => handleConstantDataChange('cornerRadius', parseInt(e.target.value) || 0)}
+                            className="w-20 p-2 border border-gray-300 rounded-md text-sm"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Elevation:</label>
+                        <input
+                            type="number"
+                            value={formData.constantData.elevation || 0}
+                            onChange={(e) => handleConstantDataChange('elevation', parseInt(e.target.value) || 0)}
+                            className="w-20 p-2 border border-gray-300 rounded-md text-sm"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">FontSizeSp:</label>
+                        <input
+                            type="number"
+                            value={formData.constantData.fontSizeSp || 0}
+                            onChange={(e) => handleConstantDataChange('fontSizeSp', parseInt(e.target.value) || 0)}
+                            className="w-20 p-2 border border-gray-300 rounded-md text-sm"
+                        />
+                    </div>
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Font Weight:</label>
+                        <input
+                            type="number"
+                            value={formData.constantData.fontWeight || 0}
+                            onChange={(e) => handleConstantDataChange('fontWeight', parseInt(e.target.value) || 0)}
+                            className="w-20 p-2 border border-gray-300 rounded-md text-sm"
+                        />
+                    </div>
+                </AccordionSection>
+                
 
                 {/* Some More fields */}
                 <AccordionSection id="color" title="Color">

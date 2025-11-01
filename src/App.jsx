@@ -132,6 +132,7 @@ import WhatsappScanner from './components/Whatsapp/WhatsappScanner';
 import PotholeDashboard from './pages/PotholeDashboard';
 import ForgotPassword from './pages/Authentication/ForgotPassword';
 import ResetPassword from './pages/Authentication/ResetPassword';
+import BottomNavDashboardNew from './pages/BottomNavDashboard';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -374,6 +375,8 @@ function App() {
           <Route path="/razorpay" element={<RazorpayDashboard />} />
           <Route path="/bookings" element={<BookingsPage />} />
           <Route path="/api-hit" element={<Apihit />} />
+          <Route path="/bottom-nav/new" element={<BottomNavDashboardNew />} />
+
         </Routes>
       </Suspense>
 
