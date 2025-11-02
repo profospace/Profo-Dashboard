@@ -5,11 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node pinger.js",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "start": "node pinger.js && vite preview"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
