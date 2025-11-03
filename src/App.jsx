@@ -133,6 +133,7 @@ import PotholeDashboard from './pages/PotholeDashboard';
 import ForgotPassword from './pages/Authentication/ForgotPassword';
 import ResetPassword from './pages/Authentication/ResetPassword';
 import BottomNavDashboardNew from './pages/BottomNavDashboard';
+import ContactUs from './pages/ContactUs';
 
 const NotificationStats = lazy(() => import('./pages/Notification/NotificationStats'));
 const AdminDBSyncHistory = lazy(() => import('./pages/AdminDBSync/AdminDBSyncHistory'));
@@ -366,6 +367,7 @@ function App() {
 
             <Route path="/whatsapp/client" element={<WhatsappScanner />} />
             <Route path="/pit" element={<PotholeDashboard />} />
+            <Route path="/contact-us" element={<ContactUs />} />
 
 
             <Route path='*' element={<Error />} />

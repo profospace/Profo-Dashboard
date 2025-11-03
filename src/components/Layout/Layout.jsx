@@ -548,6 +548,45 @@ const PropertyManagerLayout = ({ children }) => {
             ]
         },
         {
+            key: 'extra',
+            icon: <AppstoreOutlined />,
+            label: 'Extra',
+            children: [
+                {
+                    key: '/razorpay',
+                    label: <Link to="/razorpay">Razorpay</Link>,
+                },
+                {
+                    key: '/bookings',
+                    label: <Link to="/bookings">Bookings</Link>,
+                },
+                {
+                    key: '/api-hit',
+                    label: <Link to="/api-hit">Api hit</Link>,
+                },
+                {
+                    key: '/whatsapp/client',
+                    label: <Link to="/whatsapp/client">Whatsapp client</Link>,
+                },
+                {
+                    key: '/search/results',
+                    label: <Link to="/search/results">Search Result</Link>,
+                },
+                {
+                    key: '/plan-management',
+                    label: <Link to="/plan-management">PLan Management</Link>,
+                },
+                {
+                    key: '/user-requirements',
+                    label: <Link to="/user-requirements">User requirements</Link>,
+                },
+                {
+                    key: '/contact-us',
+                    label: <Link to="/contact-us">Contact Us</Link>,
+                },
+            ]
+        },
+        {
             key: 'salesman',
             icon: <AppstoreOutlined />,
             label: 'Salesman',
